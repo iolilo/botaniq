@@ -465,40 +465,37 @@ body{font-family:'DM Sans',sans-serif;color:var(--text)}
 
 <!-- SCAN -->
 <div class="scr" id="scr-scan">
+  <div class="screen-hd"><div class="screen-title">🔍 Identifikasi Tanaman</div></div>
+
   <!-- CAMERA ZONE -->
   <div class="cam-zone" id="camZone" onclick="openCamFile()">
-    <img class="cam-thumb" id="camThumb">
+    <img class="cam-thumb" id="camThumb" style="display:none">
     <div class="cam-overlay" id="camOverlay">
       <div class="cam-ring">📷</div>
       <div class="cam-label">Foto Tanaman</div>
-      <div class="cam-sub">Identifikasi atau diagnosa dengan AI</div>
+      <div class="cam-sub">Tap untuk ambil foto atau pilih dari galeri</div>
     </div>
     <div class="cam-corner cc-tl"></div>
     <div class="cam-corner cc-tr"></div>
     <div class="cam-corner cc-bl"></div>
     <div class="cam-corner cc-br"></div>
-    <div class="cam-fade"></div>
   </div>
   <input type="file" id="camFileInput" accept="image/*" capture="environment" onchange="onCamFile(event)">
 
-  <!-- MODE CARDS -->
-  <div class="scan-mode-cards">
-    <div class="smc id" onclick="triggerScan('id')">
-      <span class="smc-ico">🔍</span>
-      <div class="smc-t">Identifikasi</div>
-      <div class="smc-s">Tidak tahu nama tanaman? Foto langsung tahu!</div>
-    </div>
-    <div class="smc diag" onclick="triggerScan('diag')">
-      <span class="smc-ico">🩺</span>
-      <div class="smc-t">Diagnosa</div>
-      <div class="smc-s">Tanamanmu sakit? AI bantu temukan penyebabnya</div>
-    </div>
+  <!-- SCAN BUTTON -->
+  <div style="padding:14px 20px 0">
+    <button class="gen-btn" id="scanBtn" onclick="doPlantScan()" disabled style="opacity:.4">
+      <span id="scanBtnTxt">🔍 Pilih foto dulu</span>
+    </button>
   </div>
 
-  <!-- RECENT SCANS -->
-  <div class="rs-sec">
-    <div class="rs-title">Riwayat Scan</div>
-    <div class="rs-row" id="scanRsRow"></div>
+  <!-- RESULT -->
+  <div id="scanResult" style="padding:0 20px;margin-top:14px"></div>
+
+  <!-- RIWAYAT SCAN -->
+  <div style="padding:0 20px 20px;margin-top:4px">
+    <div class="d-sec-title">Riwayat Scan</div>
+    <div id="scanHistList"></div>
   </div>
 </div>
 
@@ -692,8 +689,8 @@ body{font-family:'DM Sans',sans-serif;color:var(--text)}
 
 <script>
 // ════ CONFIG ════
-var GKEY='AIzaSyBBwy-i8utkUaqH6SlnfNTOI4tksX-bMfc';
-var GURL='https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key='+GKEY;
+var PLANTNET_KEY='2b10gjNV9UDMDNqm8jHEzo7Tu'; // ← ganti dengan API key Pl@ntNet kamu
+
 var SBURL='https://atinplsrmgkcgsdwvhiw.supabase.co';
 var SBKEY='sb_publishable__s0F7wR6_cJElrsrg9NjrA_R1NTzhWW';
 
@@ -787,12 +784,13 @@ async function loadData(){
     if(sbJ!==null){jnls=sbJ.map(function(r){return{id:r.id,plantId:r.plant_id,type:r.type,note:r.note,date:r.date};});jid=jnls.length?Math.max.apply(null,jnls.map(function(j){return j.id;}))+1:1;}else{jnls=lsGet('bq_j_'+CU,[]);}
     if(sbS!==null){scans=sbS.map(function(r){return{id:r.id,purpose:r.purpose,name:r.name,type:r.type,emoji:r.emoji,health:r.health,confidence:r.confidence,healthNote:r.health_note,result:r.result,image:r.image,date:r.created_at};});}else{scans=lsGet('bq_s_'+CU,[]);}
   }catch(e){plants=lsGet('bq_p_'+CU,[]);jnls=lsGet('bq_j_'+CU,[]);scans=lsGet('bq_s_'+CU,[]);setSyncStatus('err','⚠️ Gagal terhubung');}
-  saveLocal();renderHome();renderPlants();renderJnl();renderScanRow();
+  saveLocal();renderHome();renderPlants();renderJnl();renderScanHist();renderScanRow();
   setTimeout(function(){document.getElementById('syncbar').style.display='none';},2000);
 }
 
 // ════ NAV ════
 function showScr(n){
+  if(n==='scan'){pnImgData=null;var t=document.getElementById('camThumb');var o=document.getElementById('camOverlay');if(t)t.style.display='none';if(o)o.style.display='flex';var b=document.getElementById('scanBtn');if(b){b.disabled=true;b.style.opacity='.4';}document.getElementById('scanBtnTxt').textContent='🔍 Pilih foto dulu';document.getElementById('scanResult').innerHTML='';renderScanHist();}
   document.querySelectorAll('.scr').forEach(function(s){s.classList.remove('on');});
   document.querySelectorAll('.nav-item').forEach(function(b){b.classList.remove('active');});
   var s=document.getElementById('scr-'+n);if(s)s.classList.add('on');
@@ -945,27 +943,11 @@ function addNewType(){var emoji=(document.getElementById('ntemoji').value||'🌱
 function deleteType(id){if(plants.find(function(p){return p.type===id;})){toast('⚠️ Ada tanaman dengan jenis ini!');return;}var types=getTypes().filter(function(t){return t.id!==id;});saveTypes(types);populateTypeSelect();renderManageTypes();toast('🗑️ Jenis dihapus');}
 
 // ════ SCAN (Identifikasi & Diagnosa AI) ════
-var camImgData=null,pendingMode=null;
 
-function openCamFile(){document.getElementById('camFileInput').click();}
-function onCamFile(e){
-  var f=e.target.files[0];if(!f)return;
-  if(f.size>10*1024*1024){toast('Max 10MB');return;}
-  var r=new FileReader();
-  r.onload=function(ev){
-    camImgData=ev.target.result;
-    var th=document.getElementById('camThumb');th.src=camImgData;th.style.display='block';
-    document.getElementById('camOverlay').style.opacity='0';
-    // open choose mode
-    openSheet('chooseOv');
-  };
-  r.readAsDataURL(f);
-  e.target.value='';
-}
-function triggerScan(mode){
-  if(camImgData){doAIScan(mode);}
-  else{pendingMode=mode;document.getElementById('camFileInput').click();}
-}
+
+
+
+
 
 async function doAIScan(mode){
   if(!camImgData){toast('Foto dulu tanamannya!');return;}
@@ -1005,81 +987,17 @@ async function doAIScan(mode){
   }
 }
 
-function renderScanResult(mode,r){
-  var body=document.getElementById('resultSheetBody');
-  var imgHtml=camImgData?'<img src="'+camImgData+'" style="width:100%;height:100%;object-fit:cover;border-radius:8px">':'';
-  if(mode==='id'){
-    var tips=(r.tips||[]).map(function(t){return'<span class="cc-chip">'+t+'</span>';}).join('');
-    body.innerHTML='<div class="idr-head id-mode"><div class="idr-emi">'+(imgHtml||r.emoji||'🌿')+'</div><div><div class="idr-name">'+(r.name||'Tanaman')+'</div><div class="idr-sp">'+(r.species||'')+'</div></div><div class="idr-conf"><div class="idr-pct">'+(r.confidence||'?')+'%</div><div class="idr-lbl">akurasi</div></div></div>'
-      +'<div class="idr-body">'
-      +'<div class="sec-lbl" style="margin-bottom:8px">Info Tanaman</div>'
-      +'<div class="igrid"><div class="iitem pur"><div class="ilbl">Asal</div><div class="ival">'+(r.origin||'—')+'</div></div><div class="iitem pur"><div class="ilbl">Cahaya</div><div class="ival">'+(r.light||'—')+'</div></div><div class="iitem pur"><div class="ilbl">Siram</div><div class="ival">Tiap '+(r.water||'?')+' hari</div></div><div class="iitem pur"><div class="ilbl">Suhu</div><div class="ival">'+(r.temp||'—')+'</div></div></div>'
-      +(tips?'<div class="sec-lbl" style="margin-bottom:8px">Tips Perawatan</div><div class="care-chips-row">'+tips+'</div>':'')
-      +'<div class="id-acts-row">'
-      +'<button class="ia ia-add" onclick="addScanToCollection(\'id\')">+ Tambah ke Koleksi</button>'
-      +'<button class="ia ia-pur" onclick="closeResultSheet()">Tutup</button>'
-      +'</div></div>';
-    window._scanResult={mode:'id',data:r};
-  } else {
-    var issues=(r.issues||[]).map(function(iss){var sc=iss.severity==='parah'?'var(--red)':iss.severity==='sedang'?'var(--gold)':'var(--green-mid)';return'<div style="background:var(--rlt);border-radius:10px;padding:10px 12px;margin-bottom:8px;border-left:3px solid '+sc+'"><div style="font-size:12px;font-weight:600;color:'+sc+';margin-bottom:3px">⚠️ '+iss.name+' <span style="font-weight:400;font-size:10px">('+iss.severity+')</span></div><div style="font-size:12px;color:var(--text-muted);line-height:1.5">'+iss.solution+'</div></div>';}).join('');
-    var htips=(r.tips||[]).map(function(t){return'<span class="cc-chip">'+t+'</span>';}).join('');
-    var healthIcon=r.health==='good'?'🌟':r.health==='warn'?'⚠️':'❌';
-    body.innerHTML='<div class="idr-head diag-mode"><div class="idr-emi">'+(imgHtml||r.emoji||'🌿')+'</div><div><div class="idr-name">'+(r.plantName||'Tanaman')+'</div><div class="idr-sp">'+healthIcon+' '+(r.health==='good'?'Sehat':r.health==='warn'?'Perlu perhatian':'Bermasalah')+'</div></div><div class="idr-conf"><div class="idr-pct">'+(r.confidence||'?')+'%</div><div class="idr-lbl">akurasi</div></div></div>'
-      +'<div class="idr-body">'
-      +(issues?'<div class="sec-lbl" style="margin-bottom:8px">Masalah Terdeteksi</div>'+issues:'<div style="background:var(--glt);border-radius:10px;padding:10px 12px;margin-bottom:12px;display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:var(--g2);border-left:3px solid var(--green-light)">✅ Tanamanmu terlihat sehat!</div>')
-      +(htips?'<div class="sec-lbl" style="margin-bottom:8px">Tips</div><div class="care-chips-row">'+htips+'</div>':'')
-      +'<div class="id-acts-row">'
-      +'<button class="ia ia-jnl" onclick="addScanToJournal()">📝 Catat di Jurnal</button>'
-      +'<button class="ia ia-pur" onclick="closeResultSheet()">Tutup</button>'
-      +'</div></div>';
-    window._scanResult={mode:'diag',data:r};
-  }
-}
 
-async function saveScanToHistory(mode,r){
-  var sid=Date.now();
-  var s={id:sid,purpose:mode,name:mode==='id'?r.name:r.plantName,emoji:r.emoji||'🌿',health:r.health||'good',confidence:r.confidence||null,healthNote:mode==='diag'?(r.issues||[]).map(function(i){return i.name;}).join(', '):'',result:r,image:camImgData,date:new Date().toISOString()};
-  scans.unshift(s);if(scans.length>50)scans=scans.slice(0,50);saveLocal();renderScanRow();
-  sbQ('bq_scans','POST',{username:CU,purpose:mode,name:s.name,emoji:s.emoji,health:s.health,confidence:s.confidence,health_note:s.healthNote,result:JSON.stringify(r),image:camImgData});
-}
 
-function closeResultSheet(){document.getElementById('resultSheet').classList.remove('open');}
+
+
+
 
 // Add to collection from ID result
-function addScanToCollection(mode){
-  var sr=window._scanResult;if(!sr)return;var r=sr.data;
-  // pre-fill plant sheet
-  document.getElementById('pstitle').textContent='Tambah Tanaman';
-  ['pfid','pfnotes'].forEach(function(x){document.getElementById(x).value='';});
-  populateTypeSelect();
-  document.getElementById('pfname').value=r.name||'';
-  // try to match type
-  var types=getTypes();var matched=types.find(function(t){return t.label.toLowerCase()===(r.name||'').toLowerCase()||(r.family||'').toLowerCase().includes(t.label.toLowerCase());});
-  document.getElementById('pftype').value=matched?matched.id:'hias';
-  document.getElementById('pfwater').value=r.water||7;
-  document.getElementById('pffert').value=r.fert||14;
-  // photo
-  if(camImgData){addImg=camImgData;var prev=document.getElementById('pfprev');prev.src=camImgData;prev.style.display='block';document.querySelector('#psheet .iuico').style.display='none';document.querySelector('#psheet .iutxt').style.display='none';}
-  else{addImg=null;document.getElementById('pfprev').style.display='none';document.querySelector('#psheet .iuico').style.display='block';document.querySelector('#psheet .iutxt').style.display='block';}
-  setPfTab('file',document.getElementById('pft-file'));
-  closeResultSheet();
-  openSheet('psheet');
-}
+
 
 // Add to journal from Diag result
-function addScanToJournal(){
-  var sr=window._scanResult;if(!sr)return;var r=sr.data;
-  if(!plants.length){toast('Tambah tanaman dulu ke koleksi!');return;}
-  document.getElementById('jstitle').textContent='Catat Hasil Diagnosa';
-  document.getElementById('jfid').value='';
-  document.getElementById('jftype').value='disease';
-  var issues=(r.issues||[]).map(function(i){return i.name+': '+i.solution;}).join('\n');
-  document.getElementById('jfnote').value=issues||'Tanaman sehat';
-  document.getElementById('jfdate').value=td();
-  var sel=document.getElementById('jfplant');sel.innerHTML=plants.map(function(p){return'<option value="'+p.id+'">'+(p.emoji||'🌿')+' '+p.name+'</option>';}).join('');
-  closeResultSheet();
-  openSheet('jsheet');
-}
+
 
 function renderScanRow(){
   var el=document.getElementById('scanRsRow');if(!el)return;
@@ -1113,14 +1031,7 @@ async function delJnl(id){if(!confirm('Hapus catatan?'))return;jnls=jnls.filter(
 function editJnl(id){var j=jnls.find(function(x){return x.id===id;});if(!j)return;document.getElementById('jstitle').textContent='Edit Catatan';document.getElementById('jfid').value=id;document.getElementById('jfnote').value=j.note||'';document.getElementById('jfdate').value=j.date;document.getElementById('jftype').value=j.type;var sel=document.getElementById('jfplant');sel.innerHTML=plants.map(function(p){return'<option value="'+p.id+'" '+(p.id===j.plantId?'selected':'')+'>'+(p.emoji||'🌿')+' '+p.name+'</option>';}).join('');openSheet('jsheet');}
 function setJTab(tab,btn){document.querySelectorAll('#scr-journal .jtab').forEach(function(t){t.classList.remove('on');});btn.classList.add('on');document.getElementById('jtl-care').style.display=tab==='care'?'block':'none';document.getElementById('jtl-scan').style.display=tab==='scan'?'block':'none';if(tab==='scan')renderScanHist();}
 
-function renderScanHist(){
-  var el=document.getElementById('scanhist');if(!scans.length){el.innerHTML='<div class="empty-state" style="padding:2rem"><div class="empty-icon">🔍</div><div class="empty-title">Belum Ada Riwayat</div><div class="empty-sub">Hasil scan AI akan tersimpan di sini</div></div>';return;}
-  var PL={id:'Identifikasi',diag:'Diagnosa'};
-  el.innerHTML=scans.map(function(h){
-    var imgHtml=h.image?'<img src="'+h.image+'" style="width:34px;height:34px;object-fit:cover;border-radius:6px">':'';
-    return'<div class="scan-hist-card"><div class="shc-head"><div class="shc-emi">'+(imgHtml||h.emoji||'🌿')+'</div><div><div class="shc-name">'+(h.name||'?')+'</div><div class="shc-sp">'+(PL[h.purpose]||h.purpose)+'</div></div>'+(h.confidence?'<div class="shc-conf"><div class="shc-pct">'+h.confidence+'%</div><div class="shc-lbl">akurasi</div></div>':'')+'</div>'+(h.healthNote?'<div class="shc-note">'+h.healthNote+'</div>':'')+'<div class="shc-acts"><button class="jbtn" onclick="addFromScanHist('+h.id+')" style="color:var(--green-mid)">'+(h.purpose==='id'?'+ Koleksi':'📝 Jurnal')+'</button><button class="jbtn" onclick="delScan('+h.id+')" style="color:var(--red)">🗑️</button></div></div>';
-  }).join('');
-}
+
 async function delScan(id){if(!confirm('Hapus riwayat?'))return;scans=scans.filter(function(x){return x.id!==id;});saveLocal();sbQ('bq_scans','DELETE',null,'id=eq.'+id+'&username=eq.'+encodeURIComponent(CU));renderScanHist();toast('🗑️ Dihapus');}
 function addFromScanHist(id){
   var h=scans.find(function(x){return x.id===id;});if(!h)return;
@@ -1132,9 +1043,9 @@ function addFromScanHist(id){
 
 // ════ AI TIPS ════
 var careOpt='all';
-function checkCareBtn(){var v=document.getElementById('care-plant-name').value.trim();document.getElementById('abtn').disabled=v.length<2;}
-function setCareQuick(name){document.getElementById('care-plant-name').value=name;checkCareBtn();}
-function setCareOpt(el,opt){careOpt=opt;['all','water','disease','grow'].forEach(function(id){var e=document.getElementById('co-'+id);if(e)e.className='careopt'+(id===opt?' on':'');});}
+
+
+
 function resetCareTips(){document.getElementById('care-plant-name').value='';document.getElementById('abtn').disabled=true;setCareOpt(document.getElementById('co-all'),'all');document.getElementById('aicard').style.display='none';document.getElementById('analyzing').style.display='none';}
 async function doCareTips(){
   var plantName=document.getElementById('care-plant-name').value.trim();if(!plantName)return;
@@ -1155,8 +1066,8 @@ async function doCareTips(){
 
 // ════ AI CHAT ════
 var chatHistory=[];
-function openChat(){document.getElementById('chatoverlay').classList.add('open');document.getElementById('chatinp').focus();}
-function closeChat(){document.getElementById('chatoverlay').classList.remove('open');}
+
+
 function addMsg(text,role){var msgs=document.getElementById('chatmsgs');var div=document.createElement('div');div.className='cmsg '+role;div.textContent=text;msgs.appendChild(div);msgs.scrollTop=msgs.scrollHeight;return div;}
 async function sendChat(){var inp=document.getElementById('chatinp'),text=inp.value.trim();if(!text)return;inp.value='';inp.disabled=true;document.querySelector('.chat-send').disabled=true;var chips=document.getElementById('chat-chips');if(chips)chips.style.display='none';addMsg(text,'user');chatHistory.push({role:'user',content:text});var typing=addMsg('...','bot typing');document.getElementById('chatmsgs').scrollTop=document.getElementById('chatmsgs').scrollHeight;try{var contents=[];if(chatHistory.length===1){contents.push({role:'user',parts:[{text:'Kamu adalah asisten ahli tanaman bernama Botaniq AI. Jawab dalam Bahasa Indonesia yang ramah dan praktis. Spesialisasi: identifikasi tanaman, perawatan, penyiraman, pupuk, hama, media tanam, bonsai, kaktus, sukulen, lithops. Jika di luar topik tanaman, arahkan balik ke topik tanaman.'}]});contents.push({role:'model',parts:[{text:'Halo! Saya Botaniq AI, siap bantu seputar tanaman kamu! 🌿'}]});}var hist=chatHistory.slice(-10);for(var i=0;i<hist.length-1;i++)contents.push({role:hist[i].role==='user'?'user':'model',parts:[{text:hist[i].content}]});contents.push({role:'user',parts:[{text:text}]});var res=await fetchGemini({contents:contents,generationConfig:{temperature:.7,maxOutputTokens:500}});if(!res.ok){var ej={};try{ej=await res.json();}catch(e2){}if(res.status===429)throw new Error('Terlalu banyak request.');throw new Error(ej.error?ej.error.message:'HTTP '+res.status);}var json=await res.json();var reply='';if(json.candidates&&json.candidates[0]&&json.candidates[0].content)reply=(json.candidates[0].content.parts||[]).map(function(p){return p.text||'';}).join('').trim();if(!reply)reply='Maaf, coba tanya lagi!';chatHistory.push({role:'assistant',content:reply});typing.className='cmsg bot';typing.textContent='';var ci=0,msgs=document.getElementById('chatmsgs'),timer=setInterval(function(){ci=Math.min(ci+4,reply.length);typing.textContent=reply.slice(0,ci);msgs.scrollTop=msgs.scrollHeight;if(ci>=reply.length)clearInterval(timer);},12);}catch(e){typing.textContent='Gagal: '+e.message;typing.className='cmsg bot';}finally{inp.disabled=false;document.querySelector('.chat-send').disabled=false;inp.focus();}}
 function quickChat(text){var chips=document.getElementById('chat-chips');if(chips)chips.style.display='none';document.getElementById('chatinp').value=text;sendChat();}
@@ -1271,6 +1182,141 @@ function fpLightboxEl(el){
     +'<div class="fp-lightbox-dt">'+fmtD(ph.date)+'</div>';
   detail.appendChild(lb);
 }
+
+
+// ════ PLANTNET SCAN ════
+var pnImgData=null;
+
+function openCamFile(){document.getElementById('camFileInput').click();}
+
+function onCamFile(e){
+  var f=e.target.files[0];if(!f)return;
+  var r=new FileReader();
+  r.onload=function(ev){
+    pnImgData=ev.target.result;
+    var thumb=document.getElementById('camThumb');
+    var overlay=document.getElementById('camOverlay');
+    thumb.src=pnImgData;thumb.style.display='block';
+    overlay.style.display='none';
+    var btn=document.getElementById('scanBtn');
+    var txt=document.getElementById('scanBtnTxt');
+    btn.disabled=false;btn.style.opacity='1';
+    txt.textContent='🔍 Identifikasi Tanaman';
+  };
+  r.readAsDataURL(f);
+}
+
+async function doPlantScan(){
+  if(!pnImgData){toast('Pilih foto dulu!');return;}
+  if(PLANTNET_KEY==='MASUKKAN_API_KEY_DISINI'){
+    toast('⚠️ API key belum diisi!');return;
+  }
+  var btn=document.getElementById('scanBtn');
+  var txt=document.getElementById('scanBtnTxt');
+  btn.disabled=true;txt.textContent='⏳ Mengidentifikasi...';
+
+  var result=document.getElementById('scanResult');
+  result.innerHTML='<div style="text-align:center;padding:20px;color:var(--text-muted);font-size:13px">⏳ Sedang menganalisis foto...</div>';
+
+  try{
+    // Convert base64 to blob
+    var b64=pnImgData.split(',')[1];
+    var mime=pnImgData.split(';')[0].split(':')[1];
+    var byteArr=Uint8Array.from(atob(b64),function(c){return c.charCodeAt(0);});
+    var blob=new Blob([byteArr],{type:mime});
+
+    var fd=new FormData();
+    fd.append('images',blob,'plant.jpg');
+    fd.append('organs','auto');
+
+    var res=await fetch('https://my-api.plantnet.org/v2/identify/all?api-key='+PLANTNET_KEY+'&lang=id&include-related-images=false',{
+      method:'POST',body:fd
+    });
+
+    if(!res.ok){
+      var err=await res.json();
+      throw new Error(err.message||'Gagal identifikasi');
+    }
+
+    var data=await res.json();
+    renderScanResults(data);
+
+    // Simpan ke riwayat
+    var top=data.results&&data.results[0];
+    if(top){
+      var nm=top.species.commonNames&&top.species.commonNames[0]||top.species.scientificNameWithoutAuthor;
+      var sc=Math.round((top.score||0)*100);
+      var hist=JSON.parse(localStorage.getItem('bq_scan_hist_'+CU)||'[]');
+      hist.unshift({name:nm,sci:top.species.scientificNameWithoutAuthor,score:sc,date:td(),img:pnImgData});
+      hist=hist.slice(0,10);
+      localStorage.setItem('bq_scan_hist_'+CU,JSON.stringify(hist));
+      renderScanHist();
+    }
+
+  }catch(e){
+    result.innerHTML='<div style="background:var(--rlt);border-radius:14px;padding:16px;margin-top:4px">'
+      +'<div style="color:var(--red);font-weight:600;margin-bottom:4px">❌ Gagal mengidentifikasi</div>'
+      +'<div style="font-size:12px;color:var(--text-muted)">'+e.message+'</div>'
+      +'<button onclick="doPlantScan()" style="margin-top:10px;padding:8px 16px;border-radius:8px;border:none;background:var(--green-mid);color:#fff;font-family:\'DM Sans\',sans-serif;font-size:12px;font-weight:600;cursor:pointer">↺ Coba Lagi</button>'
+      +'</div>';
+  }finally{
+    btn.disabled=false;txt.textContent='🔍 Identifikasi Lagi';
+  }
+}
+
+function renderScanResults(data){
+  var result=document.getElementById('scanResult');
+  if(!data.results||!data.results.length){
+    result.innerHTML='<div style="text-align:center;padding:20px;color:var(--text-muted);font-size:13px">Tanaman tidak dikenali. Coba foto yang lebih jelas.</div>';
+    return;
+  }
+  var top3=data.results.slice(0,3);
+  var html='<div style="margin-bottom:10px"><div class="d-sec-title">Hasil Identifikasi</div>';
+  html+=top3.map(function(r,i){
+    var nm=r.species.commonNames&&r.species.commonNames[0]||'—';
+    var sci=r.species.scientificNameWithoutAuthor||'';
+    var sc=Math.round((r.score||0)*100);
+    var barW=sc+'%';
+    var barC=sc>=70?'var(--green-mid)':sc>=40?'var(--gold)':'var(--red)';
+    return'<div style="background:var(--white);border-radius:14px;padding:14px 16px;margin-bottom:8px;box-shadow:var(--shadow)">'
+      +(i===0?'<div style="font-size:10px;font-weight:700;color:var(--green-mid);letter-spacing:.5px;margin-bottom:6px">✅ PALING COCOK</div>':'')
+      +'<div style="font-size:15px;font-weight:600;color:var(--text);margin-bottom:2px">'+nm+'</div>'
+      +'<div style="font-size:11px;font-style:italic;color:var(--text-muted);margin-bottom:8px">'+sci+'</div>'
+      +'<div style="display:flex;align-items:center;gap:8px">'
+      +'<div style="flex:1;height:6px;border-radius:3px;background:var(--bg2);overflow:hidden">'
+      +'<div style="height:100%;width:'+barW+';background:'+barC+';border-radius:3px;transition:width .5s"></div></div>'
+      +'<div style="font-size:11px;font-weight:700;color:'+barC+'">'+sc+'%</div></div>'
+      +(i===0?'<button class="pn-add-btn" data-nm="'+nm+'" data-sci="'+sci+'" style="margin-top:10px;width:100%;padding:8px;border-radius:10px;border:none;background:var(--green-pale);color:var(--green-mid);font-size:12px;font-weight:600;cursor:pointer">＋ Tambah ke Koleksi</button>':'')
+      +'</div>';
+  }).join('');
+  html+='</div>';
+  result.innerHTML=html;
+}
+
+function addScanToCol(name,sci){
+  document.getElementById('pfname').value=name;
+  document.getElementById('pfnotes').value=sci?'Nama ilmiah: '+sci:'';
+  openSheet('psheet');
+  toast('📋 Data sudah diisi, lengkapi dan simpan!');
+}
+
+function renderScanHist(){
+  var el=document.getElementById('scanHistList');if(!el)return;
+  var hist=JSON.parse(localStorage.getItem('bq_scan_hist_'+CU)||'[]');
+  if(!hist.length){el.innerHTML='<div style="font-size:12px;color:var(--text-muted);text-align:center;padding:12px">Belum ada riwayat scan</div>';return;}
+  el.innerHTML=hist.map(function(h){
+    return'<div style="display:flex;align-items:center;gap:10px;background:var(--white);border-radius:12px;padding:10px 14px;margin-bottom:8px;box-shadow:var(--shadow)">'
+      +(h.img?'<img src="'+h.img+'" style="width:36px;height:36px;border-radius:8px;object-fit:cover;flex-shrink:0">':'<div style="width:36px;height:36px;border-radius:8px;background:var(--green-pale);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">🌿</div>')
+      +'<div style="flex:1;min-width:0"><div style="font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+h.name+'</div>'
+      +'<div style="font-size:11px;color:var(--text-muted)">'+h.score+'% · '+fmtD(h.date)+'</div></div>'
+      +'</div>';
+  }).join('');
+}
+
+document.addEventListener('click',function(e){
+  var btn=e.target.closest('.pn-add-btn');
+  if(btn){addScanToCol(btn.dataset.nm||'',btn.dataset.sci||'');}
+});
 
 // ════ INIT ════
 var savedUser=lsRaw('bq_user');
