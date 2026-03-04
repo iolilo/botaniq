@@ -28,7 +28,7 @@ body{font-family:'DM Sans',sans-serif;color:var(--text)}
 .ll{font-size:4rem;margin-bottom:1rem}
 .llogo{font-family:'Playfair Display',serif;font-size:2.6rem;margin-bottom:.25rem;color:var(--green-dark)}
 .llogo em{font-style:italic;color:var(--green-light)}
-.lsub{font-size:.75rem;color:var(--text-muted);margin-bottom:2rem;text-align:center;line-height:1.6}
+.lsub{font-size:.75rem;color:var(--text-muted);margin-bottom:2rem;text-align:center;line-height:1.6}.lsub em{font-style:italic;color:var(--green-mid)}
 .lbox{width:100%;max-width:320px;background:var(--white);border-radius:20px;padding:1.5rem;border:1.5px solid var(--line);box-shadow:0 4px 24px rgba(26,77,46,.08)}
 .llbl{font-size:.6rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.35rem;display:block}
 .linp{width:100%;padding:.75rem 1rem;border:1.5px solid var(--line);border-radius:12px;font-family:'DM Sans',sans-serif;font-size:.9rem;color:var(--text);background:var(--bg2);outline:none;transition:.2s;margin-bottom:.55rem}
@@ -62,9 +62,9 @@ body{font-family:'DM Sans',sans-serif;color:var(--text)}
 .hero::before{content:'';position:absolute;right:-20px;top:-20px;width:140px;height:140px;background:rgba(255,255,255,.06);border-radius:50%}
 .hero::after{content:'🌿';position:absolute;right:16px;bottom:-12px;font-size:80px;opacity:.2;transform:rotate(-20deg);pointer-events:none}
 .hero-greeting{color:rgba(255,255,255,.7);font-size:12px;margin-bottom:3px;font-weight:500;letter-spacing:.03em}
-.hero-title{color:var(--white);font-family:'Playfair Display',serif;font-size:22px;font-weight:700;line-height:1.2;margin-bottom:16px}
+.hero-title{color:var(--white);font-family:'Playfair Display',serif;font-size:22px;font-weight:700;line-height:1.2;margin-bottom:14px}
 .hero-title em{font-style:italic;color:#b7f5c8}
-.hero-stats{display:flex;gap:10px}
+.hero-stats{display:flex;gap:10px;justify-content:center}
 .stat-pill{background:rgba(255,255,255,.15);border-radius:12px;padding:8px 14px;text-align:center;backdrop-filter:blur(4px)}
 .stat-pill .num{color:var(--white);font-size:18px;font-weight:700;line-height:1}
 .stat-pill .label{color:rgba(255,255,255,.65);font-size:10px;text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
@@ -114,7 +114,7 @@ body{font-family:'DM Sans',sans-serif;color:var(--text)}
 .filt{padding:6px 14px;border-radius:20px;border:1.5px solid var(--line);background:var(--white);font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;cursor:pointer;color:var(--text-muted);white-space:nowrap}
 .filt.on{background:var(--green-mid);color:#fff;border-color:var(--green-mid)}
 .grid-pad{padding:0 16px}
-.empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:3rem 2rem;text-align:center}
+.empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:3rem 2rem;text-align:center;color:var(--text-muted)}
 .empty-icon{font-size:3rem;margin-bottom:.6rem;opacity:.3}
 .empty-title{font-family:'Playfair Display',serif;font-size:1.1rem;margin-bottom:.3rem;color:var(--text)}
 .empty-sub{font-size:.7rem;color:var(--text-muted);line-height:1.6;max-width:180px}
@@ -292,8 +292,9 @@ body{font-family:'DM Sans',sans-serif;color:var(--text)}
 .detail{position:absolute;inset:0;z-index:50;background:var(--white);display:flex;flex-direction:column;overflow:hidden;transform:translateX(100%);transition:transform .28s cubic-bezier(.4,0,.2,1);pointer-events:none}
 .detail.open{transform:translateX(0);pointer-events:all}
 .dback{position:absolute;top:14px;left:14px;z-index:5;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.9);border:1px solid var(--line);cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(8px);box-shadow:var(--shadow)}
-.d-img{height:240px;background:var(--green-pale);display:flex;align-items:center;justify-content:center;font-size:88px;flex-shrink:0;overflow:hidden;position:relative}
-.d-img img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+.d-img{height:200px;background:#1a4d2e;display:flex;align-items:center;justify-content:center;font-size:72px;flex-shrink:0;overflow:hidden;position:relative}
+.d-img img{width:100%;height:100%;object-fit:contain;position:relative;z-index:1;padding:8px;filter:drop-shadow(0 4px 16px rgba(0,0,0,.25))}
+.d-img .d-blur-bg{position:absolute;inset:-10px;background-size:cover;background-position:center;filter:blur(18px) brightness(.55);transform:scale(1.1);z-index:0}
 .d-emoji{position:relative;z-index:1}
 .d-body{flex:1;overflow-y:auto;padding:16px 20px;scrollbar-width:none}
 .d-body::-webkit-scrollbar{display:none}
@@ -303,7 +304,7 @@ body{font-family:'DM Sans',sans-serif;color:var(--text)}
 .d-sec-title{font-size:11px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px;display:flex;align-items:center;gap:6px}
 .d-sec-title::after{content:'';flex:1;height:1px;background:var(--line)}
 .care-info-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.care-info-item{background:var(--bg2);border-radius:12px;padding:10px 12px;display:flex;align-items:center;gap:8px;border:1px solid var(--line)}
+.care-info-item{background:var(--bg2);border-radius:12px;padding:10px 12px;display:flex;align-items:center;gap:8px;border:1px solid var(--line);transition:.15s}.care-info-item:hover{background:var(--green-pale)}
 .cii-ico{font-size:16px;flex-shrink:0}.cii-lbl{font-size:10px;font-weight:500;text-transform:uppercase;color:var(--text-muted)}.cii-val{font-size:12px;font-weight:500;color:var(--text)}
 .sched-water{background:var(--blt);border-radius:14px;padding:12px 14px;display:flex;align-items:center;gap:10px;border:1px solid #C4DAEE}
 .sched-fert{background:var(--golt);border-radius:14px;padding:12px 14px;display:flex;align-items:center;gap:10px;border:1px solid #EDD8A8;margin-top:8px}
@@ -367,106 +368,30 @@ body{font-family:'DM Sans',sans-serif;color:var(--text)}
 /* BOTTOM NAV */
 .bottom-nav{position:sticky;bottom:0;background:var(--white);border-top:1px solid rgba(26,77,46,.08);display:flex;justify-content:space-around;padding:10px 0 18px;flex-shrink:0;box-shadow:0 -4px 20px rgba(26,77,46,.07);z-index:20}
 .nav-item{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;color:var(--text-muted);transition:color .15s;flex:1;border:none;background:none;font-family:'DM Sans',sans-serif}
-.nav-item .nav-icon{font-size:20px;width:42px;height:42px;display:flex;align-items:center;justify-content:center;border-radius:14px;transition:background .15s}
+.nav-item .nav-icon{font-size:20px;width:42px;height:42px;display:flex;align-items:center;justify-content:center;border-radius:14px;transition:background .18s,transform .12s}.nav-item:active .nav-icon{transform:scale(.9)}
 .nav-item.active{color:var(--green-mid)}.nav-item.active .nav-icon{background:var(--green-pale)}
 .nav-item.center-btn .nav-icon{background:linear-gradient(135deg,var(--green-light),var(--green-mid));font-size:22px;box-shadow:0 4px 14px rgba(82,183,136,.5);color:#fff;width:50px;height:50px;border-radius:50%;margin-top:-12px}
 .nav-item.center-btn.active .nav-icon{background:linear-gradient(135deg,var(--green-light),var(--green-mid))}
-.nav-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+.nav-label{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.3px;white-space:nowrap}
 
 /* TOAST */
 #toast{position:absolute;bottom:82px;left:16px;right:16px;background:var(--green-dark);color:#fff;padding:10px 16px;border-radius:12px;font-size:13px;font-weight:500;z-index:300;display:none;box-shadow:0 6px 20px rgba(0,0,0,.15);animation:tin .2s ease}
 @keyframes tin{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
 @media(max-width:480px){#app{max-width:100%;width:100%}}
 
-/* ── SMART REMINDER BANNER ── */
-.reminder-banner{margin:8px 20px 0;border-radius:14px;padding:11px 14px;display:flex;align-items:center;gap:10px;cursor:pointer;flex-shrink:0;animation:slidein .35s cubic-bezier(.4,0,.2,1)}
-@keyframes slidein{from{transform:translateY(-16px);opacity:0}to{transform:none;opacity:1}}
-.rb-water{background:linear-gradient(135deg,#2F7EC4,#1a5a9e);box-shadow:0 4px 14px rgba(47,126,196,.3)}
-.rb-fert{background:linear-gradient(135deg,#C4891A,#9a6a10);box-shadow:0 4px 14px rgba(196,137,26,.3)}
-.rb-multi{background:linear-gradient(135deg,var(--green-mid),var(--green-dark));box-shadow:0 4px 14px rgba(26,77,46,.25)}
-.rb-ico{font-size:20px;flex-shrink:0}
-.rb-t{color:#fff;font-size:13px;font-weight:600;margin-bottom:2px}
-.rb-s{color:rgba(255,255,255,.72);font-size:11px}
-.rb-close{margin-left:auto;color:rgba(255,255,255,.5);font-size:16px;cursor:pointer;padding:2px 6px;flex-shrink:0}
-
-/* ── STATS STRIP ── */
-.stats-strip{display:flex;gap:8px;padding:0 20px;margin-top:12px;overflow-x:auto;scrollbar-width:none;flex-shrink:0}
-.stats-strip::-webkit-scrollbar{display:none}
-.stat-card{background:var(--white);border-radius:14px;padding:10px 14px;flex-shrink:0;min-width:90px;box-shadow:0 2px 10px rgba(26,77,46,.07);text-align:center;border:1px solid var(--line)}
-.sc-num{font-size:22px;font-weight:700;color:var(--green-dark);font-family:'Playfair Display',serif;line-height:1.1}
-.sc-lbl{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);margin-top:3px}
-.sc-ico{font-size:16px;margin-bottom:4px}
-.streak-bar{margin:10px 20px 0;background:linear-gradient(135deg,var(--green-mid),var(--green-dark));border-radius:14px;padding:12px 16px;display:flex;align-items:center;gap:14px;box-shadow:var(--shadow)}
-.sb-num{font-size:28px;font-weight:700;color:#fff;font-family:'Playfair Display',serif;line-height:1}
-.sb-t{color:#fff;font-size:13px;font-weight:600;margin-bottom:2px}
-.sb-s{color:rgba(255,255,255,.65);font-size:11px}
-.sb-ico{margin-left:auto;font-size:32px;opacity:.4}
-
-/* ── KALENDER ── */
-.cal-nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px 14px;flex-shrink:0}
-.cal-month{font-family:'Playfair Display',serif;font-size:20px;color:var(--green-dark)}
-.cal-arrows{display:flex;gap:6px}
-.cal-arr{width:30px;height:30px;border-radius:50%;border:1.5px solid var(--line);background:var(--white);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;padding:0 20px;margin-bottom:14px}
-.cal-dow{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);text-align:center;padding:4px 0}
-.cal-day{aspect-ratio:1;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;position:relative;font-size:13px;font-weight:500;color:var(--text)}
-.cal-day.empty{pointer-events:none}
-.cal-day.today{background:var(--green-pale);color:var(--green-dark);font-weight:700}
-.cal-day.has-event::after{content:'';position:absolute;bottom:3px;width:4px;height:4px;border-radius:50%;background:var(--green-mid)}
-.cal-day.has-water::after{background:var(--blue)}
-.cal-day.has-fert::after{background:var(--gold)}
-.cal-day.has-both::after{background:var(--green-mid)}
-.cal-day.past{color:var(--text-muted)}
-.cal-day.selected{background:var(--green-mid);color:#fff}
-.cal-day.selected::after{background:#fff}
-.cal-legend{display:flex;gap:12px;padding:0 20px;margin-bottom:14px}
-.cl-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text-muted)}
-.cl-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.cal-events{padding:0 20px;margin-bottom:14px}
-.cal-ev-title{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:var(--text-muted);margin-bottom:8px}
-.cal-ev-item{background:var(--white);border-radius:12px;padding:10px 14px;display:flex;align-items:center;gap:10px;margin-bottom:8px;box-shadow:0 1px 6px rgba(26,77,46,.07)}
-.cei-ico{font-size:18px;flex-shrink:0}
-.cei-name{font-size:13px;font-weight:500;margin-bottom:2px}
-.cei-sub{font-size:11px;color:var(--text-muted)}
-.cei-done{margin-left:auto;background:var(--green-pale);border:none;border-radius:8px;padding:5px 10px;font-size:11px;font-weight:600;color:var(--green-mid);cursor:pointer;font-family:'DM Sans',sans-serif}
-
-/* ── KAMUS PENYAKIT ── */
-.kp-search-wrap{padding:0 20px 10px;flex-shrink:0}
-.kp-inp{width:100%;padding:11px 16px 11px 40px;border:1.5px solid var(--line);border-radius:14px;font-family:'DM Sans',sans-serif;font-size:14px;background:var(--bg2);color:var(--text);outline:none;transition:.2s}
-.kp-inp:focus{border-color:var(--green-mid);background:var(--white)}
-.kp-inp-wrap{position:relative}
-.kp-inp-ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:14px;pointer-events:none}
-.kp-cats{display:flex;gap:8px;padding:0 20px 12px;overflow-x:auto;scrollbar-width:none;flex-shrink:0}
-.kp-cats::-webkit-scrollbar{display:none}
-.kpcat{padding:6px 12px;border-radius:20px;border:1.5px solid var(--line);background:var(--white);font-size:11px;font-weight:500;cursor:pointer;color:var(--text-muted);white-space:nowrap;font-family:'DM Sans',sans-serif}
-.kpcat.on{background:var(--red);color:#fff;border-color:var(--red)}
-.kp-list{padding:0 20px}
-.kp-card{background:var(--white);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);margin-bottom:12px;cursor:pointer}
-.kpc-head{display:flex;align-items:center;gap:12px;padding:14px 16px}
-.kpc-ico{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
-.kpc-name{font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px}
-.kpc-tags{display:flex;gap:5px;flex-wrap:wrap}
-.kpc-tag{font-size:9px;font-weight:600;padding:2px 7px;border-radius:5px;background:var(--bg2);color:var(--text-muted)}
-.kpc-sev{margin-left:auto;border-radius:8px;padding:4px 10px;font-size:11px;font-weight:700;flex-shrink:0}
-.kpc-body{padding:0 16px 14px;border-top:1px solid var(--line)}
-.kpc-sec{margin-top:10px}
-.kpc-sec-t{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.6px;color:var(--text-muted);margin-bottom:5px}
-.kpc-sec-b{font-size:12px;color:var(--text);line-height:1.75}
-.stags{display:flex;flex-wrap:wrap;gap:5px}
-.stag{font-size:11px;padding:3px 9px;border-radius:6px;background:var(--rlt);color:var(--red);font-weight:500}
-.sol-row{display:flex;align-items:flex-start;gap:7px;font-size:12px;color:var(--text);margin-bottom:6px;line-height:1.5}
-.sol-n{width:18px;height:18px;border-radius:50%;background:var(--green-mid);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
-
-/* ── FOTO PROGRESS (di dalam detail) ── */
 .fp-section{margin-top:14px}
-.fp-add-btn{width:100%;padding:10px;border-radius:12px;border:1.5px dashed var(--green-light);background:var(--green-pale);color:var(--green-mid);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px}
+.fp-add-btn{width:100%;padding:10px;border-radius:12px;border:1.5px dashed var(--green-light);background:var(--green-pale);color:var(--green-mid);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:.15s}
+.fp-add-btn:active{opacity:.7}
 .fp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
 .fp-item{aspect-ratio:1;border-radius:10px;overflow:hidden;position:relative;background:var(--green-pale);cursor:pointer}
 .fp-item img{width:100%;height:100%;object-fit:cover}
-.fp-item .fp-emi{display:flex;align-items:center;justify-content:center;height:100%;font-size:28px}
-.fp-item .fp-dt{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,rgba(0,0,0,.5),transparent);padding:5px 6px 4px;font-size:9px;color:#fff;font-weight:500}
-.fp-item .fp-del{position:absolute;top:4px;right:4px;background:rgba(0,0,0,.45);border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;font-size:9px;cursor:pointer;color:#fff;border:none}
-.fp-empty{text-align:center;padding:16px;color:var(--text-muted);font-size:12px}
+.fp-emi{display:flex;align-items:center;justify-content:center;height:100%;font-size:28px}
+.fp-dt{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,rgba(0,0,0,.55),transparent);padding:5px 6px 4px;font-size:9px;color:#fff;font-weight:500}
+.fp-del{position:absolute;top:4px;right:4px;background:rgba(0,0,0,.45);border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:10px;cursor:pointer;color:#fff;border:none;line-height:1}
+.fp-lightbox{position:absolute;inset:0;z-index:200;background:rgba(0,0,0,.92);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}
+.fp-lightbox img{max-width:100%;max-height:75vh;object-fit:contain;border-radius:8px}
+.fp-lightbox-dt{color:rgba(255,255,255,.7);font-size:12px}
+.fp-lightbox-close{position:absolute;top:14px;right:14px;background:rgba(255,255,255,.15);border:none;color:#fff;width:32px;height:32px;border-radius:50%;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center}
 </style>
 </head>
 <body>
@@ -476,12 +401,12 @@ body{font-family:'DM Sans',sans-serif;color:var(--text)}
 <div id="login">
   <div class="ll">🌿</div>
   <div class="llogo">Bot<em>aniq</em></div>
-  <div class="lsub">Pant care, <em>Digitalized!</em> </div>
+  <div class="lsub">Plant care, <em>Digitalized!</em></div>
   <div class="lbox">
     <label class="llbl">Username kamu</label>
     <input class="linp" id="linp" type="text" placeholder="Contoh: Petani666, Kebun01" autocomplete="username" autocapitalize="none" onkeydown="if(event.key==='Enter')doLogin()">
     <button class="lbtn" onclick="doLogin()">Masuk ke Botaniq</button>
-    <div class="lnote"><strong>Username = kunci data kamu.</strong><br>Gunakan username yang sama di perangkat lain untuk sinkronisasi data cloud.</div>
+    <div class="lnote"><strong>Username = kunci data kamu.</strong><br>Pakai username yang sama di HP lain untuk sync otomatis ☁️</div>
   </div>
 </div>
 
@@ -503,30 +428,11 @@ body{font-family:'DM Sans',sans-serif;color:var(--text)}
     <div class="hero-title">Plant care, <em>Digitalized!</em></div>
     <div class="hero-stats">
       <div class="stat-pill"><div class="num" id="stp">0</div><div class="label">Tanaman</div></div>
-      <div class="stat-pill"><div class="num" id="stc">0</div><div class="label">Perlu Rawat</div></div>
-      <div class="stat-pill"><div class="num" id="sth">—</div><div class="label">Kondisi</div></div>
+      <div class="stat-pill"><div class="num" id="stj">0</div><div class="label">Jenis</div></div>
+      <div class="stat-pill"><div class="num" id="sth">🔥</div><div class="label">Streak</div></div>
     </div>
   </div>
-  <!-- REMINDER BANNER -->
-  <div id="reminderBanner" style="display:none"></div>
 
-  <!-- STATS STRIP -->
-  <div class="stats-strip" id="statsStrip"></div>
-
-  <!-- STREAK -->
-  <div class="streak-bar" id="streakBar" style="margin-bottom:4px;display:none">
-    <div style="font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:#fff" id="streakNum">0</div>
-    <div style="margin-left:10px">
-      <div style="color:#fff;font-size:13px;font-weight:600;margin-bottom:2px">🔥 Hari Berturut-turut</div>
-      <div style="color:rgba(255,255,255,.65);font-size:11px" id="streakTxt">Mulai merawat sekarang!</div>
-    </div>
-    <div style="margin-left:auto;font-size:28px;opacity:.4">🏆</div>
-  </div>
-
-  <div class="section">
-    <div class="section-header"><span class="section-title">Perawatan Hari Ini</span><button class="see-all" onclick="showScr('journal')">Lihat semua →</button></div>
-    <div id="carelist"></div>
-  </div>
   <div class="section">
     <div class="tip-card">
       <div class="tip-icon" id="tipi">🌿</div>
@@ -558,47 +464,69 @@ body{font-family:'DM Sans',sans-serif;color:var(--text)}
 </div>
 
 <!-- SCAN -->
-<div class="scr" id="scr-kalender">
-  <div class="screen-hd">
-    <div class="screen-title">🗓️ Kalender</div>
+<div class="scr" id="scr-scan">
+  <!-- CAMERA ZONE -->
+  <div class="cam-zone" id="camZone" onclick="openCamFile()">
+    <img class="cam-thumb" id="camThumb">
+    <div class="cam-overlay" id="camOverlay">
+      <div class="cam-ring">📷</div>
+      <div class="cam-label">Foto Tanaman</div>
+      <div class="cam-sub">Identifikasi atau diagnosa dengan AI</div>
+    </div>
+    <div class="cam-corner cc-tl"></div>
+    <div class="cam-corner cc-tr"></div>
+    <div class="cam-corner cc-bl"></div>
+    <div class="cam-corner cc-br"></div>
+    <div class="cam-fade"></div>
   </div>
-  <div class="cal-nav">
-    <div class="cal-month" id="calMonthLabel">Maret 2025</div>
-    <div class="cal-arrows">
-      <button class="cal-arr" onclick="calNav(-1)">‹</button>
-      <button class="cal-arr" onclick="calNav(1)">›</button>
+  <input type="file" id="camFileInput" accept="image/*" capture="environment" onchange="onCamFile(event)">
+
+  <!-- MODE CARDS -->
+  <div class="scan-mode-cards">
+    <div class="smc id" onclick="triggerScan('id')">
+      <span class="smc-ico">🔍</span>
+      <div class="smc-t">Identifikasi</div>
+      <div class="smc-s">Tidak tahu nama tanaman? Foto langsung tahu!</div>
+    </div>
+    <div class="smc diag" onclick="triggerScan('diag')">
+      <span class="smc-ico">🩺</span>
+      <div class="smc-t">Diagnosa</div>
+      <div class="smc-s">Tanamanmu sakit? AI bantu temukan penyebabnya</div>
     </div>
   </div>
-  <div class="cal-grid" id="calGrid"></div>
-  <div class="cal-legend">
-    <div class="cl-item"><div class="cl-dot" style="background:var(--blue)"></div>Siram</div>
-    <div class="cl-item"><div class="cl-dot" style="background:var(--gold)"></div>Pupuk</div>
-    <div class="cl-item"><div class="cl-dot" style="background:var(--green-mid)"></div>Keduanya</div>
-  </div>
-  <div class="cal-events">
-    <div class="cal-ev-title" id="calEvTitle">Jadwal Hari Ini</div>
-    <div id="calEvList"></div>
+
+  <!-- RECENT SCANS -->
+  <div class="rs-sec">
+    <div class="rs-title">Riwayat Scan</div>
+    <div class="rs-row" id="scanRsRow"></div>
   </div>
 </div>
 
-<!-- KAMUS PENYAKIT -->
-<div class="scr" id="scr-penyakit">
-  <div class="screen-hd"><div class="screen-title">🦠 Kamus Penyakit</div></div>
-  <div class="kp-search-wrap">
-    <div class="kp-inp-wrap">
-      <span class="kp-inp-ico">🔍</span>
-      <input class="kp-inp" id="kpSearch" placeholder="Cari penyakit, gejala, tanaman..." oninput="filterKP(this.value)">
+<!-- AI TIPS -->
+<div class="scr" id="scr-tips">
+  <div class="aitips-wrap">
+    <div class="aitips-title">✨ AI Tips</div>
+    <div class="aitips-sub">Ketik nama tanaman, AI langsung kasih tips perawatan yang tepat untukmu.</div>
+    <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:var(--text-muted);margin-bottom:8px">Nama Tanaman</div>
+    <input id="care-plant-name" class="care-input" placeholder="Contoh: Kaktus, Monstera, Mawar..." oninput="checkCareBtn()" onkeydown="if(event.key==='Enter'&&!document.getElementById('abtn').disabled)doCareTips()">
+    <div class="chips-row">
+      <button class="chip" onclick="setCareQuick('Kaktus')">🌵 Kaktus</button>
+      <button class="chip" onclick="setCareQuick('Sukulen')">🪴 Sukulen</button>
+      <button class="chip" onclick="setCareQuick('Monstera')">🌿 Monstera</button>
+      <button class="chip" onclick="setCareQuick('Bonsai')">🌳 Bonsai</button>
+      <button class="chip" onclick="setCareQuick('Mawar')">🌹 Mawar</button>
+      <button class="chip" onclick="setCareQuick('Anggrek')">🌸 Anggrek</button>
+      <button class="chip" onclick="setCareQuick('Lithops')">🪨 Lithops</button>
     </div>
+    <div class="focus-label">Fokus Tips</div>
+    <label class="careopt on" id="co-all" onclick="setCareOpt(this,'all')"><span style="font-size:18px">🌿</span><div><b>Panduan Lengkap</b> <span style="color:var(--text-muted)">— semua aspek perawatan</span></div></label>
+    <label class="careopt" id="co-water" onclick="setCareOpt(this,'water')"><span style="font-size:18px">💧</span><div><b>Penyiraman</b> <span style="color:var(--text-muted)">— jadwal dan teknik</span></div></label>
+    <label class="careopt" id="co-disease" onclick="setCareOpt(this,'disease')"><span style="font-size:18px">🦠</span><div><b>Penyakit dan Hama</b> <span style="color:var(--text-muted)">— pencegahan dan solusi</span></div></label>
+    <label class="careopt" id="co-grow" onclick="setCareOpt(this,'grow')"><span style="font-size:18px">🚀</span><div><b>Percepat Pertumbuhan</b> <span style="color:var(--text-muted)">— tips dan nutrisi</span></div></label>
+    <button class="gen-btn" id="abtn" onclick="doCareTips()" disabled>✨ Generate Tips Perawatan</button>
+    <div class="analyzing-box" id="analyzing"><div class="spin"></div><div style="font-size:14px;font-weight:500;margin-bottom:4px" id="antxt">Menganalisa...</div><div style="font-size:12px;color:var(--text-muted)">AI sedang mempelajari tanamanmu</div></div>
+    <div class="ai-result-card" id="aicard"></div>
   </div>
-  <div class="kp-cats">
-    <button class="kpcat on" onclick="filterKPCat('all',this)">Semua</button>
-    <button class="kpcat" onclick="filterKPCat('jamur',this)">🍄 Jamur</button>
-    <button class="kpcat" onclick="filterKPCat('hama',this)">🐛 Hama</button>
-    <button class="kpcat" onclick="filterKPCat('bakteri',this)">🦠 Bakteri</button>
-    <button class="kpcat" onclick="filterKPCat('nutrisi',this)">🌿 Nutrisi</button>
-    <button class="kpcat" onclick="filterKPCat('virus',this)">⚠️ Virus</button>
-  </div>
-  <div class="kp-list" id="kpList"></div>
 </div>
 
 <!-- JURNAL -->
@@ -623,11 +551,11 @@ body{font-family:'DM Sans',sans-serif;color:var(--text)}
   <button class="nav-item" id="nav-plants" onclick="showScr('plants')">
     <div class="nav-icon">🌾</div><div class="nav-label">Koleksi</div>
   </button>
-  <button class="nav-item center-btn" id="nav-kalender" onclick="showScr('kalender')">
-    <div class="nav-icon">🗓️</div><div class="nav-label">Kalender</div>
+  <button class="nav-item center-btn" id="nav-scan" onclick="showScr('scan')">
+    <div class="nav-icon">📷</div><div class="nav-label">Scan</div>
   </button>
-  <button class="nav-item" id="nav-penyakit" onclick="showScr('penyakit')">
-    <div class="nav-icon">🦠</div><div class="nav-label">Penyakit</div>
+  <button class="nav-item" id="nav-tips" onclick="showScr('tips')">
+    <div class="nav-icon">✨</div><div class="nav-label">AI Tips</div>
   </button>
   <button class="nav-item" id="nav-journal" onclick="showScr('journal')">
     <div class="nav-icon">📅</div><div class="nav-label">Jurnal</div>
@@ -726,7 +654,7 @@ body{font-family:'DM Sans',sans-serif;color:var(--text)}
     <div class="fg"><label class="fl">Aktivitas</label>
       <select class="fsel" id="jftype">
         <option value="water">💧 Menyiram</option><option value="fert">🌱 Pemupukan</option>
-        <option value="repot">🪴 Repotting</option><option value="note">📝 Catatan</option>
+        <option value="ganti pot">🪴 Ganti Pot</option><option value="note">📝 Catatan</option>
         <option value="disease">🩺 Penyakit/Hama</option><option value="prune">✂️ Pemangkasan</option>
       </select>
     </div>
@@ -802,10 +730,10 @@ function typeEmoji(id){var t=getTypes().find(function(x){return x.id===id;});ret
 function typeLabel(id){var t=getTypes().find(function(x){return x.id===id;});return t?t.label:id;}
 
 // ════ CONSTANTS ════
-var JICO={water:'💧',fert:'🌱',repot:'🪴',note:'📝',disease:'🩺',prune:'✂️'};
-var JLBL={water:'Siram',fert:'Pupuk',repot:'Repot',note:'Catatan',disease:'Penyakit',prune:'Pangkas'};
-var JCLS={water:'tw',fert:'tf',repot:'tr',note:'tn',disease:'td',prune:'tp'};
-var JCLR={water:'#2F7EC4',fert:'#C4891A',repot:'#3A8228',note:'#7B4FB5',disease:'#D94040',prune:'#1E8A63'};
+var JICO={water:'💧',fert:'🌱','ganti pot':'🪴',note:'📝',disease:'🩺',prune:'✂️'};
+var JLBL={water:'Siram',fert:'Pupuk','ganti pot':'Ganti Pot',note:'Catatan',disease:'Penyakit',prune:'Pangkas'};
+var JCLS={water:'tw',fert:'tf','ganti pot':'tr',note:'tn',disease:'td',prune:'tp'};
+var JCLR={water:'#2F7EC4',fert:'#C4891A','ganti pot':'#3A8228',note:'#7B4FB5',disease:'#D94040',prune:'#1E8A63'};
 var CARE={bonsai:{light:'Full sun 4-6 jam',temp:'15-30°C',humid:'Sedang',soil:'Akadama mix'},kaktus:{light:'Full sun 6+ jam',temp:'18-35°C',humid:'Sangat rendah',soil:'Kaktus drainase'},lithops:{light:'Full sun 4-5 jam',temp:'15-30°C',humid:'Sangat rendah',soil:'Pasir & perlite'},sukulen:{light:'Terang tidak langsung',temp:'15-30°C',humid:'Rendah',soil:'Sukulen mix'},anggrek:{light:'Terang tidak langsung',temp:'18-28°C',humid:'Tinggi',soil:'Bark orchid'},hias:{light:'Terang tidak langsung',temp:'18-28°C',humid:'Sedang',soil:'Potting mix'},lainnya:{light:'Terang',temp:'18-28°C',humid:'Sedang',soil:'Potting mix'}};
 var TIPS=[{i:'🌵',t:'Tips Kaktus',b:'Tunggu tanah kering sempurna. Kaktus lebih tahan kering daripada basah.'},{i:'🌳',t:'Tips Bonsai',b:'Sinar matahari 4-6 jam/hari. Putar pot tiap minggu agar tumbuh seimbang.'},{i:'🪨',t:'Tips Lithops',b:'Hampir tidak perlu air saat istirahat. Overwatering adalah musuh utama.'},{i:'💧',t:'Cara Menyiram',b:'Siram di pangkal, bukan dari atas daun. Pastikan drainase pot lancar.'},{i:'☀️',t:'Cahaya Optimal',b:'Kenali kebutuhan cahaya tiap tanaman. Terlalu gelap bikin etiolasi.'},{i:'🪴',t:'Tips Sukulen',b:'Media harus cepat kering. Siram ketika daun mulai sedikit keriput.'},{i:'🌸',t:'Tips Anggrek',b:'Kelembaban tinggi penting. Siram pagi hari agar akar kering sebelum malam.'}];
 var tipI=0;
@@ -859,7 +787,7 @@ async function loadData(){
     if(sbJ!==null){jnls=sbJ.map(function(r){return{id:r.id,plantId:r.plant_id,type:r.type,note:r.note,date:r.date};});jid=jnls.length?Math.max.apply(null,jnls.map(function(j){return j.id;}))+1:1;}else{jnls=lsGet('bq_j_'+CU,[]);}
     if(sbS!==null){scans=sbS.map(function(r){return{id:r.id,purpose:r.purpose,name:r.name,type:r.type,emoji:r.emoji,health:r.health,confidence:r.confidence,healthNote:r.health_note,result:r.result,image:r.image,date:r.created_at};});}else{scans=lsGet('bq_s_'+CU,[]);}
   }catch(e){plants=lsGet('bq_p_'+CU,[]);jnls=lsGet('bq_j_'+CU,[]);scans=lsGet('bq_s_'+CU,[]);setSyncStatus('err','⚠️ Gagal terhubung');}
-  saveLocal();renderHome();renderPlants();renderJnl();renderReminderBanner();renderStats();renderKP(KP_DATA);renderScanRow();
+  saveLocal();renderHome();renderPlants();renderJnl();renderScanRow();
   setTimeout(function(){document.getElementById('syncbar').style.display='none';},2000);
 }
 
@@ -867,7 +795,6 @@ async function loadData(){
 function showScr(n){
   document.querySelectorAll('.scr').forEach(function(s){s.classList.remove('on');});
   document.querySelectorAll('.nav-item').forEach(function(b){b.classList.remove('active');});
-  if(n==='kalender'){calYear=new Date().getFullYear();calMonth=new Date().getMonth();calSel=td();setTimeout(renderKalender,50);}
   var s=document.getElementById('scr-'+n);if(s)s.classList.add('on');
   var b=document.getElementById('nav-'+n);if(b)b.classList.add('active');
   if(n==='home')renderHome();if(n==='plants')renderPlants();
@@ -898,16 +825,20 @@ function closeSheet(id){
 
 // ════ HOME ════
 function renderHome(){
+  // Tanaman
   document.getElementById('stp').textContent=plants.length;
-  var today=td();
-  var care=plants.filter(function(p){return dueDate(p.lastWater,p.water)<=today||dueDate(p.lastFert,p.fert)<=today;});
-  document.getElementById('stc').textContent=care.length;
-  var hm={great:5,good:4,warn:3,bad:1};
-  var avg=plants.length?Math.round(plants.reduce(function(a,p){return a+(hm[p.health]||3);},0)/plants.length):0;
-  document.getElementById('sth').textContent=['','😞','😟','😐','😊','🌟'][avg]||'—';
-  var cl=document.getElementById('carelist');
-  if(!care.length){cl.innerHTML='<div class="care-done-wrap"><span style="font-size:20px">🎉</span><span style="font-size:13px;color:var(--text-muted);font-weight:500">Semua tanaman sudah dirawat!</span></div>';}
-  else{cl.innerHTML=care.slice(0,3).map(function(p){var isW=dueDate(p.lastWater,p.water)<=today;var th=p.image?'<img src="'+p.image+'">':(p.emoji||typeEmoji(p.type)||'🌿');return'<div class="care-card" onclick="openDetail('+p.id+')"><div class="care-thumb">'+th+'</div><div style="flex:1;min-width:0"><div class="care-name">'+p.name+'</div><div class="care-sub">'+(isW?'💧 Perlu disiram':'🌱 Perlu dipupuk')+'</div></div><span class="care-badge">Hari ini</span></div>';}).join('');}
+  // Jenis
+  var types=[];plants.forEach(function(p){if(p.type&&types.indexOf(p.type)===-1)types.push(p.type);});
+  document.getElementById('stj').textContent=types.length||0;
+  // Streak
+  var streak=0;var d=new Date();
+  for(var i=0;i<365;i++){
+    var ds=d.toISOString().split('T')[0];
+    if(jnls.some(function(j){return j.date===ds;})){streak++;}
+    else if(i>0){break;}
+    d.setDate(d.getDate()-1);
+  }
+  document.getElementById('sth').textContent=streak>0?streak+'🔥':'—';
   var rt=TIPS.slice();
   if(plants.length>0){var mt={};plants.forEach(function(p){mt[p.type]=true;});var TT={bonsai:{i:'🌳',t:'Tips Bonsai',b:'Sinar matahari 4-6 jam/hari. Putar pot tiap minggu agar tumbuh seimbang.'},kaktus:{i:'🌵',t:'Tips Kaktus',b:'Tunggu tanah kering sempurna. Kaktus lebih tahan kering daripada basah.'},lithops:{i:'🪨',t:'Tips Lithops',b:'Hampir tidak perlu air saat istirahat. Overwatering adalah musuh utama.'},sukulen:{i:'🪴',t:'Tips Sukulen',b:'Media harus cepat kering. Siram ketika daun mulai sedikit keriput.'},anggrek:{i:'🌸',t:'Tips Anggrek',b:'Kelembaban tinggi penting. Siram pagi hari agar akar kering sebelum malam.'},hias:{i:'🌿',t:'Tips Tanaman Hias',b:'Bersihkan daun dari debu agar fotosintesis optimal.'}};var my=[];Object.keys(mt).forEach(function(type){if(TT[type])my.push(TT[type]);});var seen={};rt=my.concat(TIPS).filter(function(tip){if(seen[tip.t])return false;seen[tip.t]=true;return true;});}
   var tip=rt[tipI%rt.length];
@@ -926,8 +857,14 @@ var detId=null;
 function openDetail(id){
   var p=plants.find(function(x){return x.id===id;});if(!p)return;detId=id;
   var di=document.getElementById('dimg');
-  if(p.image){di.innerHTML='<img src="'+p.image+'" alt="">';di.style.fontSize='';}
-  else{di.style.fontSize='80px';di.innerHTML='<span class="d-emoji">'+(p.emoji||typeEmoji(p.type)||'🌿')+'</span>';}
+  if(p.image){
+    di.innerHTML='<div class="d-blur-bg" style="background-image:url(\''+p.image+'\')"></div><img src="'+p.image+'" alt="">';
+    di.style.fontSize='';di.style.background='#111';
+  } else {
+    di.style.fontSize='72px';
+    di.style.background='linear-gradient(135deg,#1a4d2e,#2d6a4f)';
+    di.innerHTML='<span class="d-emoji">'+(p.emoji||typeEmoji(p.type)||'🌿')+'</span>';
+  }
   var today=td(),wd=dueDate(p.lastWater,p.water),fd=dueDate(p.lastFert,p.fert);
   var wdays=daysUntil(wd),fdays=daysUntil(fd);
   var pj=jnls.filter(function(j){return j.plantId===id;}).sort(function(a,b){return new Date(b.date)-new Date(a.date);});
@@ -944,16 +881,22 @@ function openDetail(id){
     +'<div class="care-info-item"><div class="cii-ico">🪴</div><div><div class="cii-lbl">Media</div><div class="cii-val">'+ci.soil+'</div></div></div>'
     +'</div></div>'
     +(p.notes?'<div class="d-sec"><div class="d-sec-title">Catatan</div><div style="font-size:13px;color:var(--text-muted);line-height:1.7">'+p.notes+'</div></div>':'')
-    +'<div class="d-sec"><div class="d-sec-title">Riwayat Terakhir</div><div class="mini-jnl">'
-    +(pj.slice(0,3).map(function(j){return'<div class="mini-jnl-item"><div class="mji-ico">'+(JICO[j.type]||'📝')+'</div><div><div class="mji-txt">'+(j.note||JLBL[j.type])+'</div><div class="mji-dt">'+fmtD(j.date)+'</div></div></div>';}).join('')||'<div style="font-size:12px;color:var(--text-muted)">Belum ada catatan.</div>')
+    +'<div class="d-sec"><div class="d-sec-title">Riwayat</div><div class="mini-jnl" id="mini-jnl-'+id+'">'
+    +(pj.length?pj.slice(0,3).map(function(j){return'<div class="mini-jnl-item"><div class="mji-ico">'+(JICO[j.type]||'📝')+'</div><div style="flex:1"><div class="mji-txt">'+(j.note||JLBL[j.type])+'</div><div class="mji-dt">'+fmtD(j.date)+'</div></div><span style="font-size:9px;padding:2px 7px;border-radius:5px;background:var(--bg2);color:var(--text-muted);font-weight:600">'+(JLBL[j.type]||j.type)+'</span></div>';}).join(''):'<div style="font-size:12px;color:var(--text-muted);text-align:center;padding:12px">Belum ada catatan.</div>')
+    +(pj.length>3?'<button onclick="showAllRiwayat('+id+')" style="width:100%;padding:8px;margin-top:6px;border:1.5px solid var(--line);border-radius:10px;background:none;font-family:\'DM Sans\',sans-serif;font-size:12px;color:var(--green-mid);font-weight:600;cursor:pointer">Lihat semua '+pj.length+' catatan →</button>':'')
     +'</div></div>'
     +'<div class="fp-section"><div class="d-sec-title">📸 Foto Progress</div>'
-    +'<button class="fp-add-btn" onclick="openFotoProgress('+id+')">📷 Tambah Foto Progress</button>'
+    +'<button class="fp-add-btn" onclick="openFP('+id+')">📷 Tambah Foto</button>'
     +'<div class="fp-grid" id="fpgrid-'+id+'"></div>'
     +'</div>';
   document.getElementById('dbody').innerHTML=html;
-  renderFotoProgress(id);
-  document.getElementById('dacts').innerHTML='<button class="da da-s" onclick="logCare('+id+',\'water\')">💧 Siram</button><button class="da da-s" onclick="logCare('+id+',\'fert\')">🌱 Pupuk</button><button class="da da-s" onclick="editPlant('+id+')" style="flex:.65">✏️</button><button class="da da-d" onclick="delPlant('+id+')" style="flex:.65">🗑️</button>';
+  renderFP(id);
+  document.getElementById('dacts').innerHTML=
+    '<button class="da da-s" onclick="logCare('+id+',\'water\')">💧 Siram</button>'
+    +'<button class="da da-s" onclick="logCare('+id+',\'fert\')">🌱 Pupuk</button>'
+    +'<button class="da da-s" onclick="quickLog('+id+')" style="background:var(--green-pale);color:var(--green-dark)">＋ Catat</button>'
+    +'<button class="da da-s" onclick="editPlant('+id+')" style="flex:.5">✏️</button>'
+    +'<button class="da da-d" onclick="delPlant('+id+')" style="flex:.5">🗑️</button>';
   document.getElementById('detail').classList.add('open');
 }
 function closeDetail(){document.getElementById('detail').classList.remove('open');}
@@ -964,7 +907,7 @@ async function logCare(id,type){
   jnls.push(j);saveLocal();
   sbQ('bq_plants','PATCH',{last_water:p.lastWater,last_fert:p.lastFert},'id=eq.'+id+'&username=eq.'+encodeURIComponent(CU));
   sbQ('bq_jnls','POST',{username:CU,plant_id:id,type:type,note:j.note,date:t});
-  toast(type==='water'?'💧 Siram tercatat!':'🌱 Pupuk tercatat!');openDetail(id);renderReminderBanner();renderStats();
+  toast(type==='water'?'💧 Siram tercatat!':'🌱 Pupuk tercatat!');openDetail(id);
 }
 async function delPlant(id){
   if(!confirm('Hapus tanaman ini?'))return;
@@ -1218,210 +1161,115 @@ function addMsg(text,role){var msgs=document.getElementById('chatmsgs');var div=
 async function sendChat(){var inp=document.getElementById('chatinp'),text=inp.value.trim();if(!text)return;inp.value='';inp.disabled=true;document.querySelector('.chat-send').disabled=true;var chips=document.getElementById('chat-chips');if(chips)chips.style.display='none';addMsg(text,'user');chatHistory.push({role:'user',content:text});var typing=addMsg('...','bot typing');document.getElementById('chatmsgs').scrollTop=document.getElementById('chatmsgs').scrollHeight;try{var contents=[];if(chatHistory.length===1){contents.push({role:'user',parts:[{text:'Kamu adalah asisten ahli tanaman bernama Botaniq AI. Jawab dalam Bahasa Indonesia yang ramah dan praktis. Spesialisasi: identifikasi tanaman, perawatan, penyiraman, pupuk, hama, media tanam, bonsai, kaktus, sukulen, lithops. Jika di luar topik tanaman, arahkan balik ke topik tanaman.'}]});contents.push({role:'model',parts:[{text:'Halo! Saya Botaniq AI, siap bantu seputar tanaman kamu! 🌿'}]});}var hist=chatHistory.slice(-10);for(var i=0;i<hist.length-1;i++)contents.push({role:hist[i].role==='user'?'user':'model',parts:[{text:hist[i].content}]});contents.push({role:'user',parts:[{text:text}]});var res=await fetchGemini({contents:contents,generationConfig:{temperature:.7,maxOutputTokens:500}});if(!res.ok){var ej={};try{ej=await res.json();}catch(e2){}if(res.status===429)throw new Error('Terlalu banyak request.');throw new Error(ej.error?ej.error.message:'HTTP '+res.status);}var json=await res.json();var reply='';if(json.candidates&&json.candidates[0]&&json.candidates[0].content)reply=(json.candidates[0].content.parts||[]).map(function(p){return p.text||'';}).join('').trim();if(!reply)reply='Maaf, coba tanya lagi!';chatHistory.push({role:'assistant',content:reply});typing.className='cmsg bot';typing.textContent='';var ci=0,msgs=document.getElementById('chatmsgs'),timer=setInterval(function(){ci=Math.min(ci+4,reply.length);typing.textContent=reply.slice(0,ci);msgs.scrollTop=msgs.scrollHeight;if(ci>=reply.length)clearInterval(timer);},12);}catch(e){typing.textContent='Gagal: '+e.message;typing.className='cmsg bot';}finally{inp.disabled=false;document.querySelector('.chat-send').disabled=false;inp.focus();}}
 function quickChat(text){var chips=document.getElementById('chat-chips');if(chips)chips.style.display='none';document.getElementById('chatinp').value=text;sendChat();}
 
-
-// ════ REMINDER BANNER ════
-function renderReminderBanner(){
-  var el=document.getElementById('reminderBanner');if(!el)return;
-  var today=td();
-  var needWater=plants.filter(function(p){return dueDate(p.lastWater,p.water)<=today;});
-  var needFert=plants.filter(function(p){return dueDate(p.lastFert,p.fert)<=today;});
-  var total=needWater.length+needFert.length;
-  if(!total){el.style.display='none';return;}
-  var cls='rb-multi',ico='🌿',t='',s='';
-  if(needWater.length&&!needFert.length){cls='rb-water';ico='💧';t=needWater.length+' tanaman perlu disiram sekarang!';s=needWater.slice(0,3).map(function(p){return p.name;}).join(' · ');}
-  else if(needFert.length&&!needWater.length){cls='rb-fert';ico='🌱';t=needFert.length+' tanaman perlu dipupuk sekarang!';s=needFert.slice(0,3).map(function(p){return p.name;}).join(' · ');}
-  else{cls='rb-multi';ico='🔔';t=total+' jadwal perawatan menunggu!';s='💧 '+needWater.length+' siram · 🌱 '+needFert.length+' pupuk';}
-  el.className='reminder-banner '+cls;
-  el.innerHTML='<div class="rb-ico">'+ico+'</div><div><div class="rb-t">'+t+'</div><div class="rb-s">'+s+'</div></div><div class="rb-close" onclick="this.parentElement.style.display='none'">✕</div>';
-  el.style.display='flex';
-}
-
-// ════ STATS STRIP ════
-function renderStats(){
-  var strip=document.getElementById('statsStrip');if(!strip)return;
-  var today=td();
-  var thisMonth=new Date().toISOString().slice(0,7);
-  var monthJnls=jnls.filter(function(j){return j.date&&j.date.startsWith(thisMonth);});
-  var totalSiram=monthJnls.filter(function(j){return j.type==='water';}).length;
-  var totalPupuk=monthJnls.filter(function(j){return j.type==='fert';}).length;
-  // streak calc
-  var streak=0;var d=new Date();
-  for(var i=0;i<90;i++){
-    var ds=d.toISOString().split('T')[0];
-    var hasActivity=jnls.some(function(j){return j.date===ds;});
-    if(hasActivity){streak++;}else if(i>0){break;}
-    d.setDate(d.getDate()-1);
-  }
-  // streak bar
-  var sb=document.getElementById('streakBar');
-  if(sb&&streak>0){sb.style.display='flex';document.getElementById('streakNum').textContent=streak;document.getElementById('streakTxt').textContent=streak>1?streak+' hari berturut-turut merawat tanaman!':'Bagus! Pertahankan streak-mu!';}
-  else if(sb){sb.style.display='none';}
-  strip.innerHTML=
-    '<div class="stat-card"><div class="sc-ico">🌿</div><div class="sc-num">'+plants.length+'</div><div class="sc-lbl">Tanaman</div></div>'+
-    '<div class="stat-card"><div class="sc-ico">💧</div><div class="sc-num">'+totalSiram+'</div><div class="sc-lbl">Siram bulan ini</div></div>'+
-    '<div class="stat-card"><div class="sc-ico">🌱</div><div class="sc-num">'+totalPupuk+'</div><div class="sc-lbl">Pupuk bulan ini</div></div>'+
-    '<div class="stat-card"><div class="sc-ico">📅</div><div class="sc-num">'+monthJnls.length+'</div><div class="sc-lbl">Aktivitas</div></div>';
-}
-
-// ════ KALENDER ════
-var calYear=new Date().getFullYear(),calMonth=new Date().getMonth(),calSel=td();
-var MONTHS_ID=['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
-var DAYS_ID=['Min','Sen','Sel','Rab','Kam','Jum','Sab'];
-
-function calNav(dir){calMonth+=dir;if(calMonth>11){calMonth=0;calYear++;}if(calMonth<0){calMonth=11;calYear--;}renderKalender();}
-
-function renderKalender(){
-  document.getElementById('calMonthLabel').textContent=MONTHS_ID[calMonth]+' '+calYear;
-  var grid=document.getElementById('calGrid');if(!grid)return;
-  // header
-  var html=DAYS_ID.map(function(d){return'<div class="cal-dow">'+d+'</div>';}).join('');
-  // first day
-  var first=new Date(calYear,calMonth,1).getDay();
-  for(var i=0;i<first;i++)html+='<div class="cal-day empty"></div>';
-  var days=new Date(calYear,calMonth+1,0).getDate();
-  var todayStr=td();
-  for(var d=1;d<=days;d++){
-    var ds=calYear+'-'+String(calMonth+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
-    var cls='cal-day';
-    if(ds===todayStr)cls+=' today';
-    if(ds===calSel)cls+=' selected';
-    if(new Date(ds)<new Date(todayStr))cls+=' past';
-    // check events
-    var hasW=plants.some(function(p){return dueDate(p.lastWater,p.water)===ds;});
-    var hasF=plants.some(function(p){return dueDate(p.lastFert,p.fert)===ds;});
-    if(hasW&&hasF)cls+=' has-event has-both';
-    else if(hasW)cls+=' has-event has-water';
-    else if(hasF)cls+=' has-event has-fert';
-    html+='<div class="'+cls+'" onclick="calSelectDay(''+ds+'')">'+d+'</div>';
-  }
-  grid.innerHTML=html;
-  renderCalEvents(calSel);
-}
-
-function calSelectDay(ds){
-  calSel=ds;renderKalender();
-}
-
-function renderCalEvents(ds){
-  var title=document.getElementById('calEvTitle');
-  var list=document.getElementById('calEvList');
-  if(!title||!list)return;
-  var todayStr=td();
-  var isToday=ds===todayStr;
-  var d=new Date(ds);
-  var label=isToday?'Jadwal Hari Ini':d.toLocaleDateString('id-ID',{day:'numeric',month:'long'});
-  title.textContent=label;
-  var evs=[];
-  plants.forEach(function(p){
-    var wd=dueDate(p.lastWater,p.water);var fd=dueDate(p.lastFert,p.fert);
-    if(wd===ds)evs.push({plant:p,type:'water'});
-    if(fd===ds)evs.push({plant:p,type:'fert'});
-  });
-  if(!evs.length){list.innerHTML='<div style="text-align:center;padding:20px;color:var(--text-muted);font-size:13px">Tidak ada jadwal hari ini 🌿</div>';return;}
-  list.innerHTML=evs.map(function(ev){
-    var ico=ev.type==='water'?'💧':'🌱';
-    var lbl=ev.type==='water'?'Saatnya disiram':'Saatnya dipupuk';
-    var th=ev.plant.image?'<img src="'+ev.plant.image+'" style="width:100%;height:100%;object-fit:cover;border-radius:8px">':(ev.plant.emoji||'🌿');
-    return'<div class="cal-ev-item"><div style="width:36px;height:36px;border-radius:10px;background:var(--green-pale);overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">'+th+'</div><div><div class="cei-name">'+ev.plant.name+'</div><div class="cei-sub">'+ico+' '+lbl+'</div></div><button class="cei-done" onclick="logCareFromCal('+ev.plant.id+',''+ev.type+'')">✓ Tandai</button></div>';
+function showAllRiwayat(id){
+  var pj=jnls.filter(function(j){return j.plantId===id;}).sort(function(a,b){return new Date(b.date)-new Date(a.date);});
+  var el=document.getElementById('mini-jnl-'+id);if(!el)return;
+  el.innerHTML=pj.map(function(j){
+    return'<div class="mini-jnl-item"><div class="mji-ico">'+(JICO[j.type]||'📝')+'</div><div style="flex:1"><div class="mji-txt">'+(j.note||JLBL[j.type])+'</div><div class="mji-dt">'+fmtD(j.date)+'</div></div><span style="font-size:9px;padding:2px 7px;border-radius:5px;background:var(--bg2);color:var(--text-muted);font-weight:600">'+(JLBL[j.type]||j.type)+'</span></div>';
   }).join('');
 }
 
-async function logCareFromCal(id,type){await logCare(id,type);renderKalender();renderReminderBanner();}
-
-// ════ KAMUS PENYAKIT ════
-var KP_DATA=[
-  {id:1,name:'Embun Tepung',emoji:'⬜',cat:'jamur',sev:'sedang',bg:'#F3EEF9',ico:'#7B4FB5',plants:['Mawar','Anggrek','Bonsai','Monstera'],symptoms:['Lapisan putih seperti tepung di daun','Daun mengkerut dan menguning','Pertumbuhan terhambat','Bunga gagal mekar'],solutions:['Semprot fungisida berbasis sulfur atau tembaga minggu sekali','Jaga sirkulasi udara, hindari kelembaban berlebih','Potong bagian yang terinfeksi dengan gunting steril','Semprot larutan baking soda (1 sdt per 1L air) sebagai alternatif'],desc:'Penyakit jamur yang menyebabkan lapisan putih seperti tepung di permukaan daun, batang, dan bunga. Berkembang pesat di kondisi lembab dengan sirkulasi udara buruk.'},
-  {id:2,name:'Busuk Akar',emoji:'🟤',cat:'jamur',sev:'parah',bg:'var(--rlt)',ico:'var(--red)',plants:['Sukulen','Kaktus','Lithops','Semua tanaman'],symptoms:['Daun layu meski tanah lembab','Akar berwarna coklat/hitam dan lunak','Bau tidak sedap dari media tanam','Batang bagian bawah lunak dan berubah warna'],solutions:['Keluarkan tanaman, bersihkan dan potong semua akar hitam/busuk','Keringkan akar 1-3 hari di tempat teduh sebelum tanam ulang','Ganti media tanam baru yang steril dan memiliki drainase baik','Kurangi drastis frekuensi penyiraman ke depannya'],desc:'Disebabkan overwatering kronis yang mengakibatkan jamur Pythium/Phytophthora menyerang sistem akar. Salah satu penyebab kematian tanaman paling umum.'},
-  {id:3,name:'Bercak Daun Alternaria',emoji:'🟠',cat:'jamur',sev:'sedang',bg:'var(--golt)',ico:'var(--gold)',plants:['Tomat hias','Mawar','Anggrek','Monstera'],symptoms:['Bercak coklat bulat dengan cincin konsentris','Bercak membesar dan menyatu','Daun menguning di sekitar bercak','Daun gugur prematur'],solutions:['Semprot fungisida berbahan mankozeb atau klorotalonil','Jaga jarak tanam agar sirkulasi udara lancar','Hindari menyiram dari atas (basahi daun)','Buang daun terinfeksi dan musnahkan'],desc:'Infeksi jamur Alternaria yang membentuk bercak coklat khas dengan pola cincin seperti sasaran panah. Aktif saat suhu hangat dan kelembaban tinggi.'},
-  {id:4,name:'Kutu Putih (Mealybug)',emoji:'🤍',cat:'hama',sev:'sedang',bg:'var(--plt)',ico:'var(--pur)',plants:['Sukulen','Kaktus','Anggrek','Monstera','Hias daun'],symptoms:['Gumpalan putih seperti kapas di ketiak daun','Tanaman tampak lemah dan pucat','Cairan lengket (honeydew) di permukaan daun','Semut berdatangan ke tanaman'],solutions:['Usap dengan cotton bud yang dicelup alkohol 70% pada setiap koloni','Semprot campuran air sabun cuci piring (1 sdt per 500ml) ke seluruh tanaman','Gunakan insektisida sistemik imidakloprid sesuai dosis','Ulangi treatment setiap 7 hari selama 3-4 minggu'],desc:'Serangga kecil berwarna putih yang menghisap cairan tanaman dan berkembang biak sangat cepat. Sulit diberantas karena terlindungi lapisan lilin.'},
-  {id:5,name:'Tungau Merah (Spider Mite)',emoji:'🔴',cat:'hama',sev:'sedang',bg:'var(--rlt)',ico:'var(--red)',plants:['Bonsai','Monstera','Mawar','Sukulen','Kaktus'],symptoms:['Bintik-bintik kuning kecil di permukaan daun','Sarang halus (spider web) di bawah dan ketiak daun','Daun terlihat kusam dan berdebu','Daun mengering dari tepi ke dalam'],solutions:['Semprot air bertekanan kencang di bawah daun setiap hari selama seminggu','Tingkatkan kelembaban udara di sekitar tanaman','Aplikasikan akarisida atau minyak nimba (neem oil) setiap 5-7 hari','Isolasi tanaman yang terinfeksi dari koleksi lainnya'],desc:'Hama berukuran sangat kecil (0.3-0.5mm) yang mengisap cairan sel daun. Sangat aktif dan cepat berkembang saat udara panas dan kering.'},
-  {id:6,name:'Kutu Daun (Aphid)',emoji:'🟢',cat:'hama',sev:'ringan',bg:'var(--glt)',ico:'var(--g2)',plants:['Mawar','Kaktus berbunga','Anggrek','Bonsai'],symptoms:['Koloni serangga hijau/hitam/coklat di pucuk tanaman','Daun muda mengkerut dan tidak normal','Cairan lengket di daun (honeydew)','Pertumbuhan pucuk terhambat'],solutions:['Semprot air kencang untuk menghilangkan koloni secara fisik','Gunakan insektisida berbahan imidakloprid atau bahan nabati','Semprotan larutan sabun insektisida (sabun cuci piring + air)','Hadirkan predator alami jika memungkinkan (kumbang kepik)'],desc:'Serangga kecil yang hidup berkoloni di pucuk tanaman dan menghisap cairan. Menyebarkan virus dan menghasilkan embun madu yang memicu jamur hitam.'},
-  {id:7,name:'Kutu Perisai (Scale)',emoji:'🟫',cat:'hama',sev:'sedang',bg:'var(--golt)',ico:'var(--gold)',plants:['Bonsai','Anggrek','Kaktus','Sukulen'],symptoms:['Benjolan coklat atau putih di batang dan ranting','Tanaman tampak lesu dan daun menguning','Cairan lengket di permukaan daun','Kulit kayu batang tampak tidak rata'],solutions:['Sikat dengan sikat gigi bekas yang dicelup alkohol 70%','Semprot minyak nimba (neem oil) seminggu sekali','Gunakan insektisida berbahan imidakloprid sistemik','Potong bagian yang sangat parah terinfeksi'],desc:'Serangga yang terlindungi cangkang lilin keras sehingga sulit dibasmi dengan semprotan biasa. Menghisap cairan tanaman secara perlahan.'},
-  {id:8,name:'Bercak Bakteri',emoji:'💧',cat:'bakteri',sev:'sedang',bg:'var(--blt)',ico:'var(--blue)',plants:['Anggrek','Mawar','Hias daun','Monstera'],symptoms:['Bercak berair coklat/hitam di daun','Tepi bercak berwarna kuning','Bau tidak sedap dari area terinfeksi','Menyebar cepat ke daun lain saat basah'],solutions:['Potong bagian terinfeksi dengan gunting steril (sterilkan tiap potongan)','Semprot bakterisida berbasis tembaga hidroksida','Hindari menyiram dari atas dan membasahi daun','Isolasi tanaman dari koleksi lain sampai sembuh'],desc:'Infeksi bakteri (Pseudomonas, Xanthomonas) yang masuk melalui luka atau stomata daun yang basah. Menyebar cepat dalam kondisi lembab.'},
-  {id:9,name:'Busuk Lunak Bakteri',emoji:'🖤',cat:'bakteri',sev:'parah',bg:'var(--rlt)',ico:'var(--red)',plants:['Sukulen','Kaktus','Begonia','Bromelia'],symptoms:['Jaringan menjadi lunak, berair, dan berbau busuk','Warna berubah coklat kehitaman','Menyebar sangat cepat','Batang atau daun runtuh'],solutions:['Potong jauh di atas area terinfeksi dengan alat steril','Biarkan luka mengering 3-5 hari sebelum tanam ulang','Tanam di media baru yang steril dan memiliki drainase sempurna','Kurangi air drastis, hindari membasahi batang'],desc:'Infeksi bakteri Erwinia yang menyebabkan kerusakan jaringan masif dan sangat cepat. Sering fatal jika tidak ditangani segera.'},
-  {id:10,name:'Klorosis (Daun Kuning)',emoji:'🟡',cat:'nutrisi',sev:'ringan',bg:'var(--golt)',ico:'var(--gold)',plants:['Semua tanaman'],symptoms:['Daun menguning merata atau di antara tulang daun','Pertumbuhan melambat dan daun baru kecil','Daun tua menguning lebih dulu (N)','Daun muda menguning lebih dulu (Fe, Mn)'],solutions:['Berikan pupuk cair NPK seimbang setiap 2 minggu','Periksa pH media tanam (idealnya 6.0-6.8)','Tambah suplemen zat besi chelated jika kuning di antara urat daun','Ganti media tanam yang sudah jenuh (lebih dari 1 tahun)'],desc:'Kekurangan klorofil akibat defisiensi nutrisi (Nitrogen, Besi, Magnesium) atau pH media yang tidak sesuai sehingga nutrisi tidak bisa diserap.'},
-  {id:11,name:'Etiolasi',emoji:'🌿',cat:'nutrisi',sev:'ringan',bg:'var(--glt)',ico:'var(--g2)',plants:['Sukulen','Kaktus','Semua tanaman'],symptoms:['Batang memanjang tidak normal dan pucat','Daun kecil dengan jarak antar ruas yang panjang','Warna tanaman memudar dari hijau cerah','Tanaman condong ke arah cahaya'],solutions:['Pindahkan ke lokasi dengan cahaya lebih intens','Rotasi pot 90° setiap minggu agar cahaya merata','Untuk tanaman indoor tambahkan grow light 12 jam/hari','Pangkas bagian yang sudah etiolasi untuk tampilan lebih rapi'],desc:'Tanaman kekurangan cahaya sehingga berusaha mencarinya dengan tumbuh memanjang dan tipis. Bukan penyakit menular, tapi melemahkan tanaman.'},
-  {id:12,name:'Virus Mosaik',emoji:'🟩',cat:'virus',sev:'parah',bg:'var(--plt)',ico:'var(--pur)',plants:['Anggrek','Mawar','Begonia','Tanaman hias'],symptoms:['Pola mosaik kuning-hijau di daun','Daun mengerut dan tidak simetris','Pertumbuhan sangat terhambat','Tidak ada obat, hanya pencegahan'],solutions:['Isolasi dan musnahkan tanaman yang terinfeksi','Sterilkan semua alat pemangkasan dengan alkohol','Kendalikan serangga vektor (kutu daun, trips) sebagai pencegahan','Beli bibit dari sumber terpercaya yang bebas virus'],desc:'Infeksi virus yang tidak bisa disembuhkan. Ditularkan melalui serangga (kutu daun, trips) atau alat pemangkasan yang terkontaminasi. Satu-satunya cara adalah pencegahan.'},
-];
-var kpFiltered=KP_DATA.slice(),kpExpandId=null;
-
-function renderKP(list){
-  var el=document.getElementById('kpList');if(!el)return;
-  if(!list.length){el.innerHTML='<div style="text-align:center;padding:30px;color:var(--text-muted);font-size:13px">Tidak ditemukan 🔍</div>';return;}
-  var sevMap={parah:{cls:'background:var(--rlt);color:var(--red)',lbl:'⚠️ Parah'},sedang:{cls:'background:var(--golt);color:var(--gold)',lbl:'⚡ Sedang'},ringan:{cls:'background:var(--glt);color:var(--g2)',lbl:'✅ Ringan'}};
-  el.innerHTML=list.map(function(d){
-    var sev=sevMap[d.sev]||sevMap.ringan;
-    var isOpen=kpExpandId===d.id;
-    var body=isOpen?'<div class="kpc-body">'
-      +'<div class="kpc-sec"><div class="kpc-sec-t">Tentang Penyakit</div><div class="kpc-sec-b">'+d.desc+'</div></div>'
-      +'<div class="kpc-sec"><div class="kpc-sec-t">Gejala</div><div class="stags">'+d.symptoms.map(function(s){return'<span class="stag">'+s+'</span>';}).join('')+'</div></div>'
-      +'<div class="kpc-sec"><div class="kpc-sec-t">Cara Mengatasi</div>'+d.solutions.map(function(s,i){return'<div class="sol-row"><div class="sol-n">'+(i+1)+'</div><div>'+s+'</div></div>';}).join('')+'</div>'
-      +'<div class="kpc-sec"><div class="kpc-sec-t">Tanaman Rentan</div><div style="font-size:12px;color:var(--text-muted)">'+d.plants.join(' · ')+'</div></div>'
-      +'</div>':'';
-    return'<div class="kp-card" onclick="kpToggle('+d.id+')">'
-      +'<div class="kpc-head"><div class="kpc-ico" style="background:'+d.bg+'">'+d.emoji+'</div>'
-      +'<div><div class="kpc-name">'+d.name+'</div><div class="kpc-tags">'+d.plants.slice(0,2).map(function(p){return'<span class="kpc-tag">'+p+'</span>';}).join('')+(d.plants.length>2?'<span class="kpc-tag">+'+( d.plants.length-2)+'</span>':'')+'</div></div>'
-      +'<div class="kpc-sev" style="'+sev.cls+'">'+sev.lbl+'</div></div>'+body+'</div>';
-  }).join('');
+function quickLog(plantId){
+  var p=plants.find(function(x){return x.id===plantId;});if(!p)return;
+  document.getElementById('jstitle').textContent='Catat Aktivitas';
+  document.getElementById('jfid').value='';
+  document.getElementById('jfnote').value='';
+  document.getElementById('jfdate').value=td();
+  document.getElementById('jftype').value='note';
+  var sel=document.getElementById('jfplant');
+  sel.innerHTML=plants.map(function(x){return'<option value="'+x.id+'"'+(x.id===plantId?' selected':'')+'>'+( x.emoji||'🌿')+' '+x.name+'</option>';}).join('');
+  openSheet('jsheet');
 }
 
-function kpToggle(id){kpExpandId=kpExpandId===id?null:id;renderKP(kpFiltered);}
-function filterKP(q){
-  q=q.toLowerCase();
-  kpFiltered=KP_DATA.filter(function(d){
-    return d.name.toLowerCase().includes(q)||d.desc.toLowerCase().includes(q)||d.symptoms.some(function(s){return s.toLowerCase().includes(q);})||d.plants.some(function(p){return p.toLowerCase().includes(q);});
-  });
-  renderKP(kpFiltered);
-}
-function filterKPCat(cat,btn){
-  document.querySelectorAll('.kpcat').forEach(function(b){b.classList.remove('on');});btn.classList.add('on');
-  kpFiltered=cat==='all'?KP_DATA.slice():KP_DATA.filter(function(d){return d.cat===cat;});
-  renderKP(kpFiltered);
-}
 
 // ════ FOTO PROGRESS ════
-function getFotoProgress(plantId){return lsGet('bq_fp_'+CU+'_'+plantId,[]);}
-function saveFotoProgress(plantId,photos){lsSet('bq_fp_'+CU+'_'+plantId,photos);}
+var fpCache={};
 
-function renderFotoProgress(plantId){
+function compressImage(file,cb){
+  var reader=new FileReader();
+  reader.onload=function(e){
+    var img=new Image();
+    img.onload=function(){
+      var MAX=800;
+      var w=img.width,h=img.height;
+      if(w>MAX||h>MAX){if(w>h){h=Math.round(h*MAX/w);w=MAX;}else{w=Math.round(w*MAX/h);h=MAX;}}
+      var canvas=document.createElement('canvas');
+      canvas.width=w;canvas.height=h;
+      canvas.getContext('2d').drawImage(img,0,0,w,h);
+      cb(canvas.toDataURL('image/jpeg',0.7));
+    };
+    img.src=e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+async function loadFP(plantId){
+  if(fpCache[plantId])return fpCache[plantId];
+  var res=await sbQ('bq_photos','GET',null,'plant_id=eq.'+plantId+'&username=eq.'+encodeURIComponent(CU)+'&order=date.desc');
+  var photos=(res||[]).map(function(r){return{id:r.id,img:r.image,date:r.date};});
+  fpCache[plantId]=photos;
+  return photos;
+}
+
+async function renderFP(plantId){
   var el=document.getElementById('fpgrid-'+plantId);if(!el)return;
-  var photos=getFotoProgress(plantId);
-  if(!photos.length){el.innerHTML='<div class="fp-empty">Belum ada foto. Tambah foto pertama tanamanmu!</div>';return;}
-  el.innerHTML=photos.slice().reverse().map(function(ph,i){
-    var realIdx=photos.length-1-i;
-    var imgHtml=ph.img?'<img src="'+ph.img+'">':'<div class="fp-emi">'+(ph.emoji||'🌿')+'</div>';
-    return'<div class="fp-item">'+imgHtml+'<div class="fp-dt">'+fmtD(ph.date)+'</div>'
-      +'<button class="fp-del" onclick="delFotoProgress('+plantId+','+realIdx+',event)">✕</button></div>';
+  el.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:10px;color:var(--text-muted);font-size:11px">Memuat...</div>';
+  var photos=await loadFP(plantId);
+  if(!photos.length){
+    el.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:12px;color:var(--text-muted);font-size:12px">Belum ada foto. Tambah foto pertama!</div>';
+    return;
+  }
+  el.innerHTML=photos.map(function(ph){
+    return'<div class="fp-item" data-pid="'+plantId+'" data-id="'+ph.id+'" data-date="'+ph.date+'" onclick="fpLightboxEl(this)">'
+      +'<img src="'+ph.img+'">'
+      +'<div class="fp-dt">'+fmtD(ph.date)+'</div>'
+      +'<button class="fp-del" onclick="delFP(event,'+ph.id+','+plantId+')">✕</button>'
+      +'</div>';
   }).join('');
 }
 
-function openFotoProgress(plantId){
-  var inp=document.createElement('input');inp.type='file';inp.accept='image/*';
+function openFP(plantId){
+  var inp=document.createElement('input');
+  inp.type='file';inp.accept='image/*';
   inp.onchange=function(e){
     var f=e.target.files[0];if(!f)return;
-    if(f.size>6*1024*1024){toast('Max 6MB');return;}
-    var r=new FileReader();
-    r.onload=function(ev){
-      var p=plants.find(function(x){return x.id===plantId;});
-      var photos=getFotoProgress(plantId);
-      photos.push({img:ev.target.result,date:td(),emoji:p?p.emoji||typeEmoji(p.type):'🌿'});
-      saveFotoProgress(plantId,photos);
-      renderFotoProgress(plantId);
-      toast('📸 Foto progress ditambahkan!');
-    };
-    r.readAsDataURL(f);
+    compressImage(f,async function(b64){
+      // Sheet konfirmasi tanggal
+      var dt=prompt('Tanggal foto (YYYY-MM-DD):',td());
+      if(!dt)return;
+      var res=await sbQ('bq_photos','POST',{username:CU,plant_id:plantId,image:b64,date:dt});
+      if(res&&res[0]){
+        if(!fpCache[plantId])fpCache[plantId]=[];
+        fpCache[plantId].unshift({id:res[0].id,img:b64,date:dt});
+      }
+      renderFP(plantId);
+      toast('📸 Foto progress disimpan!');
+    });
   };
   inp.click();
 }
 
-function delFotoProgress(plantId,idx,e){
+async function delFP(e,photoId,plantId){
   e.stopPropagation();
   if(!confirm('Hapus foto ini?'))return;
-  var photos=getFotoProgress(plantId);
-  photos.splice(idx,1);
-  saveFotoProgress(plantId,photos);
-  renderFotoProgress(plantId);
+  await sbQ('bq_photos','DELETE',null,'id=eq.'+photoId+'&username=eq.'+encodeURIComponent(CU));
+  if(fpCache[plantId])fpCache[plantId]=fpCache[plantId].filter(function(p){return p.id!==photoId;});
+  renderFP(plantId);
   toast('🗑️ Foto dihapus');
+}
+
+function fpLightboxEl(el){
+  var photoId=el.dataset.id,plantId=el.dataset.pid;
+  var photos=fpCache[plantId]||[];
+  var ph=photos.find(function(p){return String(p.id)===String(photoId);});
+  if(!ph)return;
+  var detail=document.getElementById('detail');
+  var lb=document.createElement('div');
+  lb.className='fp-lightbox';
+  lb.innerHTML='<button class="fp-lightbox-close" onclick="this.parentElement.remove()">✕</button>'
+    +'<img src="'+ph.img+'">'
+    +'<div class="fp-lightbox-dt">'+fmtD(ph.date)+'</div>';
+  detail.appendChild(lb);
 }
 
 // ════ INIT ════
