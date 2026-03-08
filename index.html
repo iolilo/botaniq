@@ -603,24 +603,26 @@ body{font-family:'DM Sans',sans-serif;color:var(--text)}
 
 
 <!-- FOTO PROGRESS SHEET -->
-<div class="sheet" id="fpsheet">
-  <div class="sheet-bar"></div>
-  <div class="sheet-title">📸 Tambah Foto Progress</div>
-  <input type="hidden" id="fpPlantId">
-  <div class="fg">
-    <label class="fl">Tanggal</label>
-    <input type="date" id="fpDate" class="fi">
-  </div>
-  <div class="fg">
-    <label class="fl">Foto</label>
-    <div class="img-upload" onclick="document.getElementById('fpImgInput').click()" style="height:160px;border-radius:14px;border:2px dashed var(--line);background:var(--bg2);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;position:relative;overflow:hidden">
-      <img id="fpPrev" src="" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:12px">
-      <div id="fpIcoEl" style="font-size:32px">📷</div>
-      <div id="fpTxtEl" style="font-size:12px;color:var(--text-muted);margin-top:4px">Pilih foto</div>
+<div class="overlay" id="fpsheet">
+  <div class="sheet">
+    <div class="sheet-bar"></div>
+    <div class="sheet-title">📸 Tambah Foto Progress</div>
+    <input type="hidden" id="fpPlantId">
+    <div class="fg">
+      <label class="fl">Tanggal</label>
+      <input type="date" id="fpDate" class="fi">
     </div>
-    <input type="file" id="fpImgInput" accept="image/*" style="display:none" onchange="onFpImg(event)">
+    <div class="fg">
+      <label class="fl">Foto</label>
+      <div class="img-upload" onclick="document.getElementById('fpImgInput').click()" style="height:160px;border-radius:14px;border:2px dashed var(--line);background:var(--bg2);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;position:relative;overflow:hidden">
+        <img id="fpPrev" src="" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:12px">
+        <div id="fpIcoEl" style="font-size:32px">📷</div>
+        <div id="fpTxtEl" style="font-size:12px;color:var(--text-muted);margin-top:4px">Pilih foto</div>
+      </div>
+      <input type="file" id="fpImgInput" accept="image/*" style="display:none" onchange="onFpImg(event)">
+    </div>
+    <button class="submt" onclick="saveFP()">💾 Simpan Foto</button>
   </div>
-  <button class="submt" onclick="saveFP()">💾 Simpan Foto</button>
 </div>
 
 <!-- FP LIGHTBOX -->
@@ -1598,7 +1600,8 @@ function selectManualEmoji(btn,emoji){
   document.querySelectorAll('.emoji-opt').forEach(function(b){
     b.style.background='var(--bg2)';b.style.borderColor='var(--line)';
   });
-  btn.style.background='var(--green-pale)';btn.style.borderColor='var(--green-mid)';
+  btn.style.background='var(--green-pale)';btn.style.borderColor='
+  (--green-mid)';
   document.getElementById('manual-emoji-sel').textContent=emoji;
 }
 </script>
