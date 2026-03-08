@@ -454,8 +454,8 @@ body{font-family:'DM Sans',sans-serif;color:var(--text)}
 .center-btn{position:relative}
 .center-btn .nav-icon{width:44px;height:44px;background:linear-gradient(135deg,var(--green-light),var(--green-mid));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;color:#fff;box-shadow:0 3px 12px rgba(82,183,136,.45);margin-top:-14px;margin-bottom:1px}
 /* ── AI SCREEN ── */
-#scr-stats{display:none!important}
-#scr-stats.on{display:flex!important;flex-direction:column}
+#scr-stats{display:none!important;padding-bottom:0!important;overflow:hidden!important}
+#scr-stats.on{display:flex!important;flex-direction:column;overflow:hidden!important;padding-bottom:0!important}
 </style>
 </head>
 <body>
@@ -776,7 +776,7 @@ body{font-family:'DM Sans',sans-serif;color:var(--text)}
 // Setelah login → klik nama kamu → "My profile" → salin API key
 // Contoh: var PLANTNET_KEY='2b3xXXXXXXXXXXXXXXXXXXXX';
 // ============================================================
-var PLANTNET_KEY='2b3xAbCdEfGhIjKl';
+var PLANTNET_KEY='2b10CJSGtPl09xQC5iyd7E6mQu';
 
 var SBURL='https://atinplsrmgkcgsdwvhiw.supabase.co';
 var SBKEY='sb_publishable__s0F7wR6_cJElrsrg9NjrA_R1NTzhWW';
@@ -1269,7 +1269,11 @@ async function doPlantScan(){
 function renderScanResults(data){
   var result=document.getElementById('scanResult');
   if(!data.results||!data.results.length){
-    result.innerHTML='<div style="text-align:center;padding:20px;color:var(--text-muted);font-size:13px">Tanaman tidak dikenali. Coba foto yang lebih jelas.</div>';
+    result.innerHTML='<div style="padding:16px;text-align:center">'
+    +'<div style="font-size:28px;margin-bottom:8px">🔍</div>'
+    +'<div style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px">Tanaman tidak teridentifikasi</div>'
+    +'<div style="font-size:12px;color:var(--text-muted);line-height:1.5">Coba foto lebih dekat, pencahayaan lebih terang, atau pilih bagian daun/bunga yang jelas.</div>'
+    +'</div>';
     return;
   }
   var top3=data.results.slice(0,3);
@@ -1455,7 +1459,7 @@ if(savedUser){
 // Klik "Get API Key" → "Create API Key" → salin key-nya
 // Contoh: var GEMINI_KEY='AIzaSyXXXXXXXXXXXXXXXXXXXXXXXX';
 // ============================================================
-var GEMINI_KEY='AIzaSyAbCdEfGhIjKlMnOpQr';
+var GEMINI_KEY='AIzaSyCfLf0h98OM4CO0Q6WaEUZ2T6L03DmXSMc';
 var GEMINI_URL='https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=';
 var aiHistory=[];var aiInited=false;
 
@@ -1598,3 +1602,4 @@ function selectManualEmoji(btn,emoji){
 </script>
 </body>
 </html>
+
