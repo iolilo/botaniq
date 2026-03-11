@@ -1476,7 +1476,7 @@ async function doScan(){
     var blob=new Blob([u8],{type:mime});
 
     var fd=new FormData();fd.append('images',blob,'plant.jpg');fd.append('organs','auto');
-    var resp=await fetch('https://my-api.plantnet.org/v2/identify/all?include-related-images=false&no-reject=false&nb-results=3&lang=id&api-key='+PNKEY,{method:'POST',body:fd});
+    var resp=await fetch(APIURL+'/api/plant',{method:'POST',body:fd});
     var data=await resp.json();
     if(!resp.ok||!data.results||!data.results.length){
       document.getElementById('scanResult').innerHTML=scanErrCard('Tidak dapat mengidentifikasi. Coba foto lebih jelas.');
