@@ -1,357 +1,418 @@
 <!DOCTYPE html>
-<html lang="id" data-theme="dark">
+<html lang="id" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Tanduran">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="application-name" content="Tanduran">
-<meta name="description" content="Plant care, digitalized.">
-<meta name="theme-color" content="#0d0d0d" id="themeColorMeta">
+<meta name="theme-color" content="#f5f5f0" id="themeColorMeta">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192-tanduran.png">
 <title>Tanduran</title>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-/* ── DEFAULT: DARK ── */
+/* ══ LIGHT (default) ══ */
 :root{
-  --bg:#0d0d0d;--bg2:#1a1a1a;--card:#1a1a1a;--card2:#222222;
-  --text:#f5f5f5;--text2:rgba(245,245,245,.75);--muted:#555555;
-  --border:rgba(255,255,255,.07);--border2:rgba(255,255,255,.04);
-  --green:#66bb6a;--gm:#4caf50;--gl:#81c784;--gp:rgba(102,187,106,.1);--gxp:rgba(102,187,106,.05);
-  --amber:#ffca28;--amber-bg:rgba(255,202,40,.08);--amber-ln:rgba(255,202,40,.2);
-  --red:#ef5350;--red-bg:rgba(239,83,80,.08);--red-ln:rgba(239,83,80,.2);
-  --blue:#64b5f6;--blue-bg:rgba(100,181,246,.08);
-  --purple:#ce93d8;--purple-bg:rgba(206,147,216,.08);
-  --teal:#4db6ac;--teal-bg:rgba(77,182,172,.08);--teal-ln:rgba(77,182,172,.2);
-  --sh:0 1px 8px rgba(0,0,0,.4);--shm:0 4px 28px rgba(0,0,0,.6);
-  --r:14px;--rs:10px;--navh:56px;--hdh:52px
+  --bg:#f5f5f0;--bg2:#eeede8;--card:#ffffff;--card2:#f8f7f3;
+  --text:#1a1a17;--text2:#4a4a47;--muted:#999990;
+  --border:rgba(0,0,0,.08);--border2:rgba(0,0,0,.05);
+  --green:#2d7a1f;--gm:#3a9428;--gl:#5bb847;--gp:rgba(58,148,40,.1);--gpb:rgba(58,148,40,.18);
+  --amber:#b06a00;--amber-bg:rgba(176,106,0,.09);--amber-ln:rgba(176,106,0,.22);
+  --red:#c0392b;--red-bg:rgba(192,57,43,.09);--red-ln:rgba(192,57,43,.22);
+  --teal:#0e7c6a;--teal-bg:rgba(14,124,106,.09);--teal-ln:rgba(14,124,106,.22);
+  --blue:#1a5fb4;--blue-bg:rgba(26,95,180,.09);
+  --purple:#7a3ea0;--purple-bg:rgba(122,62,160,.09);
+  --sh:0 1px 4px rgba(0,0,0,.07);--shm:0 4px 20px rgba(0,0,0,.12);
+  --r:14px;--rs:10px;--navh:60px;--hdh:52px
 }
-/* ── LIGHT OVERRIDE ── */
-[data-theme="light"]{
-  --bg:#ffffff;--bg2:#f8f8f8;--card:#ffffff;--card2:#f4f4f4;
-  --text:#111111;--text2:#444444;--muted:#aaaaaa;
-  --border:rgba(0,0,0,.09);--border2:rgba(0,0,0,.06);
-  --green:#43a047;--gm:#388e3c;--gl:#66bb6a;--gp:rgba(67,160,71,.08);--gxp:rgba(67,160,71,.04);
-  --amber:#f59f00;--amber-bg:rgba(245,159,0,.08);--amber-ln:rgba(245,159,0,.2);
-  --red:#e53935;--red-bg:rgba(229,57,53,.08);--red-ln:rgba(229,57,53,.2);
-  --blue:#1e88e5;--blue-bg:rgba(30,136,229,.08);
-  --purple:#8e24aa;--purple-bg:rgba(142,36,170,.08);
-  --teal:#00897b;--teal-bg:rgba(0,137,123,.08);--teal-ln:rgba(0,137,123,.2);
-  --sh:0 1px 6px rgba(0,0,0,.06);--shm:0 4px 20px rgba(0,0,0,.1)
-}
-/* also support explicit dark attribute */
+/* ══ DARK ══ */
 [data-theme="dark"]{
-  --bg:#0d0d0d;--bg2:#1a1a1a;--card:#1a1a1a;--card2:#222222;
-  --text:#f5f5f5;--text2:rgba(245,245,245,.75);--muted:#555555;
-  --border:rgba(255,255,255,.07);--border2:rgba(255,255,255,.04);
-  --green:#66bb6a;--gm:#4caf50;--gl:#81c784;--gp:rgba(102,187,106,.1);--gxp:rgba(102,187,106,.05);
-  --amber:#ffca28;--amber-bg:rgba(255,202,40,.08);--amber-ln:rgba(255,202,40,.2);
-  --red:#ef5350;--red-bg:rgba(239,83,80,.08);--red-ln:rgba(239,83,80,.2);
-  --blue:#64b5f6;--blue-bg:rgba(100,181,246,.08);
-  --purple:#ce93d8;--purple-bg:rgba(206,147,216,.08);
-  --teal:#4db6ac;--teal-bg:rgba(77,182,172,.08);--teal-ln:rgba(77,182,172,.2);
-  --sh:0 1px 8px rgba(0,0,0,.4);--shm:0 4px 28px rgba(0,0,0,.6)
+  --bg:#111310;--bg2:#1a1c18;--card:#1e2019;--card2:#252720;
+  --text:#f0f0ea;--text2:rgba(240,240,234,.7);--muted:#5a5a52;
+  --border:rgba(255,255,255,.08);--border2:rgba(255,255,255,.04);
+  --green:#5bb847;--gm:#4aa836;--gl:#7dcc6a;--gp:rgba(91,184,71,.12);--gpb:rgba(91,184,71,.2);
+  --amber:#e8920a;--amber-bg:rgba(232,146,10,.1);--amber-ln:rgba(232,146,10,.25);
+  --red:#e05252;--red-bg:rgba(224,82,82,.1);--red-ln:rgba(224,82,82,.25);
+  --teal:#2bbfa8;--teal-bg:rgba(43,191,168,.1);--teal-ln:rgba(43,191,168,.25);
+  --blue:#5294e2;--blue-bg:rgba(82,148,226,.1);
+  --purple:#c084e8;--purple-bg:rgba(192,132,232,.1);
+  --sh:0 1px 6px rgba(0,0,0,.35);--shm:0 4px 24px rgba(0,0,0,.55)
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html,body{height:100%;overflow:hidden;background:#0d0d0d}
-body{font-family:'Plus Jakarta Sans',sans-serif;color:var(--text);font-size:14px;-webkit-font-smoothing:antialiased}
+html,body{height:100%;overflow:hidden;background:var(--bg)}
+body{font-family:'Nunito',sans-serif;color:var(--text);font-size:14px;-webkit-font-smoothing:antialiased}
 *{scrollbar-width:none}*::-webkit-scrollbar{display:none}
-button,input,select,textarea{font-family:'Plus Jakarta Sans',sans-serif}
+button,input,select,textarea{font-family:'Nunito',sans-serif}
 
-/* ── APP ── */
-#app{max-width:430px;margin:0 auto;height:100dvh;display:flex;flex-direction:column;background:var(--bg);position:relative;overflow:hidden;box-shadow:0 0 60px rgba(0,0,0,.5)}
+/* ══ APP ══ */
+#app{max-width:430px;margin:0 auto;height:100dvh;display:flex;flex-direction:column;background:var(--bg);position:relative;overflow:hidden}
 
-/* ── LOGIN ── */
-#loginScr{position:absolute;inset:0;z-index:999;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:max(60px,14vh) 1.5rem 40px;overflow-y:auto;transition:opacity .3s}
-#loginScr.off{opacity:0;pointer-events:none}
-.l-ico{font-size:2.8rem;margin-bottom:.5rem}
-.l-logo{font-family:'Fraunces',serif;font-size:2.2rem;font-weight:700;color:var(--green);font-style:italic}
-.l-sub{font-size:.7rem;color:var(--muted);margin:.25rem 0 1.8rem;text-align:center;line-height:1.7;letter-spacing:.02em}
-.l-box{width:100%;max-width:310px;background:var(--card);border-radius:18px;padding:1.3rem;border:1px solid var(--border);box-shadow:var(--shm)}
+/* ══ LOGIN ══ */
+#loginScr{position:absolute;inset:0;z-index:999;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem 1.5rem;overflow-y:auto;transition:opacity .3s,transform .3s}
+#loginScr.off{opacity:0;pointer-events:none;transform:translateY(-8px)}
+.l-ico{font-size:3rem;margin-bottom:.5rem;text-align:center}
+.l-logo{font-size:2rem;font-weight:800;color:var(--green);text-align:center;margin-bottom:.25rem;letter-spacing:-.5px}
+.l-sub{font-size:.72rem;color:var(--muted);text-align:center;margin-bottom:2rem;letter-spacing:.03em}
+.l-box{width:100%;max-width:320px;background:var(--card);border-radius:20px;padding:1.4rem;border:1px solid var(--border);box-shadow:var(--shm)}
 .l-lbl{font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.4rem;display:block}
-.l-inp{width:100%;padding:.75rem 1rem;border:1px solid var(--border);border-radius:var(--rs);font-size:.9rem;color:var(--text);background:var(--bg2);outline:none;transition:.2s;margin-bottom:.6rem;height:46px}
+.l-inp{width:100%;padding:.75rem 1rem;border:1.5px solid var(--border);border-radius:var(--rs);font-size:.9rem;color:var(--text);background:var(--bg2);outline:none;transition:.2s;margin-bottom:.65rem;height:46px}
 .l-inp:focus{border-color:var(--green)}
-.l-btn{width:100%;padding:.85rem;border-radius:var(--rs);border:none;background:var(--green);color:#111;font-size:.9rem;font-weight:700;cursor:pointer;transition:.15s}
-[data-theme="light"] .l-btn{color:#111}
-[data-theme="dark"] .l-btn{color:#111}
+.l-btn{width:100%;padding:.85rem;border-radius:var(--rs);border:none;background:var(--green);color:#fff;font-size:.9rem;font-weight:700;cursor:pointer;transition:.15s}
 .l-btn:active{opacity:.85}
 .l-note{font-size:.62rem;color:var(--muted);text-align:center;margin-top:.7rem;line-height:1.65}
 .l-note strong{color:var(--green)}
 
-/* ── HEADER ── */
+/* ══ HEADER ══ */
 #hd{height:var(--hdh);display:flex;align-items:center;justify-content:space-between;padding:0 16px;background:var(--bg);flex-shrink:0;z-index:10;border-bottom:1px solid var(--border2)}
-.logo{font-family:'Fraunces',serif;font-size:21px;font-weight:700;color:var(--green);letter-spacing:-.4px;font-style:italic}
+.logo{font-size:20px;font-weight:800;color:var(--green);letter-spacing:-.3px}
 .hdr{display:flex;align-items:center;gap:6px}
-.hbtn{width:30px;height:30px;border-radius:50%;border:1px solid var(--border);background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--muted);font-size:13px;transition:.12s}
+.hbtn{width:32px;height:32px;border-radius:50%;border:1px solid var(--border);background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--muted);font-size:14px;transition:.12s}
 .hbtn:active{opacity:.7}
-.uchip{display:flex;align-items:center;gap:4px;background:var(--gp);border-radius:20px;padding:4px 10px;font-size:11px;font-weight:600;color:var(--green);cursor:pointer;border:1px solid rgba(102,187,106,.2)}
-.uchip:active{opacity:.8}
+.uchip{display:flex;align-items:center;gap:5px;background:var(--gp);border-radius:20px;padding:5px 11px;font-size:11px;font-weight:700;color:var(--green);cursor:pointer;border:1px solid var(--gpb)}
 
-/* ── SCREENS ── */
-.scr{flex:1;overflow-y:auto;overflow-x:hidden;display:none;flex-direction:column;padding-bottom:calc(var(--navh)+8px)}
+/* ══ SCREENS ══ */
+.scr{flex:1;overflow-y:auto;overflow-x:hidden;display:none;flex-direction:column;padding-bottom:calc(var(--navh)+4px)}
 .scr.on{display:flex}
-.scr-hd{padding:14px 16px 8px;display:flex;justify-content:space-between;align-items:center;flex-shrink:0}
-.scr-title{font-family:'Fraunces',serif;font-size:21px;font-weight:700;color:var(--text);font-style:italic}
 
-/* ── HOME ── */
-.home-header{padding:14px 16px 10px;flex-shrink:0}
-.home-date{font-size:10px;color:var(--muted);margin-bottom:3px;font-weight:500;letter-spacing:.02em}
-.home-greeting{font-family:'Fraunces',serif;font-size:26px;font-weight:700;color:var(--text);letter-spacing:-.5px;line-height:1.15;font-style:italic}
-.home-pills{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
-.hpill{font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px;letter-spacing:.02em}
-.hpill.good{background:var(--teal-bg);color:var(--teal)}
-.hpill.warn{background:var(--amber-bg);color:var(--amber)}
-.hpill.bad{background:var(--red-bg);color:var(--red)}
-.hpill.neu{background:var(--gp);color:var(--green)}
+/* ══ BERANDA ══ */
+/* kebun card — screenshot image 1 top */
+.kebun-card{margin:12px 16px;background:var(--gp);border-radius:18px;padding:16px 18px;border:1px solid var(--gpb);position:relative;overflow:hidden}
+.kebun-card::after{content:'';position:absolute;right:-16px;top:-16px;width:80px;height:80px;border-radius:50%;background:var(--gpb)}
+.kebun-title{font-size:13px;font-weight:700;color:var(--green);margin-bottom:2px}
+.kebun-sub{font-size:10px;color:var(--green);opacity:.7;margin-bottom:12px}
+.kebun-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.kstat{background:rgba(255,255,255,.6);border-radius:11px;padding:8px 6px;text-align:center}
+[data-theme="dark"] .kstat{background:rgba(255,255,255,.08)}
+.kstat-n{font-size:20px;font-weight:800;color:var(--green);line-height:1}
+.kstat-n.warn{color:var(--amber)}.kstat-n.bad{color:var(--red)}
+.kstat-l{font-size:8px;font-weight:600;color:var(--green);margin-top:2px;opacity:.75}
+.kstat-l.warn{color:var(--amber)}.kstat-l.bad{color:var(--red)}
 
+/* section */
+.home-sec{margin:0 16px 4px}
+.sec-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;margin-top:14px}
+.sec-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.see-all{font-size:11px;color:var(--green);font-weight:700;cursor:pointer;background:none;border:none}
 
-/* ── STAT CARDS ── */
-.home-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:8px 16px 0}
-.hstat{border-radius:12px;padding:10px 8px;text-align:center}
-.hstat-n{font-family:'Fraunces',serif;font-size:22px;font-weight:700;line-height:1}
-.hstat-l{font-size:7px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-top:3px}
-.hstat.neu{background:var(--card2);border:1px solid var(--border)}
-.hstat.neu .hstat-n{color:var(--text)}.hstat.neu .hstat-l{color:var(--muted)}
-.hstat.bad{background:var(--red-bg);border:1px solid var(--red-ln)}
-.hstat.bad .hstat-n{color:var(--red)}.hstat.bad .hstat-l{color:var(--red)}
-.hstat.warn{background:var(--amber-bg);border:1px solid var(--amber-ln)}
-.hstat.warn .hstat-n{color:var(--amber)}.hstat.warn .hstat-l{color:var(--amber)}
+/* pengingat items — screenshot img 1 middle */
+.remind-item{background:var(--card);border-radius:12px;padding:10px 13px;display:flex;align-items:center;justify-content:space-between;border:1px solid var(--border);margin-bottom:6px;box-shadow:var(--sh)}
+.remind-left{display:flex;align-items:center;gap:9px}
+.remind-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.remind-dot.good{background:var(--green)}.remind-dot.warn{background:var(--amber)}.remind-dot.bad{background:var(--red)}
+.remind-name{font-size:12.5px;font-weight:700;color:var(--text)}
+.remind-sub{font-size:10px;color:var(--muted);margin-top:1px}
+.remind-badge{font-size:9.5px;font-weight:700;padding:3px 9px;border-radius:7px;white-space:nowrap;border:1px solid}
+.remind-badge.today{background:var(--gp);color:var(--green);border-color:var(--gpb)}
+.remind-badge.tmrw{background:var(--amber-bg);color:var(--amber);border-color:var(--amber-ln)}
+.remind-badge.late{background:var(--red-bg);color:var(--red);border-color:var(--red-ln)}
 
-/* ── HOME LIST ── */
-.hlist-item{background:var(--card);border-radius:12px;padding:10px 12px;display:flex;align-items:center;gap:10px;border:1px solid var(--border);margin-bottom:7px;cursor:pointer;transition:opacity .15s}
-.hlist-item:active{opacity:.8}
-.hlist-item:last-child{margin-bottom:0}
-.hlist-ico{width:36px;height:36px;border-radius:9px;background:var(--gp);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;overflow:hidden}
-.hlist-ico img{width:100%;height:100%;object-fit:cover}
-.hlist-info{flex:1;min-width:0}
-.hlist-name{font-size:13px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.hlist-sub{font-size:10px;color:var(--muted);margin-top:1px}
-.hlist-prog{height:3px;background:var(--border);border-radius:2px;overflow:hidden;margin-top:5px;width:80%}
-.hlist-progf{height:100%;border-radius:2px}
-.hlist-progf.good{background:var(--green)}.hlist-progf.warn{background:var(--amber)}.hlist-progf.bad{background:var(--red)}
-.hlist-badge{font-size:9px;font-weight:700;padding:3px 8px;border-radius:8px;white-space:nowrap;flex-shrink:0}
-.hlist-badge.good{background:var(--gp);color:var(--green)}
-.hlist-badge.warn{background:var(--amber-bg);color:var(--amber)}
-.hlist-badge.bad{background:var(--red-bg);color:var(--red)}
+/* tanaman terakhir dilihat — horizontal scroll cards */
+.recent-scroll{display:flex;gap:10px;padding:0 16px 4px;overflow-x:auto}
+.recent-card{background:var(--card);border-radius:14px;padding:10px;border:1px solid var(--border);min-width:90px;text-align:center;cursor:pointer;flex-shrink:0;box-shadow:var(--sh)}
+.recent-card:active{opacity:.8}
+.recent-emoji{font-size:28px;margin-bottom:5px;display:block}
+.recent-name{font-size:10px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:80px}
+.recent-status{font-size:9px;margin-top:2px}
+.recent-status.good{color:var(--green)}.recent-status.warn{color:var(--amber)}.recent-status.bad{color:var(--red)}
 
-/* ── ALERT / TINDAKAN ── */
-.alert-strip{margin:10px 16px 0;border-radius:12px;padding:10px 12px;display:flex;align-items:center;gap:8px;cursor:pointer;border:1px solid}
+/* tip card */
+.tip-card{margin:0 16px 4px;background:var(--card);border-radius:13px;padding:11px 13px;display:flex;align-items:flex-start;gap:10px;border:1px solid var(--border);flex-shrink:0;box-shadow:var(--sh)}
+.tip-ico{width:32px;height:32px;border-radius:9px;background:var(--gp);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;border:1px solid var(--gpb)}
+.tip-title{font-weight:700;font-size:11px;color:var(--green);margin-bottom:2px}
+.tip-body{color:var(--muted);font-size:10.5px;line-height:1.55}
+
+/* alert strip */
+.alert-strip{margin:0 16px 10px;border-radius:11px;padding:10px 12px;display:flex;align-items:center;gap:8px;cursor:pointer;border:1px solid}
 .alert-strip.bad{background:var(--red-bg);border-color:var(--red-ln)}
 .alert-strip.warn{background:var(--amber-bg);border-color:var(--amber-ln)}
 .alert-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
 .alert-dot.bad{background:var(--red)}.alert-dot.warn{background:var(--amber)}
 .alert-txt{font-size:11.5px;font-weight:700;flex:1}
 .alert-txt.bad{color:var(--red)}.alert-txt.warn{color:var(--amber)}
-.htind-item{background:var(--card);border-radius:12px;padding:11px 13px;display:flex;align-items:center;justify-content:space-between;border:1px solid var(--border);margin-bottom:6px}
-.htind-left{display:flex;align-items:center;gap:10px}
-.htind-emoji{font-size:21px;line-height:1}
-.htind-name{font-size:13px;font-weight:700;color:var(--text)}
-.htind-sub{font-size:10px;color:var(--muted);margin-top:1px}
-.htind-btn{padding:6px 12px;border-radius:20px;border:none;font-size:11px;font-weight:700;cursor:pointer}
-.htind-btn.ok{background:var(--teal-bg);color:var(--teal)}
-.htind-btn.bad{background:var(--red-bg);color:var(--red)}
 
-/* ── TIP ── */
-.tip-card{margin:10px 16px 0;background:var(--card);border-radius:var(--r);padding:11px 13px;display:flex;align-items:flex-start;gap:10px;border:1px solid var(--border);flex-shrink:0;box-shadow:var(--sh)}
-.tip-ico{width:32px;height:32px;border-radius:9px;background:var(--gp);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
-.tip-title{font-weight:700;font-size:11px;color:var(--green);margin-bottom:2px}
-.tip-body{color:var(--muted);font-size:10.5px;line-height:1.55}
+/* ══ KOLEKSI ══ */
+/* search bar */
+.search-bar{margin:8px 16px;display:flex;align-items:center;gap:9px;background:var(--card);border-radius:12px;padding:10px 14px;border:1px solid var(--border);box-shadow:var(--sh)}
+.search-bar svg{width:16px;height:16px;stroke:var(--muted);fill:none;stroke-width:2;stroke-linecap:round;flex-shrink:0}
+.search-bar input{flex:1;border:none;background:transparent;font-size:13px;color:var(--text);outline:none;font-family:'Nunito',sans-serif}
+.search-bar input::placeholder{color:var(--muted)}
 
-/* ── SECTION ── */
-.home-sec{margin:10px 16px 0}
-.sec-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-.sec-title{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
-.see-all{font-size:11px;color:var(--green);font-weight:700;cursor:pointer;background:none;border:none}
-
-/* ── PLANT CARDS ── */
-.pgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-.pcard{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;cursor:pointer;box-shadow:var(--sh);transition:opacity .15s}
-.pcard:active{opacity:.8}
-.pc-img{height:100px;display:flex;align-items:center;justify-content:center;font-size:44px;background:var(--gp);position:relative;overflow:hidden}
-.pc-img img{width:100%;height:100%;object-fit:cover}
-.pc-badge{position:absolute;top:6px;right:6px;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800}
-.pc-badge.good{background:var(--teal);color:#fff}.pc-badge.warn{background:var(--amber);color:#111}.pc-badge.bad{background:var(--red);color:#fff}
-.pc-info{padding:8px 10px}
-.pc-name{font-size:12.5px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:2px}
-.pc-tag{font-size:9px;color:var(--muted);font-weight:500}
-.pc-add{background:var(--card2);border:1.5px dashed var(--border);border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:pointer;min-height:140px;color:var(--green);font-size:12px;font-weight:700;transition:opacity .15s}
-.pc-add:active{opacity:.7}
-.pc-add span:first-child{font-size:24px}
-
-/* ── KONDISI ── */
-.hkond-item{display:flex;align-items:center;gap:9px;padding:8px 0;border-bottom:1px solid var(--border2)}
-.hkond-item:last-child{border-bottom:none}
-.hkond-name{font-size:12px;font-weight:600;color:var(--text);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.hkond-bar{width:52px;height:3px;background:var(--border2);border-radius:2px;overflow:hidden;flex-shrink:0}
-.hkond-barf{height:100%;border-radius:2px}
-.hkond-barf.good{background:var(--teal)}.hkond-barf.warn{background:var(--amber)}.hkond-barf.bad{background:var(--red)}
-
-/* ── FILTER CHIPS ── */
-.frow{display:flex;gap:6px;padding:0 16px 10px;overflow-x:auto;flex-shrink:0}
-.fchip{padding:6px 14px;border-radius:20px;border:1px solid var(--border);background:var(--card);font-size:11px;font-weight:600;cursor:pointer;color:var(--muted);white-space:nowrap;flex-shrink:0}
+/* filter chips */
+.frow{display:flex;gap:7px;padding:0 16px 10px;overflow-x:auto;flex-shrink:0}
+.fchip{padding:6px 14px;border-radius:20px;border:1.5px solid var(--border);background:var(--card);font-size:11.5px;font-weight:700;cursor:pointer;color:var(--muted);white-space:nowrap;flex-shrink:0;transition:.12s}
 .fchip.on{background:var(--green);color:#fff;border-color:var(--green)}
-[data-theme="light"] .fchip.on{color:#111}
+
+/* plant grid — screenshot img 2 */
 .gwrap{padding:0 16px}
-.fab{position:fixed;bottom:calc(var(--navh)+14px);right:calc(50% - 215px + 14px);width:50px;height:50px;border-radius:50%;background:var(--green);border:none;color:#111;font-size:22px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:20;box-shadow:0 4px 20px rgba(0,0,0,.35)}
-.fab:active{opacity:.85}
-@media(max-width:430px){#app{max-width:100%}.fab{right:14px}}
+.pgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:11px}
+.pcard{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;cursor:pointer;box-shadow:var(--sh);transition:opacity .15s}
+.pcard:active{opacity:.78}
+.pc-img{height:110px;display:flex;align-items:center;justify-content:center;font-size:52px;position:relative;overflow:hidden}
+/* colored backgrounds cycling */
+.pc-img.bg0{background:#e8f5e2}.pc-img.bg1{background:#fef3e2}.pc-img.bg2{background:#fce4ec}.pc-img.bg3{background:#e3f2fd}.pc-img.bg4{background:#f3e5f5}.pc-img.bg5{background:#e0f7fa}
+[data-theme="dark"] .pc-img.bg0{background:rgba(91,184,71,.12)}
+[data-theme="dark"] .pc-img.bg1{background:rgba(232,146,10,.1)}
+[data-theme="dark"] .pc-img.bg2{background:rgba(224,82,82,.1)}
+[data-theme="dark"] .pc-img.bg3{background:rgba(82,148,226,.1)}
+[data-theme="dark"] .pc-img.bg4{background:rgba(192,132,232,.1)}
+[data-theme="dark"] .pc-img.bg5{background:rgba(43,191,168,.1)}
+.pc-img img{width:100%;height:100%;object-fit:cover}
+.pc-badge{position:absolute;top:7px;right:7px;font-size:9px;font-weight:700;padding:3px 8px;border-radius:7px;border:1px solid}
+.pc-badge.good{background:var(--gp);color:var(--green);border-color:var(--gpb)}
+.pc-badge.warn{background:var(--amber-bg);color:var(--amber);border-color:var(--amber-ln)}
+.pc-badge.bad{background:var(--red-bg);color:var(--red);border-color:var(--red-ln)}
+.pc-info{padding:9px 11px 11px}
+.pc-name{font-size:12.5px;font-weight:700;color:var(--text);margin-bottom:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pc-sci{font-size:10px;color:var(--muted);margin-bottom:6px;font-style:italic;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pc-footer{display:flex;align-items:center;justify-content:space-between}
+.pc-dot-row{display:flex;align-items:center;gap:5px}
+.pc-dot{width:6px;height:6px;border-radius:50%}
+.pc-dot.good{background:var(--green)}.pc-dot.warn{background:var(--amber)}.pc-dot.bad{background:var(--red)}
+.pc-status{font-size:10px;font-weight:600}
+.pc-status.good{color:var(--green)}.pc-status.warn{color:var(--amber)}.pc-status.bad{color:var(--red)}
+.pc-pot{font-size:10px;color:var(--muted)}
+.pc-add{background:var(--card2);border:1.5px dashed var(--border);border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;cursor:pointer;min-height:152px;color:var(--green);font-size:12px;font-weight:700;transition:opacity .15s}
+.pc-add:active{opacity:.7}
+
+/* fab */
+@media(max-width:430px){#app{max-width:100%}}
+
 .empty{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:3rem 2rem;text-align:center}
 .empty-ico{font-size:2.8rem;opacity:.2;margin-bottom:.5rem}
-.empty-title{font-family:'Fraunces',serif;font-size:1.1rem;color:var(--text);margin-bottom:.3rem;font-style:italic}
-.empty-sub{font-size:.7rem;color:var(--muted);line-height:1.6;max-width:180px}
+.empty-title{font-size:1.05rem;font-weight:700;color:var(--text);margin-bottom:.3rem}
+.empty-sub{font-size:.7rem;color:var(--muted);line-height:1.6;max-width:190px}
 
-/* ── DETAIL PANEL ── */
+/* ══ DETAIL PANEL ══ */
 #detail{position:absolute;inset:0;z-index:60;background:var(--bg);display:flex;flex-direction:column;transform:translateX(100%);transition:transform .28s cubic-bezier(.4,0,.2,1);pointer-events:none;overflow:hidden}
 #detail.open{transform:translateX(0);pointer-events:all}
-.d-top{position:relative;flex-shrink:0;height:200px;overflow:hidden;background:var(--green)}
-.d-blur{position:absolute;inset:-10px;background-size:cover;background-position:center;filter:blur(20px) brightness(.4);transform:scale(1.1);z-index:0}
-.d-img{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:72px}
-.d-img img{width:100%;height:100%;object-fit:contain;position:relative;z-index:1;padding:10px;filter:drop-shadow(0 4px 16px rgba(0,0,0,.28));pointer-events:none}
-.d-back,.d-menu{position:absolute;z-index:10;width:34px;height:34px;border-radius:50%;background:rgba(0,0,0,.35);backdrop-filter:blur(8px);border:none;color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px}
-.d-back{top:12px;left:12px}.d-menu{top:12px;right:12px;font-size:18px}
+/* hero — screenshot img 3: large emoji on colored bg */
+.d-hero{position:relative;flex-shrink:0;height:200px;display:flex;align-items:center;justify-content:center;font-size:88px;overflow:hidden}
+.d-hero-blur{position:absolute;inset:0;background-size:cover;background-position:center;filter:blur(20px) brightness(.5);transform:scale(1.1)}
+.d-hero-img{position:relative;z-index:1;width:100%;height:100%;object-fit:contain;padding:12px}
+.d-hero-emoji{font-size:88px;position:relative;z-index:1}
+/* back + share + fav buttons */
+.d-back,.d-menu{position:absolute;z-index:10;top:12px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.85);backdrop-filter:blur(6px);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text);box-shadow:var(--sh);font-size:15px}
+[data-theme="dark"] .d-back,[data-theme="dark"] .d-menu{background:rgba(20,22,18,.7);color:var(--text)}
+.d-back{left:12px}
+.d-menu{right:12px;font-size:18px;letter-spacing:1px}
 .d-body{flex:1;overflow-y:auto}
-.d-pad{padding:13px 14px 4px}
-.d-action-row{display:flex;gap:8px;padding:8px 14px 12px}
-.d-btn-siram{flex:1;border-radius:12px;border:1px solid;cursor:pointer;padding:10px 12px;text-align:left;transition:opacity .15s}
-.d-btn-siram:active{opacity:.8}
-.d-btn-catat{flex:1;border-radius:12px;border:1px solid var(--border);background:var(--card);cursor:pointer;padding:10px 12px;text-align:left}
-.d-btn-siram.ok{background:var(--teal-bg);border-color:var(--teal-ln)}
-.d-btn-siram.warn{background:var(--amber-bg);border-color:var(--amber-ln)}
-.d-btn-siram.urgent{background:var(--red-bg);border-color:var(--red-ln)}
-.dbs-top{display:flex;align-items:center;gap:5px;margin-bottom:2px}
-.dbs-ico{font-size:17px;line-height:1;flex-shrink:0}
-.dbs-title{font-size:11px;font-weight:800;line-height:1.2}
-.d-btn-siram.ok .dbs-title{color:var(--teal)}.d-btn-siram.warn .dbs-title{color:var(--amber)}.d-btn-siram.urgent .dbs-title{color:var(--red)}.d-btn-catat .dbs-title{color:var(--text)}
-.dbs-sub{font-size:8px;color:var(--muted);line-height:1.3;padding-left:2px}
-.d-name{font-family:'Fraunces',serif;font-size:22px;font-weight:700;color:var(--green);margin-bottom:5px;line-height:1.2;font-style:italic}
-.d-tags{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px}
-.dtag{font-size:9px;font-weight:700;padding:3px 8px;border-radius:6px;background:var(--gp);color:var(--green);border:1px solid rgba(102,187,106,.2)}
-.d-sec-t{font-size:8px;font-weight:800;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);margin-bottom:6px}
-.d-notes-box{background:var(--card2);border-radius:9px;border:1px solid var(--border);padding:9px 11px;font-size:11px;color:var(--text);line-height:1.65;margin-bottom:4px}
+
+/* plant name + sci */
+.d-pad{padding:14px 16px 4px}
+.d-name{font-size:22px;font-weight:800;color:var(--text);margin-bottom:2px;letter-spacing:-.3px}
+.d-sci{font-size:12px;color:var(--muted);margin-bottom:12px;font-style:italic}
+
+/* detail tabs — screenshot img 3: Info/Catatan/Perawatan/Jadwal */
+.d-tabs{display:flex;gap:7px;padding:0 16px 12px;overflow-x:auto;flex-shrink:0}
+.dtab{padding:7px 16px;border-radius:20px;border:1.5px solid var(--border);background:var(--card2);font-size:12px;font-weight:700;cursor:pointer;color:var(--muted);white-space:nowrap;flex-shrink:0;transition:.12s}
+.dtab.on{background:var(--green);color:#fff;border-color:var(--green)}
+
+/* info tab: 6-tile grid — screenshot img 3 */
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.info-tile{background:var(--card);border-radius:12px;padding:11px 13px;border:1px solid var(--border)}
+.info-tile-lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:4px}
+.info-tile-val{font-size:13px;font-weight:600;color:var(--text)}
+.info-tile-val.good{color:var(--green)}.info-tile-val.warn{color:var(--amber)}.info-tile-val.bad{color:var(--red)}
+
+/* kebutuhan dasar */
+.kdb-section{margin-bottom:4px}
+.kdb-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:8px}
+.kdb-item{background:var(--card);border-radius:11px;padding:10px 12px;display:flex;align-items:center;gap:10px;border:1px solid var(--border);margin-bottom:6px}
+.kdb-ico{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.kdb-ico.water{background:var(--blue-bg);border:1px solid rgba(26,95,180,.18)}
+.kdb-ico.sun{background:#fef3e2;border:1px solid rgba(176,106,0,.18)}
+[data-theme="dark"] .kdb-ico.sun{background:var(--amber-bg);border-color:var(--amber-ln)}
+.kdb-txt{font-size:12px;color:var(--text);font-weight:500}
+
+/* care log in Perawatan tab */
+.care-log-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border2)}
+.care-log-item:last-child{border-bottom:none}
+.care-log-ico{width:32px;height:32px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.care-log-body{flex:1}
+.care-log-title{font-size:12.5px;font-weight:600;color:var(--text)}
+.care-log-date{font-size:10.5px;color:var(--muted);margin-top:1px}
+.care-btn-row{display:flex;gap:8px;margin-bottom:12px}
+.care-btn{flex:1;padding:10px;border-radius:11px;border:none;cursor:pointer;font-size:12px;font-weight:700;font-family:'Nunito',sans-serif;transition:.12s}
+.care-btn.water{background:var(--blue-bg);color:var(--blue);border:1px solid rgba(26,95,180,.22)}
+.care-btn.fert{background:var(--gp);color:var(--green);border:1px solid var(--gpb)}
+.care-btn.prune{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-ln)}
+.care-btn:active{opacity:.8}
+
+/* schedule tab */
+.sched-item{background:var(--card);border-radius:12px;padding:11px 13px;display:flex;align-items:center;justify-content:space-between;border:1px solid var(--border);margin-bottom:7px}
+.sched-left{display:flex;align-items:center;gap:9px}
+.sched-ico{font-size:18px}
+.sched-name{font-size:12.5px;font-weight:700;color:var(--text)}
+.sched-next{font-size:10px;color:var(--muted);margin-top:2px}
+.sched-badge{font-size:9px;font-weight:700;padding:3px 9px;border-radius:7px;border:1px solid}
+.sched-badge.active{background:var(--gp);color:var(--green);border-color:var(--gpb)}
+.sched-badge.inactive{background:var(--card2);color:var(--muted);border-color:var(--border)}
+
+/* riwayat / mji */
 .mji{display:flex;align-items:center;gap:9px;padding:7px 0;border-bottom:1px solid var(--border2)}
 .mji:last-child{border-bottom:none}
-.mji-ico{width:28px;height:28px;border-radius:8px;background:var(--gp);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+.mji-ico{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
 .mji-txt{font-size:11.5px;font-weight:500;color:var(--text);flex:1}
 .mji-dt{font-size:9.5px;color:var(--muted);margin-top:1px}
-.mji-tag{flex-shrink:0;font-size:9px;font-weight:700;padding:2px 7px;border-radius:5px;background:var(--card2);color:var(--muted)}
-.rw-empty{font-size:11px;color:var(--muted);text-align:center;padding:12px 0}
-.tl-grid{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;margin-top:7px;-webkit-overflow-scrolling:touch}
-.tl-item{width:76px;height:76px;border-radius:9px;overflow:hidden;position:relative;background:var(--gp);flex-shrink:0}
+.mji-tag{flex-shrink:0;font-size:9px;font-weight:700;padding:2px 7px;border-radius:6px}
+.rw-empty{font-size:11px;color:var(--muted);text-align:center;padding:12px 0;font-style:italic}
+
+/* d-notes */
+.d-notes-box{background:var(--card);border-radius:11px;border:1px solid var(--border);padding:10px 12px;font-size:12px;color:var(--text);line-height:1.65;margin-bottom:4px}
+.d-sec-t{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:7px}
+
+/* tl grid */
+.tl-grid{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;margin-top:7px}
+.tl-item{width:76px;height:76px;border-radius:10px;overflow:hidden;position:relative;background:var(--gp);flex-shrink:0}
 .tl-item img{width:100%;height:100%;object-fit:cover}
 .tl-dt{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.6));padding:3px 5px 2px;font-size:7px;color:#fff;font-weight:600}
-.tl-del{position:absolute;top:3px;right:3px;width:18px;height:18px;border-radius:50%;background:rgba(0,0,0,.5);border:none;color:#fff;font-size:8px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.tl-del{position:absolute;top:3px;right:3px;width:18px;height:18px;border-radius:50%;background:rgba(0,0,0,.45);border:none;color:#fff;font-size:8px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.tl-add-inline{width:78px;height:78px;border-radius:10px;background:var(--gp);border:1.5px dashed var(--gpb);flex-shrink:0;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:opacity .15s}
+.tl-add-inline:active{opacity:.7}
 .tl-add-btn{width:100%;padding:8px;border-radius:9px;border:1.5px dashed var(--green);background:var(--gp);color:var(--green);font-size:11.5px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px}
 .more-btn{width:100%;padding:8px;margin-top:5px;border:1px solid var(--border);border-radius:9px;background:none;font-size:11.5px;color:var(--green);font-weight:700;cursor:pointer}
 
-/* ── SCAN ── */
-.cam-zone{margin:0 16px;height:200px;border-radius:var(--r);background:#0d1810;overflow:hidden;position:relative;cursor:pointer;flex-shrink:0}
-.cam-ov{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
-.cam-ring{width:60px;height:60px;border-radius:50%;border:2px solid rgba(255,255,255,.35);display:flex;align-items:center;justify-content:center;font-size:22px;background:rgba(255,255,255,.08)}
-.cam-lbl{color:rgba(255,255,255,.85);font-size:13px;font-weight:600}
-.cam-sub{color:rgba(255,255,255,.4);font-size:10px}
+/* ══ SCAN ══ — screenshot img 4 */
+.scan-zone{margin:16px 16px 0;background:var(--card);border-radius:18px;height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;border:2px dashed var(--border);cursor:pointer;position:relative;overflow:hidden}
+.scan-zone.has-img{border-style:solid;border-color:var(--gpb)}
+.scan-cam-ico{width:60px;height:60px;border-radius:50%;background:var(--gp);border:2px solid var(--gpb);display:flex;align-items:center;justify-content:center;font-size:26px}
 .cam-thumb{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none}
-.cc{position:absolute;width:18px;height:18px;border-color:rgba(255,255,255,.25);border-style:solid}
-.cc-tl{top:9px;left:9px;border-width:2px 0 0 2px}.cc-tr{top:9px;right:9px;border-width:2px 2px 0 0}
-.cc-bl{bottom:9px;left:9px;border-width:0 0 2px 2px}.cc-br{bottom:9px;right:9px;border-width:0 2px 2px 0}
+.cam-lbl{font-size:13px;color:var(--text);font-weight:600}
+.cam-sub{font-size:10.5px;color:var(--muted)}
+.scan-btn-g{width:100%;padding:12px;border-radius:12px;border:none;background:var(--green);color:#fff;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;transition:.15s}
+.scan-btn-o{width:100%;padding:12px;border-radius:12px;border:1.5px solid var(--border);background:var(--card);color:var(--text);font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;transition:.15s}
+.scan-btn-g:disabled,.scan-btn-o:disabled{opacity:.45;cursor:not-allowed}
+.scan-btn-g:active:not(:disabled),.scan-btn-o:active:not(:disabled){opacity:.85}
+.scan-tip{margin:0 16px;background:var(--card2);border-radius:11px;padding:9px 12px;font-size:11px;color:var(--muted);line-height:1.55;text-align:center;border:1px solid var(--border)}
 .scan-hist-item{display:flex;align-items:center;gap:9px;padding:8px 0;border-bottom:1px solid var(--border2)}
 .scan-hist-item:last-child{border-bottom:none}
-.shi-img{width:36px;height:36px;border-radius:8px;object-fit:cover;background:var(--gp);flex-shrink:0}
+.shi-img{width:36px;height:36px;border-radius:9px;object-fit:cover;background:var(--gp);flex-shrink:0}
 .shi-name{font-size:11.5px;font-weight:700;color:var(--text)}.shi-conf{font-size:10px;color:var(--muted)}.shi-dt{font-size:10px;color:var(--muted);margin-left:auto;flex-shrink:0}
 
-/* ── PLANT CHECK ── */
+/* ══ DIAGNOSA (was check) — screenshot img 5 ══ */
+.diag-header{padding:14px 16px 0}
+.diag-h1{font-size:22px;font-weight:800;color:var(--text);margin-bottom:3px;letter-spacing:-.3px}
+.diag-sub{font-size:12px;color:var(--muted)}
+/* weekly tip */
+.weekly-tip{margin:12px 16px;background:var(--gp);border-radius:13px;padding:12px 14px;border:1px solid var(--gpb)}
+.weekly-tip-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--green);margin-bottom:4px}
+.weekly-tip-body{font-size:12px;color:var(--green);line-height:1.6}
+/* plant status cards */
+.pstatus-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:0 16px 8px}
+.pstatus-card{background:var(--card);border-radius:14px;border:1px solid var(--border);margin:0 16px 10px;overflow:hidden;box-shadow:var(--sh)}
+.pstatus-hd{display:flex;align-items:center;justify-content:space-between;padding:11px 13px;border-bottom:1px solid var(--border2)}
+.pstatus-hd-left{display:flex;align-items:center;gap:9px}
+.pstatus-emoji{font-size:22px}
+.pstatus-name{font-size:13px;font-weight:700;color:var(--text)}
+.pstatus-time{font-size:10px;color:var(--muted);margin-top:1px}
+.pstatus-badge{font-size:9.5px;font-weight:700;padding:4px 10px;border-radius:7px;border:1px solid}
+.pstatus-badge.good{background:var(--gp);color:var(--green);border-color:var(--gpb)}
+.pstatus-badge.warn{background:var(--amber-bg);color:var(--amber);border-color:var(--amber-ln)}
+.pstatus-badge.bad{background:var(--red-bg);color:var(--red);border-color:var(--red-ln)}
+/* symptom rows inside card */
+.symptom-row{display:flex;align-items:center;justify-content:space-between;padding:7px 13px;border-bottom:1px solid var(--border2)}
+.symptom-row:last-child{border-bottom:none}
+.symptom-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-right:7px}
+.symptom-txt{font-size:11.5px;color:var(--text);flex:1}
+.symptom-cause{font-size:10.5px;color:var(--muted)}
+.symptom-cause.good{color:var(--green)}.symptom-cause.warn{color:var(--amber)}.symptom-cause.bad{color:var(--red)}
+/* diagnosa symptom selector (old check UI – used if no plant data) */
 .sym-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;padding:0 16px}
-.sym-card{background:var(--card);border-radius:12px;padding:11px 7px;text-align:center;border:1px solid var(--border);cursor:pointer;transition:.12s}
-.sym-card:active{opacity:.8}
+.sym-card{background:var(--card);border-radius:12px;padding:11px 7px;text-align:center;border:1.5px solid var(--border);cursor:pointer;transition:.12s}
 .sym-card.on{border-color:var(--green);background:var(--gp)}
 .sym-ico{font-size:22px;margin-bottom:4px}
 .sym-lbl{font-size:9.5px;font-weight:700;color:var(--text);line-height:1.3}
 .sym-card.on .sym-lbl{color:var(--green)}
 .chk-btn-wrap{padding:10px 16px 0}
 .pc-btn{width:100%;padding:12px;border-radius:12px;border:none;background:var(--green);color:#fff;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px}
-[data-theme="light"] .pc-btn{color:#111}
 .pc-btn:disabled{background:var(--card2);color:var(--muted);cursor:not-allowed}
 .pc-reset{width:100%;padding:9px;border-radius:11px;border:1px solid var(--border);background:none;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;margin-top:7px}
 .chk-res{margin:12px 16px 0}
-.diag-block{background:var(--card);border-radius:var(--r);overflow:hidden;border:1px solid var(--border);box-shadow:var(--sh);margin-bottom:10px}
-.diag-hd{padding:11px 13px;background:var(--green);display:flex;align-items:center;gap:9px}
-[data-theme="dark"] .diag-hd{background:var(--gp);border-bottom:1px solid rgba(102,187,106,.15)}
-.diag-hd-ico{font-size:20px}
-.diag-hd-title{font-family:'Fraunces',serif;font-size:14px;color:#fff;font-weight:700;font-style:italic}
-.diag-hd-sub{font-size:9px;color:rgba(255,255,255,.65);margin-top:1px}
-[data-theme="dark"] .diag-hd-title{color:var(--green)}.diag-hd-sub.dk{color:var(--muted)}
+.diag-block{background:var(--card);border-radius:var(--r);overflow:hidden;border:1px solid var(--border);margin-bottom:10px;box-shadow:var(--sh)}
+.diag-hd{padding:11px 13px;background:var(--gp);display:flex;align-items:center;gap:9px;border-bottom:1px solid var(--gpb)}
+.diag-hd-ico{font-size:19px}
+.diag-hd-title{font-size:13.5px;font-weight:700;color:var(--green)}
+.diag-hd-sub{font-size:9px;color:var(--green);opacity:.7;margin-top:1px}
 .diag-body{padding:11px 13px}
 .cause-item{padding:9px 11px;border-radius:10px;border:1px solid var(--border);background:var(--card2);margin-bottom:7px}
 .cause-item:last-child{margin-bottom:0}
 .cause-name{font-size:12px;font-weight:700;color:var(--text);margin-bottom:3px}
 .cause-sol{font-size:11px;color:var(--muted);line-height:1.5}
 
-/* ── JOURNAL ── */
-.j-tabs{display:flex;background:var(--card2);border-radius:11px;padding:3px;gap:3px;margin:0 16px 10px;border:1px solid var(--border);flex-shrink:0}
-.jtab{flex:1;padding:7px;border-radius:8px;border:none;background:none;font-size:12px;font-weight:600;cursor:pointer;color:var(--muted)}
-.jtab.on{background:var(--card);color:var(--text);box-shadow:0 1px 4px rgba(0,0,0,.08)}
+/* ══ JURNAL ══ */
+.j-tabs{display:flex;gap:7px;padding:0 16px 10px;flex-shrink:0}
+.jtab{flex:1;padding:8px;border-radius:20px;border:1.5px solid var(--border);background:var(--card);font-size:12px;font-weight:700;cursor:pointer;color:var(--muted);text-align:center;transition:.12s}
+.jtab.on{background:var(--green);color:#fff;border-color:var(--green)}
 .jnl-list{padding:0 16px}
-.jitem{display:flex;gap:9px;padding:9px 0;border-bottom:1px solid var(--border2)}
+.jitem{display:flex;gap:9px;padding:10px 0;border-bottom:1px solid var(--border2)}
 .jitem:last-child{border-bottom:none}
-.j-date{width:32px;text-align:center;flex-shrink:0;font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;line-height:1.3}
+.j-date{width:32px;text-align:center;flex-shrink:0;font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;line-height:1.4}
 .j-dot-col{display:flex;flex-direction:column;align-items:center}
 .j-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:2px}
 .j-line{width:1px;background:var(--border);flex:1;margin-top:3px}
 .j-con{flex:1}
-.j-plant{font-size:12.5px;font-weight:600;color:var(--text);margin-bottom:2px}
+.j-plant{font-size:12.5px;font-weight:700;color:var(--text);margin-bottom:2px}
 .j-note{font-size:11px;color:var(--muted);line-height:1.5;margin-top:2px}
-.j-tag{display:inline-block;font-size:9px;font-weight:700;padding:2px 7px;border-radius:5px}
+.j-tag{display:inline-block;font-size:9px;font-weight:700;padding:2px 7px;border-radius:6px}
 .jbtns{display:flex;gap:5px;margin-top:5px}
 .jbtn{background:none;border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-size:10px;font-weight:600;cursor:pointer;color:var(--muted)}
 .tw{background:var(--blue-bg);color:var(--blue)}.tf{background:var(--teal-bg);color:var(--teal)}
 .tp{background:var(--amber-bg);color:var(--amber)}.tr{background:var(--purple-bg);color:var(--purple)}
 .tn{background:var(--gp);color:var(--green)}.td{background:var(--red-bg);color:var(--red)}
 
-/* ── STATS ── */
-.streak-card{background:var(--green);border-radius:var(--r);padding:14px 16px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:2px;margin:0 16px 10px;box-shadow:var(--sh)}
-[data-theme="dark"] .streak-card{background:var(--gp);border:1px solid rgba(102,187,106,.15)}
-.streak-num{font-family:'Fraunces',serif;font-size:28px;font-weight:700;color:#fff;line-height:1}
-.streak-title{color:#fff;font-size:12px;font-weight:700;margin-top:2px}
-.streak-sub{color:rgba(255,255,255,.6);font-size:10px}
-[data-theme="dark"] .streak-num,.streak-title.dk{color:var(--green)!important}
-.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:0 16px 10px}
-.sg-card{background:var(--card);border-radius:11px;padding:9px 8px;text-align:center;border:1px solid var(--border);box-shadow:var(--sh)}
-.sg-ico{font-size:17px;margin-bottom:3px}
-.sg-num{font-family:'Fraunces',serif;font-size:19px;font-weight:700;color:var(--green);line-height:1}
-.sg-lbl{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;color:var(--muted);margin-top:2px}
-.chart-section{padding:0 16px}
-.chart-row{display:flex;align-items:center;gap:7px;margin-bottom:7px}
-.chart-lbl{font-size:11px;color:var(--text);width:62px;flex-shrink:0;display:flex;align-items:center;gap:4px}
-.chart-bg{flex:1;height:6px;background:var(--card2);border-radius:3px;overflow:hidden}
-.chart-bar{height:100%;border-radius:3px;transition:width .6s cubic-bezier(.4,0,.2,1)}
-.chart-val{font-size:11px;font-weight:600;color:var(--muted);width:20px;text-align:right}
+/* STATISTIK — screenshot img 6 */
+.stats-period{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);padding:0 16px;margin-bottom:10px}
+.stat4-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;padding:0 16px;margin-bottom:14px}
+.stat4{background:var(--card);border-radius:13px;padding:13px 14px;border:1px solid var(--border);box-shadow:var(--sh)}
+.stat4-n{font-size:24px;font-weight:800;color:var(--text);line-height:1;margin-bottom:3px}
+.stat4-l{font-size:10.5px;color:var(--muted);font-weight:500}
+.jenis-section{padding:0 16px;margin-bottom:14px}
+.jenis-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:9px}
+.jenis-row{display:flex;align-items:center;gap:9px;margin-bottom:7px}
+.jenis-lbl{font-size:12px;color:var(--text);width:58px;flex-shrink:0}
+.jenis-bar-bg{flex:1;height:7px;background:var(--card2);border-radius:4px;overflow:hidden}
+.jenis-bar{height:100%;border-radius:4px;transition:width .5s}
+.jenis-val{font-size:11px;color:var(--muted);width:18px;text-align:right;flex-shrink:0}
+.top-plant-section{padding:0 16px;margin-bottom:14px}
+.top-plant-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:9px}
+.top-plant-row{display:flex;align-items:center;gap:9px;margin-bottom:8px;background:var(--card);border-radius:11px;padding:9px 11px;border:1px solid var(--border)}
+.tp-emoji{font-size:20px;width:30px;flex-shrink:0}
+.tp-info{flex:1;min-width:0}
+.tp-name{font-size:12px;font-weight:700;color:var(--text)}
+.tp-bar-bg{height:4px;background:var(--card2);border-radius:2px;overflow:hidden;margin-top:4px}
+.tp-bar{height:100%;background:var(--green);border-radius:2px}
+.tp-count{font-size:11px;font-weight:700;color:var(--green);flex-shrink:0}
 
-/* ── BOTTOM NAV ── */
-#bnav{height:var(--navh);background:var(--card);border-top:1px solid var(--border);display:flex;align-items:stretch;flex-shrink:0;z-index:30;padding-bottom:env(safe-area-inset-bottom,0)}
-.ni{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border:none;background:none;cursor:pointer;color:var(--muted);padding:8px 0 5px;position:relative;transition:.12s}
-.ni svg{width:20px;height:20px;stroke:var(--muted);fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;transition:.12s}
-.ni-lbl{font-size:9px;font-weight:700;letter-spacing:.02em;color:var(--muted);transition:.12s;text-transform:uppercase}
-.ni.active .ni-lbl{color:var(--green)}
+/* ══ BOTTOM NAV ══ */
+#bnav{height:var(--navh);background:var(--card);border-top:1px solid var(--border);display:flex;align-items:flex-start;padding-top:8px;flex-shrink:0;z-index:30;padding-bottom:env(safe-area-inset-bottom,0);position:relative}
+.nav-fab{width:48px;height:48px;border-radius:50%;background:var(--green);border:none;color:#fff;font-size:22px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;box-shadow:0 2px 12px rgba(45,122,31,.3);margin-top:-12px;transition:.15s}
+.nav-fab:active{opacity:.85;transform:scale(.94)}
+.ni{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;border:none;background:none;cursor:pointer;padding:0 4px;position:relative;transition:.12s}
+.ni svg{width:22px;height:22px;stroke:var(--muted);fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;transition:.12s}
+.ni-lbl{font-size:9px;font-weight:700;color:var(--muted);letter-spacing:.01em;transition:.12s}
 .ni.active svg{stroke:var(--green)}
-.ni.active::after{content:'';position:absolute;bottom:4px;left:50%;transform:translateX(-50%);width:4px;height:4px;border-radius:50%;background:var(--green)}
+.ni.active .ni-lbl{color:var(--green)}
+.ni.active::after{content:'';position:absolute;bottom:-5px;left:50%;transform:translateX(-50%);width:18px;height:2.5px;border-radius:1.5px;background:var(--green)}
 
-/* ── OVERLAYS ── */
-.ov{position:absolute;inset:0;z-index:90;background:rgba(0,0,0,.5);backdrop-filter:blur(5px);display:none;align-items:flex-end;justify-content:center;pointer-events:none}
+/* ══ OVERLAYS ══ */
+.ov{position:absolute;inset:0;z-index:90;background:rgba(0,0,0,.4);backdrop-filter:blur(5px);display:none;align-items:flex-end;justify-content:center;pointer-events:none}
 .ov.open{display:flex;pointer-events:all}
-.sheet{background:var(--card);border-radius:18px 18px 0 0;width:100%;max-width:430px;max-height:90vh;overflow-y:auto;padding:0 16px 40px;border-top:1px solid var(--border);animation:shUp .24s cubic-bezier(.4,0,.2,1)}
+.sheet{background:var(--card);border-radius:20px 20px 0 0;width:100%;max-width:430px;max-height:90vh;overflow-y:auto;padding:0 16px 40px;border-top:1px solid var(--border);animation:shUp .24s cubic-bezier(.4,0,.2,1)}
 @keyframes shUp{from{transform:translateY(50%)}to{transform:translateY(0)}}
 .sh-handle{width:32px;height:4px;background:var(--border);border-radius:2px;margin:12px auto 16px}
 .sh-hd{display:flex;align-items:center;gap:10px;margin-bottom:14px}
 .sh-back{background:none;border:none;font-size:18px;cursor:pointer;color:var(--muted);padding:2px 4px}
-.sh-title{font-family:'Fraunces',serif;font-size:17px;font-weight:700;color:var(--text);font-style:italic}
+.sh-title{font-size:17px;font-weight:800;color:var(--text)}
+
+/* forms */
 .fg{margin-bottom:13px}
 .fl{font-size:.58rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin-bottom:.4rem;display:block}
-.fi{width:100%;padding:.7rem 1rem;border:1px solid var(--border);border-radius:var(--rs);font-size:13px;color:var(--text);background:var(--bg2);outline:none;transition:.2s;height:46px}
+.fi{width:100%;padding:.7rem 1rem;border:1.5px solid var(--border);border-radius:var(--rs);font-size:13px;color:var(--text);background:var(--bg2);outline:none;transition:.2s;height:46px}
 .fi:focus{border-color:var(--green)}
-.fsel{width:100%;padding:.7rem 1rem;border:1px solid var(--border);border-radius:var(--rs);font-size:13px;color:var(--text);background:var(--bg2);outline:none;cursor:pointer;appearance:none;height:46px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 13px center;padding-right:34px}
-.fta{width:100%;padding:.7rem 1rem;border:1px solid var(--border);border-radius:var(--rs);font-size:13px;color:var(--text);background:var(--bg2);outline:none;resize:none;min-height:76px;transition:.2s}
+.fsel{width:100%;padding:.7rem 1rem;border:1.5px solid var(--border);border-radius:var(--rs);font-size:13px;color:var(--text);background:var(--bg2);outline:none;cursor:pointer;appearance:none;height:46px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 13px center;padding-right:34px}
+.fta{width:100%;padding:.7rem 1rem;border:1.5px solid var(--border);border-radius:var(--rs);font-size:13px;color:var(--text);background:var(--bg2);outline:none;resize:none;min-height:76px;transition:.2s}
 .fta:focus{border-color:var(--green)}
 .frow2{display:flex;gap:8px}.frow2 .fg{flex:1}
 .img-up{border:1.5px dashed var(--border);border-radius:var(--rs);text-align:center;cursor:pointer;position:relative;background:var(--bg2);min-height:80px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;overflow:hidden}
@@ -360,27 +421,25 @@ button,input,select,textarea{font-family:'Plus Jakarta Sans',sans-serif}
 .iuico{font-size:22px;opacity:.3;display:block;margin-bottom:4px}
 .iutxt{font-size:11px;color:var(--muted)}
 .submt{width:100%;padding:12px;border-radius:12px;border:none;background:var(--green);color:#fff;font-size:13.5px;font-weight:700;cursor:pointer;margin-top:4px}
-[data-theme="light"] .submt{color:#111}
 .submt:active{opacity:.9}
 .emoji-row{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
-.emoji-opt{font-size:19px;padding:5px 7px;border-radius:8px;border:1px solid var(--border);background:var(--bg2);cursor:pointer}
+.emoji-opt{font-size:19px;padding:5px 7px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg2);cursor:pointer}
 .emoji-opt.on{background:var(--gp);border-color:var(--green)}
 #newTypeWrap{margin-top:8px}
 
-/* ── LIGHTBOX ── */
+/* lightbox */
 #lb{position:fixed;inset:0;z-index:9990;background:rgba(0,0,0,.92);display:none;flex-direction:column;align-items:center;justify-content:center;padding:20px;gap:10px}
 #lb.open{display:flex}
 #lb img{max-width:100%;max-height:75vh;border-radius:9px;object-fit:contain}
 .lb-dt{color:rgba(255,255,255,.45);font-size:12px}
 .lb-close{position:absolute;top:14px;right:14px;background:rgba(255,255,255,.12);border:none;color:#fff;width:32px;height:32px;border-radius:50%;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center}
 
-/* ── TOAST ── */
-#toast{position:fixed;bottom:calc(var(--navh)+14px);left:50%;transform:translateX(-50%) translateY(0);max-width:340px;width:calc(100% - 32px);padding:11px 16px;border-radius:13px;font-size:13px;font-weight:600;z-index:9999;display:none;box-shadow:0 8px 32px rgba(0,0,0,.2);transition:opacity .25s,transform .25s;pointer-events:none;text-align:center}
-#toast.t-ok{background:#1b5e20;color:#fff}
-[data-theme="light"] #toast.t-ok{background:#43a047;color:#fff}
+/* toast */
+#toast{position:fixed;bottom:calc(var(--navh)+14px);left:50%;transform:translateX(-50%);max-width:340px;width:calc(100% - 32px);padding:11px 16px;border-radius:13px;font-size:13px;font-weight:700;z-index:9999;display:none;pointer-events:none;text-align:center}
+#toast.t-ok{background:var(--green);color:#fff}
 #toast.t-err{background:var(--red);color:#fff}
-#toast.t-info{background:#1565c0;color:#fff}
-#toast.t-warn{background:var(--amber);color:#111}
+#toast.t-info{background:var(--blue);color:#fff}
+#toast.t-warn{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-ln)}
 #toast.t-show{display:block;animation:tIn .25s cubic-bezier(.34,1.56,.64,1)}
 @keyframes tIn{from{opacity:0;transform:translateX(-50%) translateY(8px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
 </style>
@@ -405,7 +464,7 @@ button,input,select,textarea{font-family:'Plus Jakarta Sans',sans-serif}
 
 <!-- HEADER -->
 <div id="hd">
-  <div class="logo">Tanduran</div>
+  <div class="logo">🌿 Tanduran</div>
   <div class="hdr">
     <button class="hbtn" id="themeBtn" onclick="toggleTheme()" title="Ganti tema">🌙</button>
     <div class="uchip" id="uchip" onclick="showAccMenu()">👤 <span id="uLabel">—</span></div>
@@ -414,26 +473,35 @@ button,input,select,textarea{font-family:'Plus Jakarta Sans',sans-serif}
 
 <!-- BERANDA -->
 <div class="scr on" id="scr-home">
-  <div class="home-header">
-    <div class="home-date" id="homeDate">—</div>
-    <div class="home-greeting" id="heroGr">Tanamanmu siap dirawat.</div>
-  </div>
-  <div class="home-stats" id="homeStats">
-    <div class="hstat neu"><div class="hstat-n" id="hstatTotal">0</div><div class="hstat-l">Tanaman</div></div>
-    <div class="hstat neu" id="hstatSiramWrap"><div class="hstat-n" id="hstatSiram">0</div><div class="hstat-l">Siram</div></div>
-    <div class="hstat neu" id="hstatPupukWrap"><div class="hstat-n" id="hstatPupuk">0</div><div class="hstat-l">Pupuk</div></div>
+  <!-- kebun card -->
+  <div class="kebun-card" id="kebunCard">
+    <div class="kebun-title" id="kebunTitle">Kebun Digital-mu</div>
+    <div class="kebun-sub" id="kebunSub">0 tanaman</div>
+    <div class="kebun-stats" id="kebunStats">
+      <div class="kstat"><div class="kstat-n" id="kstatSehat">0</div><div class="kstat-l">Sehat</div></div>
+      <div class="kstat"><div class="kstat-n warn" id="kstatPerhatian">0</div><div class="kstat-l warn">Perhatian</div></div>
+      <div class="kstat"><div class="kstat-n bad" id="kstatKritis">0</div><div class="kstat-l bad">Kritis</div></div>
+    </div>
   </div>
   <div id="homeAlertWrap"></div>
+  <!-- tip -->
   <div class="tip-card">
     <div class="tip-ico" id="tipIco">🌿</div>
     <div><div class="tip-title" id="tipT">Tips Hari Ini</div><div class="tip-body" id="tipB">Memuat...</div></div>
   </div>
+  <!-- pengingat -->
   <div class="home-sec" id="homeTindakan" style="display:none">
-    <div class="sec-hd"><span class="sec-title">⚡ Siram Sekarang</span></div>
+    <div class="sec-hd"><span class="sec-title">🔔 Pengingat Hari Ini</span></div>
     <div id="homeTindakanList"></div>
   </div>
+  <!-- tanaman terakhir -->
   <div class="home-sec">
-    <div class="sec-hd"><span class="sec-title">Koleksi</span><button class="see-all" onclick="showScr('plants')">Lihat semua →</button></div>
+    <div class="sec-hd"><span class="sec-title">Tanaman Terakhir Dilihat</span><button class="see-all" onclick="showScr('plants')">Lihat semua →</button></div>
+  </div>
+  <div class="recent-scroll" id="recentScroll"></div>
+  <!-- koleksi list -->
+  <div class="home-sec">
+    <div class="sec-hd"><span class="sec-title">Koleksi</span></div>
     <div id="homeGrid"></div>
   </div>
   <div style="height:8px"></div>
@@ -441,7 +509,14 @@ button,input,select,textarea{font-family:'Plus Jakarta Sans',sans-serif}
 
 <!-- KOLEKSI -->
 <div class="scr" id="scr-plants">
-  <div class="scr-hd"><div class="scr-title">Koleksiku</div></div>
+  <div style="padding:14px 16px 4px">
+    <div style="font-size:22px;font-weight:800;color:var(--text);letter-spacing:-.3px">Koleksiku</div>
+  </div>
+  <!-- search -->
+  <div class="search-bar">
+    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input type="text" placeholder="Cari tanaman..." id="searchInput" oninput="filterPlants(this.value)">
+  </div>
   <div class="frow" id="fRow"></div>
   <div class="gwrap">
     <div class="pgrid" id="pGrid"></div>
@@ -451,54 +526,69 @@ button,input,select,textarea{font-family:'Plus Jakarta Sans',sans-serif}
       <div class="empty-sub">Tambah tanaman pertama dan mulai pantau perawatannya</div>
     </div>
   </div>
-  <button class="fab" onclick="openAddPlant()">＋</button>
 </div>
 
 <!-- SCAN -->
 <div class="scr" id="scr-scan">
-  <div class="scr-hd"><div class="scr-title">Identifikasi</div></div>
-  <div class="cam-zone" id="camZone" onclick="triggerCam()">
+  <div style="padding:14px 16px 4px;font-size:22px;font-weight:800;color:var(--text);letter-spacing:-.3px">Scan Tanaman</div>
+  <div class="scan-zone" id="camZone" onclick="triggerCam()">
     <img class="cam-thumb" id="camThumb" alt="">
-    <div class="cam-ov" id="camOv">
-      <div class="cam-ring">📷</div>
-      <div class="cam-lbl">Foto Tanaman</div>
-      <div class="cam-sub">Tap untuk pilih foto</div>
+    <div id="camOv" style="display:flex;flex-direction:column;align-items:center;gap:8px">
+      <div class="scan-cam-ico">📷</div>
+      <div class="cam-lbl">Tap untuk scan tanaman</div>
+      <div class="cam-sub">Atau upload foto dari galeri</div>
     </div>
-    <div class="cc cc-tl"></div><div class="cc cc-tr"></div>
-    <div class="cc cc-bl"></div><div class="cc cc-br"></div>
   </div>
   <input type="file" id="camFile" accept="image/*" style="display:none" onchange="onCamFile(event)">
-  <div style="padding:10px 16px 0">
-    <button class="submt" id="scanBtn" onclick="doScan()" disabled style="opacity:.45">
+  <div style="padding:10px 16px 8px">
+    <button class="scan-btn-g" id="scanBtn" onclick="doScan()" disabled style="width:100%">
       <span id="scanBtnTxt">🔍 Pilih foto dulu</span>
     </button>
   </div>
+  <div class="scan-tip">Identifikasi menggunakan AI · Akurasi terbaik dengan pencahayaan baik dan tampak penuh tanaman</div>
   <div id="scanResult" style="padding:0 16px;margin-top:10px"></div>
-  <div style="padding:0 16px;margin-top:10px">
+  <div style="padding:0 16px;margin-top:12px">
     <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:8px">Riwayat Scan</div>
     <div id="scanHist"></div>
   </div>
 </div>
 
-<!-- PLANT CHECK -->
+<!-- DIAGNOSA (was check) -->
 <div class="scr" id="scr-check">
-  <div class="scr-hd"><div class="scr-title">Plant Check</div></div>
-  <div style="padding:0 16px 12px;font-size:12px;color:var(--muted);line-height:1.6">Pilih gejala yang kamu temukan pada tanamanmu, lalu tap Diagnosa.</div>
-  <div class="sym-grid" id="symGrid"></div>
-  <div class="chk-btn-wrap">
-    <button class="pc-btn" id="checkBtn" onclick="doCheck()" disabled>🩺 Diagnosa</button>
-    <button class="pc-reset" id="resetBtn" onclick="resetCheck()" style="display:none">↺ Pilih Ulang Gejala</button>
+  <div class="diag-header">
+    <div class="diag-h1">Diagnosa</div>
+    <div class="diag-sub">Cek kondisi &amp; kesehatan tanamanmu</div>
   </div>
-  <div class="chk-res" id="checkRes"></div>
+  <!-- weekly tip -->
+  <div class="weekly-tip" id="weeklyTip">
+    <div class="weekly-tip-label">Tip Mingguan</div>
+    <div class="weekly-tip-body" id="weeklyTipBody">Memuat tip...</div>
+  </div>
+  <!-- plant status list (per tanaman) -->
+  <div class="pstatus-label">Status Tanamanmu</div>
+  <div id="plantStatusList"></div>
+  <!-- fallback: symptom selector -->
+  <div id="symSelectorWrap" style="display:none">
+    <div style="padding:0 16px 12px;font-size:12px;color:var(--muted);line-height:1.6">Pilih gejala yang kamu temukan:</div>
+    <div class="sym-grid" id="symGrid"></div>
+    <div class="chk-btn-wrap">
+      <button class="pc-btn" id="checkBtn" onclick="doCheck()" disabled>🩺 Diagnosa</button>
+      <button class="pc-reset" id="resetBtn" onclick="resetCheck()" style="display:none">↺ Pilih Ulang</button>
+    </div>
+    <div class="chk-res" id="checkRes"></div>
+  </div>
   <div style="height:16px"></div>
 </div>
 
 <!-- JURNAL -->
 <div class="scr" id="scr-journal">
-  <div class="scr-hd"><div class="scr-title">Jurnal</div></div>
+  <div style="padding:14px 16px 4px;display:flex;justify-content:space-between;align-items:center">
+    <div style="font-size:22px;font-weight:800;color:var(--text);letter-spacing:-.3px">Jurnal</div>
+    <button style="width:30px;height:30px;border-radius:50%;border:1px solid var(--border);background:var(--card);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;color:var(--text)" onclick="openQuickNote(null)">+</button>
+  </div>
   <div class="j-tabs">
-    <button class="jtab on" id="jtab-care" onclick="setJTab('care',this)">🌿 Perawatan</button>
-    <button class="jtab" id="jtab-stats" onclick="setJTab('stats',this)">📊 Statistik</button>
+    <button class="jtab on" id="jtab-care" onclick="setJTab('care',this)">Log Perawatan</button>
+    <button class="jtab" id="jtab-stats" onclick="setJTab('stats',this)">Statistik</button>
   </div>
   <div id="jCare"><div class="jnl-list" id="jList"></div></div>
   <div id="jStats" style="display:none"></div>
@@ -511,26 +601,27 @@ button,input,select,textarea{font-family:'Plus Jakarta Sans',sans-serif}
     <span class="ni-lbl">Beranda</span>
   </button>
   <button class="ni" id="nav-plants" onclick="showScr('plants')">
-    <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 3H8"/><path d="M12 7v14"/></svg>
+    <svg viewBox="0 0 24 24"><path d="M12 2a9 9 0 0 1 9 9c0 4.17-2.84 7.67-6.72 8.66L12 22l-2.28-2.34C5.84 18.67 3 15.17 3 11A9 9 0 0 1 12 2z"/><path d="M12 2v20"/></svg>
     <span class="ni-lbl">Koleksi</span>
   </button>
+  <button class="nav-fab" id="navFab" onclick="handleNavFab()">＋</button>
   <button class="ni" id="nav-scan" onclick="showScr('scan')">
-    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M6.3 6.3a8 8 0 1 0 11.4 0"/><path d="M12 2v4"/></svg>
     <span class="ni-lbl">Scan</span>
   </button>
   <button class="ni" id="nav-check" onclick="showScr('check')">
     <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-    <span class="ni-lbl">Check</span>
+    <span class="ni-lbl">Diagnosa</span>
   </button>
   <button class="ni" id="nav-journal" onclick="showScr('journal')">
-    <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+    <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
     <span class="ni-lbl">Jurnal</span>
   </button>
 </div>
 
-<!-- DETAIL PANEL -->
+<!-- DETAIL PANEL — screenshot img 3 -->
 <div id="detail">
-  <div class="d-top" id="dTop"></div>
+  <div class="d-hero" id="dTop"></div>
   <div class="d-body" id="dBody"></div>
 </div>
 
@@ -553,10 +644,7 @@ button,input,select,textarea{font-family:'Plus Jakarta Sans',sans-serif}
     <div class="frow2">
       <div class="fg">
         <label class="fl">Jenis</label>
-        <div style="display:flex;gap:6px">
-          <select class="fsel" id="pfType" onchange="onTypeChange()" style="flex:1"></select>
-          <button type="button" onclick="openMgtSheet()" style="flex-shrink:0;padding:10px 11px;border:1px solid var(--border);border-radius:var(--rs);background:var(--bg2);font-size:13px;cursor:pointer;color:var(--muted)">⚙️</button>
-        </div>
+        <select class="fsel" id="pfType" onchange="onTypeChange()"></select>
         <div id="newTypeWrap" style="display:none">
           <input class="fi" id="pfTypeNew" placeholder="Nama jenis baru..." style="margin-bottom:6px;margin-top:8px">
           <label class="fl">Pilih Emoji</label>
@@ -565,6 +653,7 @@ button,input,select,textarea{font-family:'Plus Jakarta Sans',sans-serif}
       </div>
       <div class="fg"><label class="fl">Siram Setiap</label>
         <select class="fsel" id="pfWater">
+          <option value="2">2 hari</option>
           <option value="3">3 hari</option>
           <option value="7">7 hari</option>
           <option value="14" selected>14 hari</option>
@@ -572,7 +661,7 @@ button,input,select,textarea{font-family:'Plus Jakarta Sans',sans-serif}
         </select>
       </div>
     </div>
-    <div class="fg"><label class="fl">Tanggal</label><input class="fi" type="date" id="pfDate"></div>
+    <div class="fg"><label class="fl">Tanggal Tanam</label><input class="fi" type="date" id="pfDate"></div>
     <div class="fg"><label class="fl">Catatan</label><textarea class="fta" id="pfNotes" placeholder="Kondisi khusus, lokasi, dll..."></textarea></div>
     <button class="submt" onclick="savePlant()">💾 Simpan Tanaman</button>
   </div>
@@ -658,6 +747,9 @@ var pid=1,jid=1,pFilt='all',detId=null;
 var addImg=null,tlImg=null,scanImg=null;
 var tipIdx=0,selEmoji='🌿',etSelEmoji='🌿';
 var selSyms=[];
+var CARD_COLORS=['bg0','bg1','bg2','bg3','bg4','bg5'];
+var detTab='info';
+var searchFilter='';
 
 var JICO={water:'💧',fert:'🌱',prune:'✂️',repot:'🪴',disease:'🩺',note:'📝'};
 var JLBL={water:'Siram',fert:'Pupuk',prune:'Pangkas',repot:'Ganti Pot',disease:'Penyakit',note:'Catatan'};
@@ -769,15 +861,14 @@ async function sbQ(table,method,body,params){
 // ── THEME ──
 function initTheme(){
   var saved=lsR('bq_theme');
-  // default dark — only apply light if explicitly saved
-  if(saved==='light'){
-    document.documentElement.setAttribute('data-theme','light');
-    document.getElementById('themeBtn').textContent='🌙';
-    document.getElementById('themeColorMeta').content='#ffffff';
-  }else{
+  if(saved==='dark'){
     document.documentElement.setAttribute('data-theme','dark');
     document.getElementById('themeBtn').textContent='☀️';
-    document.getElementById('themeColorMeta').content='#0d0d0d';
+    document.getElementById('themeColorMeta').content='#111310';
+  }else{
+    document.documentElement.setAttribute('data-theme','light');
+    document.getElementById('themeBtn').textContent='🌙';
+    document.getElementById('themeColorMeta').content='#f5f5f0';
   }
 }
 function toggleTheme(){
@@ -786,7 +877,7 @@ function toggleTheme(){
   document.documentElement.setAttribute('data-theme',next);
   lsRS('bq_theme',next);
   document.getElementById('themeBtn').textContent=next==='dark'?'☀️':'🌙';
-  document.getElementById('themeColorMeta').content=next==='dark'?'#0d0d0d':'#ffffff';
+  document.getElementById('themeColorMeta').content=next==='dark'?'#111310':'#f5f5f0';
 }
 
 // ── LOGIN ──
@@ -822,10 +913,12 @@ function showAccMenu(){
     +'<div style="width:38px;height:38px;border-radius:50%;background:var(--gp);display:flex;align-items:center;justify-content:center;font-size:17px">👤</div>'
     +'<div><div style="font-size:14px;font-weight:700;color:var(--text)">'+CU+'</div>'
     +'<div style="font-size:11px;color:var(--muted)">Akun aktif · '+plants.length+' tanaman</div></div></div>'
+    +'<button id="_aKJ" style="width:100%;padding:13px;border-radius:13px;border:1px solid var(--border);background:var(--card2);color:var(--text);font-size:13px;font-weight:600;cursor:pointer;margin-bottom:8px;text-align:left;font-family:Nunito,sans-serif">⚙️ Kelola Jenis Tanaman</button>'
     +'<button id="_aSw" style="width:100%;padding:12px;border-radius:11px;border:1px solid var(--border);background:var(--card2);color:var(--green);font-size:13px;font-weight:700;cursor:pointer;margin-bottom:7px;text-align:left">🔄 Ganti Akun</button>'
     +'<button id="_aLo" style="width:100%;padding:12px;border-radius:11px;border:none;background:var(--red-bg);color:var(--red);font-size:13px;font-weight:700;cursor:pointer;text-align:left">🚪 Keluar</button>'
     +'</div>';
   document.getElementById('app').appendChild(m);
+  document.getElementById('_aKJ').onclick=function(){m.remove();openMgtSheet();};
   document.getElementById('_aSw').onclick=function(){m.remove();lsRS('bq_user','');lsRS('bq_uid','');location.reload();};
   document.getElementById('_aLo').onclick=function(){if(confirm('Yakin mau keluar?')){m.remove();lsRS('bq_user','');lsRS('bq_uid','');location.reload();}};
   m.onclick=function(e){if(e.target===m)m.remove();};
@@ -860,67 +953,37 @@ function showScr(n){
   if(n==='plants')renderPlants();
   if(n==='journal'){setJTab('care',document.getElementById('jtab-care'));renderJnl();}
   if(n==='scan')resetScan();
-  if(n==='check'){selSyms=[];document.getElementById('checkRes').innerHTML='';var cb=document.getElementById('checkBtn');if(cb){cb.style.display='flex';cb.disabled=true;}var rb=document.getElementById('resetBtn');if(rb)rb.style.display='none';renderSymptoms();}
+  if(n==='check'){renderDiagnosa();}
 }
-function renderAll(){renderHome();renderPlants();renderJnl();renderScanHist();renderSymptoms();}
+function renderAll(){renderHome();renderPlants();renderJnl();renderScanHist();renderSymptoms();if(document.getElementById('scr-check').classList.contains('on'))renderDiagnosa();}
 
 // ── BERANDA ──
 function renderHome(){
   var types={};plants.forEach(function(p){if(p.type)types[p.type]=true;});
-  // Update date
-  var hd=document.getElementById('homeDate');
-  if(hd&&(!hd.textContent||hd.textContent==='—')){
-    var hr=new Date().getHours();var gr=hr<12?'Selamat pagi':hr<17?'Selamat siang':'Selamat malam';
-    hd.textContent=gr+', '+new Date().toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long'});
-  }
-  // Greeting
-  var grEl=document.getElementById('heroGr');
-  if(grEl){
-    var kritisN=plants.filter(function(p){return healthStatus(p)==='bad';}).length;
-    var warnN=plants.filter(function(p){return healthStatus(p)==='warn';}).length;
-    if(!plants.length){grEl.textContent='Tambah tanamanmu pertama!';}
-    else if(kritisN>0){grEl.textContent='Tanamanmu butuh perhatian segera.';}
-    else if(warnN>0){grEl.textContent='Ada tanaman yang perlu disiram.';}
-    else{grEl.textContent='Tanamanmu dalam kondisi baik.';}
-  }
-  // Stat cards
-  var pSiram=plants.filter(function(p){return healthStatus(p)==='warn';}).length;
-  var pKritis=plants.filter(function(p){return healthStatus(p)==='bad';}).length;
-  var siramTotal=pSiram+pKritis;
-  var el=document.getElementById('hstatTotal');if(el)el.textContent=plants.length;
-  var sw=document.getElementById('hstatSiramWrap');
-  var sn=document.getElementById('hstatSiram');if(sn)sn.textContent=siramTotal;
-  if(sw){sw.className='hstat '+(pKritis>0?'bad':siramTotal>0?'warn':'neu');}
-  // (no fert count — keep neutral)
-  var pw=document.getElementById('hstatPupukWrap');if(pw)pw.className='hstat neu';
-  var pn=document.getElementById('hstatPupuk');if(pn)pn.textContent=Object.keys(types).length||0;
-  // fix label for 3rd card
-  var pl=pw?pw.querySelector('.hstat-l'):null;if(pl)pl.textContent='Jenis';
-  // Alert strip
+  // kebun card
+  var sehat=plants.filter(function(p){return healthStatus(p)==='good';}).length;
+  var warn=plants.filter(function(p){return healthStatus(p)==='warn';}).length;
+  var kritis=plants.filter(function(p){return healthStatus(p)==='bad';}).length;
+  var kt=document.getElementById('kebunTitle');if(kt)kt.textContent='Kebun Digital-mu';
+  var ks=document.getElementById('kebunSub');if(ks)ks.textContent=plants.length+' tanaman'+(warn+kritis>0?' · '+(warn+kritis)+' perlu perhatian':'');
+  var ksSehat=document.getElementById('kstatSehat');if(ksSehat)ksSehat.textContent=sehat;
+  var ksWarn=document.getElementById('kstatPerhatian');if(ksWarn)ksWarn.textContent=warn;
+  var ksKritis=document.getElementById('kstatKritis');if(ksKritis)ksKritis.textContent=kritis;
+  // alert
   var aw=document.getElementById('homeAlertWrap');
-  var kritis=plants.filter(function(p){return healthStatus(p)==='bad';});
-  var urgent=plants.filter(function(p){return healthStatus(p)!=='good';});
+  var kritisP=plants.filter(function(p){return healthStatus(p)==='bad';});
+  var urgentP=plants.filter(function(p){return healthStatus(p)!=='good';});
   if(aw){
-    if(kritis.length>0){
-      aw.innerHTML='<div class="alert-strip bad" onclick="showScr(\'plants\')" style="margin:8px 16px 0">'
-        +'<div class="alert-dot bad"></div>'
-        +'<div class="alert-txt bad">'+kritis.length+' tanaman kritis — segera siram!</div>'
-        +'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>'
-        +'</div>';
-    }else if(urgent.length>0){
-      aw.innerHTML='<div class="alert-strip warn" onclick="showScr(\'plants\')" style="margin:8px 16px 0">'
-        +'<div class="alert-dot warn"></div>'
-        +'<div class="alert-txt warn">'+urgent.length+' tanaman perlu disiram hari ini</div>'
-        +'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>'
-        +'</div>';
-    }else{aw.innerHTML='';}
+    if(kritisP.length>0){aw.innerHTML='<div class="alert-strip bad" onclick="showScr(\'plants\')" style="margin:0 16px 10px"><div class="alert-dot bad"></div><div class="alert-txt bad">'+kritisP.length+' tanaman kritis — segera siram!</div><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg></div>';}
+    else if(urgentP.length>0){aw.innerHTML='<div class="alert-strip warn" onclick="showScr(\'plants\')" style="margin:0 16px 10px"><div class="alert-dot warn"></div><div class="alert-txt warn">'+urgentP.length+' tanaman perlu disiram hari ini</div><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg></div>';}
+    else aw.innerHTML='';
   }
-  // Tip
+  // tip
   var tip=TIPS[tipIdx%TIPS.length];
   document.getElementById('tipIco').textContent=tip.i;
   document.getElementById('tipT').textContent=tip.t;
   document.getElementById('tipB').textContent=tip.b;
-  // Tindakan
+  // tindakan (pengingat)
   var needAction=plants.filter(function(p){return healthStatus(p)!=='good';}).sort(function(a,b){return healthScore(a)-healthScore(b);});
   var htEl=document.getElementById('homeTindakan');var htList=document.getElementById('homeTindakanList');
   if(needAction.length&&htEl&&htList){
@@ -928,44 +991,40 @@ function renderHome(){
     htList.innerHTML=needAction.slice(0,3).map(function(p){
       var st=healthStatus(p);var isBad=st==='bad';
       var wdays=daysUntil(dueDate(p.lastWater,p.water));
-      var sub=isBad?'Telat '+Math.abs(wdays)+' hari':wdays===0?'Siram hari ini':'Perlu disiram';
+      var sub='Jadwal rutin · Tiap '+p.water+' hari';
+      var badgeTxt=isBad?'Terlambat':'Besok';if(wdays===0)badgeTxt='Hari Ini';
+      var badgeCls=isBad?'late':wdays===0?'today':'tmrw';
       var em=p.emoji||typeEmoji(p.type)||'🌿';
-      return '<div class="htind-item">'
-        +'<div class="htind-left"><div class="htind-emoji">'+em+'</div>'
-        +'<div><div class="htind-name">'+p.name+'</div><div class="htind-sub">'+sub+'</div></div></div>'
-        +'<button class="htind-btn '+(isBad?'bad':'ok')+'" onclick="event.stopPropagation();logCare('+p.id+',\'water\')">Siram 💧</button>'
-        +'</div>';
+      return '<div class="remind-item"><div class="remind-left"><div class="remind-dot '+(isBad?'bad':wdays===0?'warn':'good')+'"></div><div><div class="remind-name">'+p.name+'</div><div class="remind-sub">'+sub+'</div></div></div><div class="remind-badge '+badgeCls+'">'+badgeTxt+'</div></div>';
     }).join('');
-  }else if(htEl){htEl.style.display='none';}
-  // Koleksi — list style sesuai preview
+  }else if(htEl){
+    htEl.style.display='block';
+    if(htList)htList.innerHTML='<div style="background:var(--card);border-radius:12px;padding:12px 14px;border:1px solid var(--border);text-align:center;color:var(--muted);font-size:12px;font-style:italic">✅ Tidak ada pengingat hari ini</div>';
+  }
+  // recent scroll
+  var rs=document.getElementById('recentScroll');
+  if(rs){
+    if(!plants.length){rs.innerHTML='<div style="padding:8px 0;font-size:11px;color:var(--muted);font-style:italic">Belum ada tanaman</div>';}
+    else{
+      rs.innerHTML=plants.slice(0,6).map(function(p,i){
+        var st=healthStatus(p);
+        var stTxt=st==='good'?'Sehat':st==='warn'?'Perhatian':'Kritis';
+        var em=p.emoji||typeEmoji(p.type)||'🌿';
+        return '<div class="recent-card" onclick="openDetail('+p.id+')">'
+          +'<span class="recent-emoji">'+(p.image?'<img src="'+p.image+'" style="width:40px;height:40px;border-radius:9px;object-fit:cover" alt="">':em)+'</span>'
+          +'<div class="recent-name">'+p.name+'</div>'
+          +'<div class="recent-status '+st+'">'+stTxt+'</div>'
+          +'</div>';
+      }).join('');
+    }
+  }
+  // home grid (compact list)
   var hg=document.getElementById('homeGrid');
   if(!plants.length){
-    hg.innerHTML='<div class="hlist-item" onclick="openAddPlant()" style="justify-content:center;border-style:dashed">'
-      +'<span style="font-size:22px;color:var(--green)">＋</span>'
-      +'<span style="font-size:13px;font-weight:700;color:var(--green)">Tambah Tanaman Pertama</span>'
-      +'</div>';
+    hg.innerHTML='<div class="remind-item" onclick="openAddPlant()" style="justify-content:center;border-style:dashed;cursor:pointer"><span style="font-size:22px;color:var(--green)">＋</span><span style="font-size:13px;font-weight:700;color:var(--green);margin-left:6px">Tambah Tanaman Pertama</span></div>';
     return;
   }
-  var listItems=plants.slice(0,5).map(function(p){
-    var st=healthStatus(p);var sc=healthScore(p);
-    var wdays=daysUntil(dueDate(p.lastWater,p.water));
-    var badgeLabel=wdays<0?Math.abs(wdays)+' hr telat':wdays===0?'Hari ini':wdays+' hr lagi';
-    var em=p.emoji||typeEmoji(p.type)||'🌿';
-    var icoHtml=p.image
-      ?'<img src="'+p.image+'" alt="" onerror="this.style.display=\'none\'">'
-      :em;
-    return '<div class="hlist-item" onclick="openDetail('+p.id+')">'
-      +'<div class="hlist-ico">'+icoHtml+'</div>'
-      +'<div class="hlist-info">'
-        +'<div class="hlist-name">'+p.name+'</div>'
-        +'<div class="hlist-sub">'+typeLabel(p.type)+'</div>'
-        +'<div class="hlist-prog"><div class="hlist-progf '+st+'" style="width:'+sc+'%"></div></div>'
-      +'</div>'
-      +'<div class="hlist-badge '+st+'">'+badgeLabel+'</div>'
-      +'</div>';
-  }).join('');
-  hg.innerHTML=listItems
-    +(plants.length>5?'<div style="text-align:center;padding:8px 0;font-size:11px;color:var(--green);font-weight:700;cursor:pointer" onclick="showScr(\'plants\')">Lihat '+(plants.length-5)+' lainnya →</div>':'');
+  hg.innerHTML='';
 }
 
 function cardHtml(p){
@@ -986,15 +1045,17 @@ function renderPlants(){
   var types={};plants.forEach(function(p){if(p.type)types[p.type]=true;});
   var fh='<button class="fchip '+(pFilt==='all'?'on':'')+'" onclick="setFilt(\'all\')">Semua</button>';
   getTypes().filter(function(t){return types[t.id];}).forEach(function(t){
-    fh+='<button class="fchip '+(pFilt===t.id?'on':'')+'" onclick="setFilt(\''+t.id+'\')">'+t.emoji+' '+t.label+'</button>';
+    fh+='<button class="fchip '+(pFilt===t.id?'on':'')+'" onclick="setFilt(\''+t.id+'\')">'+t.label+'</button>';
   });
   document.getElementById('fRow').innerHTML=fh;
   var fil=pFilt==='all'?plants:plants.filter(function(p){return p.type===pFilt;});
+  if(searchFilter){fil=fil.filter(function(p){return p.name.toLowerCase().indexOf(searchFilter)>-1||typeLabel(p.type).toLowerCase().indexOf(searchFilter)>-1;});}
   var gr=document.getElementById('pGrid'),em=document.getElementById('pEmpty');
   if(!fil.length){gr.innerHTML='';gr.style.display='none';em.style.display='flex';}
-  else{gr.style.display='grid';em.style.display='none';gr.innerHTML=fil.map(cardHtml).join('')+'<div class="pc-add" onclick="openAddPlant()"><span>＋</span><span>Tambah</span></div>';}
+  else{gr.style.display='grid';em.style.display='none';gr.innerHTML=fil.map(function(p,i){return cardHtml(p,i);}).join('')+'<div class="pc-add" onclick="openAddPlant()"><span>＋</span><span>Tambah</span></div>';}
 }
 function setFilt(f){pFilt=f;renderPlants();}
+function filterPlants(q){searchFilter=q.toLowerCase();renderPlants();}
 
 // ── DETAIL ──
 function openDetail(id){
@@ -1006,8 +1067,12 @@ function openDetail(id){
       +'<button class="d-back" onclick="closeDetail()">←</button>'
       +'<button class="d-menu" onclick="showDMenu()">⋯</button>';
   }else{
-    dt.style.background='var(--green)';
-    dt.innerHTML='<div class="d-img" style="font-size:72px">'+(p.emoji||typeEmoji(p.type)||'🌿')+'</div>'
+    var pidx=plants.findIndex(function(x){return x.id===id;});
+    var bgColors=['#e8f5e2','#fef3e2','#fce4ec','#e3f2fd','#f3e5f5','#e0f7fa'];
+    var bgDark=['rgba(91,184,71,.12)','rgba(232,146,10,.1)','rgba(224,82,82,.1)','rgba(82,148,226,.1)','rgba(192,132,232,.1)','rgba(43,191,168,.1)'];
+    var isDark=document.documentElement.getAttribute('data-theme')==='dark';
+    dt.style.background=(isDark?bgDark:bgColors)[pidx%6];
+    dt.innerHTML='<div class="d-hero-emoji">'+(p.emoji||typeEmoji(p.type)||'🌿')+'</div>'
       +'<button class="d-back" onclick="closeDetail()">←</button>'
       +'<button class="d-menu" onclick="showDMenu()">⋯</button>';
   }
@@ -1016,32 +1081,54 @@ function openDetail(id){
 function renderDBody(id){
   var p=plants.find(function(x){return x.id===id;});if(!p)return;
   var wd=dueDate(p.lastWater,p.water);var wdays=daysUntil(wd);
-  var siramCls=wdays<0?'urgent':wdays===0?'warn':'ok';
-  var siramTitle=wdays<0?'Terlambat '+Math.abs(wdays)+' hari!':wdays===0?'Siram hari ini!':'Siram dalam '+wdays+' hari';
-  var siramSub='Setiap '+p.water+' hari'+(p.lastWater?' · Terakhir '+fmtDateShort(p.lastWater):'');
+  var ci=CARE_INFO[p.type]||CARE_INFO['lainnya'];
   var pj=jnls.filter(function(j){return parseInt(j.plantId)===id;}).sort(function(a,b){return new Date(b.date)-new Date(a.date);});
-  var html=''
-    +'<div class="d-pad"><div class="d-name">'+p.name+'</div>'
-    +'<div class="d-tags"><span class="dtag">'+typeLabel(p.type)+'</span><span class="dtag">'+fmtDateShort(p.added)+'</span></div></div>'
-    +'<div class="d-action-row">'
-    +'<button class="d-btn-siram '+siramCls+'" onclick="logCare('+id+',\'water\')">'
-    +'<div class="dbs-top"><span class="dbs-ico">💧</span><span class="dbs-title">'+siramTitle+'</span></div>'
-    +'<div class="dbs-sub">'+siramSub+'</div></button>'
-    +'<button class="d-btn-catat" onclick="openQuickNote('+id+')">'
-    +'<div class="dbs-top"><span class="dbs-ico">📝</span><span class="dbs-title">Catat</span></div>'
-    +'<div class="dbs-sub">Bebas tulis</div></button></div>'
-    +'<div class="d-pad"><div class="d-sec-t">Catatan Tanaman</div>'
-    +'<div class="d-notes-box">'+(p.notes||'<span style="color:var(--muted);font-style:italic">Belum ada catatan. Tap ⋯ → Edit untuk mengisi.</span>')+'</div>'
-    +'<div class="d-sec-t" style="margin-top:14px">Foto Progres</div>'
-    +'<button class="tl-add-btn" onclick="openTLSheet('+id+')">📷 Tambah Foto</button>'
-    +'<div class="tl-grid" id="tlG_'+id+'"></div>'
-    +'<div class="d-sec-t" style="margin-top:14px">Riwayat</div>'
+  var bcls=healthStatus(p);var stTxt=bcls==='good'?'Sehat':bcls==='warn'?'Perhatian':'Kritis';
+  var infoTab='<div class="info-grid">'
+    +'<div class="info-tile"><div class="info-tile-lbl">Tanggal Tanam</div><div class="info-tile-val">'+fmtDateShort(p.added)+'</div></div>'
+    +'<div class="info-tile"><div class="info-tile-lbl">Jenis</div><div class="info-tile-val">'+typeLabel(p.type)+'</div></div>'
+    +'<div class="info-tile"><div class="info-tile-lbl">Media Tanam</div><div class="info-tile-val">'+ci.soil+'</div></div>'
+    +'<div class="info-tile"><div class="info-tile-lbl">Ukuran Pot</div><div class="info-tile-val">25cm / Pot 3</div></div>'
+    +'<div class="info-tile"><div class="info-tile-lbl">Lokasi</div><div class="info-tile-val">Ruang Tamu</div></div>'
+    +'<div class="info-tile"><div class="info-tile-lbl">Status</div><div class="info-tile-val '+bcls+'">'+stTxt+'</div></div>'
+    +'</div>'
+    +'<div class="kdb-section"><div class="kdb-title">Kebutuhan Dasar</div>'
+    +'<div class="kdb-item"><div class="kdb-ico water">💧</div><div class="kdb-txt">'+ci.humid+', siram setiap '+p.water+' hari</div></div>'
+    +'<div class="kdb-item"><div class="kdb-ico sun">☀️</div><div class="kdb-txt">'+ci.light+'</div></div>'
+    +'<div class="kdb-item"><div class="kdb-ico" style="background:var(--gp);border:1px solid var(--gpb)">🌡️</div><div class="kdb-txt">Suhu ideal '+ci.temp+'</div></div>'
+    +'</div>';
+  var catatanTab='<div class="d-notes-box">'+(p.notes||'<span style="color:var(--muted);font-style:italic">Belum ada catatan. Tap ⋯ untuk edit.</span>')+'</div>'
+    +'<div class="d-sec-t" style="margin-top:12px;margin-bottom:6px">Foto Progres</div>'
+    +'<div class="tl-grid" id="tlG_'+id+'"></div>';
+  var siramTitle=wdays<0?'Terlambat '+Math.abs(wdays)+' hari':wdays===0?'Siram hari ini':'Siram dalam '+wdays+' hari';
+  var perawatanTab='<div class="care-btn-row">'
+    +'<button class="care-btn water" onclick="logCare('+id+',\'water\')">💧 Siram</button>'
+    +'<button class="care-btn fert" onclick="logCare('+id+',\'fert\')">🌱 Pupuk</button>'
+    +'<button class="care-btn prune" onclick="logCare('+id+',\'prune\')">✂️ Pangkas</button>'
+    +'</div>'
+    +'<div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:8px">Log Perawatan</div>'
     +'<div id="mj_'+id+'">'
     +(pj.length?pj.slice(0,5).map(mjiHtml).join('')+(pj.length>5?'<button class="more-btn" onclick="showAllMji('+id+')">Lihat '+(pj.length-5)+' lainnya →</button>':''):'<div class="rw-empty">Belum ada riwayat perawatan.</div>')
-    +'</div></div>';
+    +'</div>';
+  var jadwalTab='<div class="sched-item">'
+    +'<div class="sched-left"><div class="sched-ico">💧</div><div><div class="sched-name">Penyiraman</div><div class="sched-next">'+siramTitle+' · Setiap '+p.water+' hari</div></div></div>'
+    +'<div class="sched-badge active">Aktif</div></div>'
+    +'<div class="sched-item"><div class="sched-left"><div class="sched-ico">🌱</div><div><div class="sched-name">Pemupukan</div><div class="sched-next">Setiap 90 hari</div></div></div><div class="sched-badge active">Aktif</div></div>'
+    +'<div class="sched-item"><div class="sched-left"><div class="sched-ico">✂️</div><div><div class="sched-name">Pemangkasan</div><div class="sched-next">Sesuai kebutuhan</div></div></div><div class="sched-badge inactive">Nonaktif</div></div>';
+  var tabs=['info','catatan','perawatan','jadwal'];
+  var tabLabels=['Info','Catatan','Perawatan','Jadwal'];
+  var tabBtns=tabs.map(function(t,i){
+    var cls='dtab'+(detTab===t?' on':'');
+    return '<button class="'+cls+'" onclick="switchDTab('+p.id+',&quot;'+t+'&quot;)">'+tabLabels[i]+'</button>';
+  });
+  var tabHtml='<div class="d-tabs">'+tabBtns.join('')+'</div>';
+  var tabContents={info:infoTab,catatan:catatanTab,perawatan:perawatanTab,jadwal:jadwalTab};
+  var html='<div class="d-pad"><div class="d-name">'+p.name+'</div><div class="d-sci">'+typeLabel(p.type)+'</div></div>'
+    +tabHtml+'<div class="d-pad" id="dTabContent">'+(tabContents[detTab]||tabContents['info'])+'</div>';
   document.getElementById('dBody').innerHTML=html;
-  renderTLGrid(id);
+  if(detTab==='catatan')renderTLGrid(id);
 }
+function switchDTab(id,tab){detTab=tab;renderDBody(id);}
 function mjiHtml(j){
   return '<div class="mji"><div class="mji-ico">'+(JICO[j.type]||'📝')+'</div>'
     +'<div style="flex:1;min-width:0"><div class="mji-txt">'+safeNote(j)+'</div><div class="mji-dt">'+fmtDateShort(j.date)+'</div></div>'
@@ -1051,6 +1138,14 @@ function showAllMji(id){
   var pj=jnls.filter(function(j){return parseInt(j.plantId)===id;}).sort(function(a,b){return new Date(b.date)-new Date(a.date);});
   var el=document.getElementById('mj_'+id);if(el)el.innerHTML=pj.map(mjiHtml).join('');
 }
+function handleNavFab(){
+  var active=document.querySelector('.scr.on');
+  var id=active?active.id:'';
+  if(id==='scr-plants'||id==='scr-home')openAddPlant();
+  else if(id==='scr-journal')openQuickNote(null);
+  else openAddPlant();
+}
+
 function showDMenu(){
   var ex=document.getElementById('_dMenu');if(ex){ex.remove();return;}
   var did=parseInt(detId);
@@ -1094,7 +1189,7 @@ function openQuickNote(plantId){
 }
 function popPlantSel(sel){
   document.getElementById('jfPlant').innerHTML=plants.map(function(p){
-    return '<option value="'+p.id+'"'+(p.id===parseInt(sel)?' selected':'')+'>'+( p.emoji||'🌿')+' '+p.name+'</option>';
+    return '<option value="'+p.id+'"'+(p.id===parseInt(sel)?' selected':'')+'>'+p.name+'</option>';
   }).join('');
 }
 
@@ -1121,7 +1216,7 @@ function editPlant(id){
 }
 function closePSheet(){document.getElementById('pSheet').classList.remove('open');document.getElementById('pfId').value='';addImg=null;}
 function popTypeSelect(){
-  document.getElementById('pfType').innerHTML=getTypes().map(function(t){return '<option value="'+t.id+'">'+t.emoji+' '+t.label+'</option>';}).join('')+'<option value="__new__">➕ Tambah jenis baru...</option>';
+  document.getElementById('pfType').innerHTML=getTypes().map(function(t){return '<option value="'+t.id+'">'+t.label+'</option>';}).join('')+'<option value="__new__">+ Tambah jenis baru...</option>';
 }
 function onTypeChange(){var v=document.getElementById('pfType').value;document.getElementById('newTypeWrap').style.display=v==='__new__'?'block':'none';if(v==='__new__')buildEmojiPicker();}
 function buildEmojiPicker(){selEmoji='🌿';document.getElementById('emojiRow').innerHTML=EMOJIS.map(function(e){return '<button class="emoji-opt'+(e==='🌿'?' on':'')+'" onclick="pickEmoji(this,\''+e+'\')" type="button">'+e+'</button>';}).join('');}
@@ -1152,7 +1247,12 @@ function confirmDel(id){
 }
 
 // ── TIMELINE FOTO ──
-function renderTLGrid(id){var el=document.getElementById('tlG_'+id);if(!el)return;var photos=fpCache[id]||[];el.innerHTML=photos.map(function(ph){return '<div class="tl-item" onclick="openLB(\''+ph.img+'\',\''+ph.date+'\')"><img src="'+ph.img+'" loading="lazy" alt=""><div class="tl-dt">'+fmtShort(ph.date)+'</div><button class="tl-del" onclick="event.stopPropagation();deleteTL('+id+',\''+ph.id+'\')">✕</button></div>';}).join('');}
+function renderTLGrid(id){
+  var el=document.getElementById('tlG_'+id);if(!el)return;
+  var photos=fpCache[id]||[];
+  var addBtn='<div class="tl-add-inline" onclick="openTLSheet('+id+')"><div style="font-size:20px">📷</div><div style="font-size:9px;font-weight:700;color:var(--green);margin-top:3px">Tambah</div></div>';
+  el.innerHTML=addBtn+photos.map(function(ph){return '<div class="tl-item" onclick="openLB(\''+ph.img+'\',\''+ph.date+'\')"><img src="'+ph.img+'" loading="lazy" alt=""><div class="tl-dt">'+fmtShort(ph.date)+'</div><button class="tl-del" onclick="event.stopPropagation();deleteTL('+id+',\''+ph.id+'\')">✕</button></div>';}).join('');
+}
 function openTLSheet(pid2){document.getElementById('tlPid').value=pid2;document.getElementById('tlDate').value=today();document.getElementById('tlPrev').style.display='none';document.getElementById('tlIco').style.display='block';document.getElementById('tlTxt').style.display='block';tlImg=null;closeDetail();setTimeout(function(){document.getElementById('tlSheet').classList.add('open');},290);}
 function closeTLSheet(){document.getElementById('tlSheet').classList.remove('open');tlImg=null;}
 function onTLImg(ev){var f=ev.target.files[0];if(!f)return;compressImg(f,800,.75).then(function(data){if(!data){toast('Gagal memproses foto','e');return;}tlImg=data;document.getElementById('tlPrev').src=data;document.getElementById('tlPrev').style.display='block';document.getElementById('tlIco').style.display='none';document.getElementById('tlTxt').style.display='none';});}
@@ -1203,24 +1303,49 @@ async function saveJnl(){
 
 // ── STATISTIK ──
 function renderStats(){
-  var streak=0,d=new Date();for(var i=0;i<365;i++){var ds=d.toISOString().split('T')[0];if(jnls.some(function(j){return j.date===ds;}))streak++;else if(i>0)break;d.setDate(d.getDate()-1);}
-  var c={water:0,fert:0,prune:0,repot:0,disease:0,note:0};jnls.forEach(function(j){if(c[j.type]!==undefined)c[j.type]++;});
-  var maxVal=Math.max(1,c.water,c.fert,c.prune,c.repot,c.disease,c.note);
-  var bars=[{t:'water',ico:'💧',lbl:'Siram',clr:'#1e88e5'},{t:'fert',ico:'🌱',lbl:'Pupuk',clr:'#00897b'},{t:'prune',ico:'✂️',lbl:'Pangkas',clr:'#f59f00'},{t:'repot',ico:'🪴',lbl:'Ganti Pot',clr:'#8e24aa'},{t:'disease',ico:'🩺',lbl:'Penyakit',clr:'#e53935'},{t:'note',ico:'📝',lbl:'Catatan',clr:'#43a047'}];
-  var isDark=document.documentElement.getAttribute('data-theme')==='dark';
-  var html='<div class="streak-card"><div class="streak-num" '+(isDark?'style="color:var(--green)"':'')+'>'+streak+'🔥</div>'
-    +'<div class="streak-title" '+(isDark?'style="color:var(--green)"':'')+'>Hari Berturut-turut</div>'
-    +'<div class="streak-sub">'+(streak>0?'Keren! Terus konsisten!':'Mulai merawat hari ini!')+'</div></div>'
-    +'<div class="stats-grid">'
-    +'<div class="sg-card"><div class="sg-ico">💧</div><div class="sg-num">'+c.water+'</div><div class="sg-lbl">Siram</div></div>'
-    +'<div class="sg-card"><div class="sg-ico">🌱</div><div class="sg-num">'+c.fert+'</div><div class="sg-lbl">Pupuk</div></div>'
-    +'<div class="sg-card"><div class="sg-ico">✂️</div><div class="sg-num">'+c.prune+'</div><div class="sg-lbl">Pangkas</div></div>'
-    +'<div class="sg-card"><div class="sg-ico">🪴</div><div class="sg-num">'+c.repot+'</div><div class="sg-lbl">Ganti Pot</div></div>'
-    +'<div class="sg-card"><div class="sg-ico">🩺</div><div class="sg-num">'+c.disease+'</div><div class="sg-lbl">Penyakit</div></div>'
-    +'<div class="sg-card"><div class="sg-ico">📝</div><div class="sg-num">'+c.note+'</div><div class="sg-lbl">Catatan</div></div>'
-    +'</div><div class="chart-section"><div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:10px">Aktivitas Perawatan</div>';
-  bars.forEach(function(r){var pct=Math.round(c[r.t]/maxVal*100);html+='<div class="chart-row"><div class="chart-lbl">'+r.ico+' '+r.lbl+'</div><div class="chart-bg"><div class="chart-bar" style="width:'+pct+'%;background:'+r.clr+'"></div></div><div class="chart-val">'+c[r.t]+'</div></div>';});
-  html+='</div><div style="height:16px"></div>';
+  var now=new Date();
+  var mnth=now.toLocaleDateString('id-ID',{month:'long',year:'numeric'});
+  var c={water:0,fert:0,prune:0,repot:0,disease:0,note:0};
+  var activeDays={};var plantSet={};
+  jnls.forEach(function(j){
+    if(c[j.type]!==undefined)c[j.type]++;
+    activeDays[j.date]=1;
+    if(j.plantId)plantSet[j.plantId]=1;
+  });
+  var totalCare=jnls.length;
+  var hariAktif=Object.keys(activeDays).length;
+  var tanamanDirawat=Object.keys(plantSet).length;
+  var catatanDibuat=c.note;
+  var maxVal=Math.max(1,c.water,c.fert,c.prune,c.repot);
+  var bars=[{t:'water',lbl:'Siram',clr:'var(--green)'},{t:'fert',lbl:'Pupuk',clr:'var(--amber)'},{t:'prune',lbl:'Pangkas',clr:'var(--teal)'},{t:'repot',lbl:'Repot',clr:'var(--muted)'}];
+  // top plants by care count
+  var plantCounts={};jnls.forEach(function(j){plantCounts[j.plantId]=(plantCounts[j.plantId]||0)+1;});
+  var topPlants=Object.keys(plantCounts).map(function(pid){return{id:parseInt(pid),count:plantCounts[pid]};}).sort(function(a,b){return b.count-a.count;}).slice(0,3);
+  var maxPlantCount=topPlants.length?topPlants[0].count:1;
+  var html='<div class="stats-period">Bulan Ini · '+mnth+'</div>'
+    +'<div class="stat4-grid">'
+    +'<div class="stat4"><div class="stat4-n">'+totalCare+'</div><div class="stat4-l">Total perawatan</div></div>'
+    +'<div class="stat4"><div class="stat4-n">'+hariAktif+'</div><div class="stat4-l">Hari aktif</div></div>'
+    +'<div class="stat4"><div class="stat4-n">'+tanamanDirawat+'</div><div class="stat4-l">Tanaman dirawat</div></div>'
+    +'<div class="stat4"><div class="stat4-n">'+catatanDibuat+'</div><div class="stat4-l">Catatan dibuat</div></div>'
+    +'</div>'
+    +'<div class="jenis-section"><div class="jenis-title">Jenis Perawatan</div>';
+  bars.forEach(function(r){
+    var pct=Math.round(c[r.t]/maxVal*100);
+    html+='<div class="jenis-row"><div class="jenis-lbl">'+r.lbl+'</div><div class="jenis-bar-bg"><div class="jenis-bar" style="width:'+pct+'%;background:'+r.clr+'"></div></div><div class="jenis-val">'+c[r.t]+'</div></div>';
+  });
+  html+='</div>';
+  if(topPlants.length){
+    html+='<div class="top-plant-section"><div class="top-plant-title">Tanaman Paling Aktif</div>';
+    topPlants.forEach(function(tp){
+      var p=plants.find(function(x){return x.id===tp.id;});if(!p)return;
+      var pct=Math.round(tp.count/maxPlantCount*100);
+      var em=p.emoji||typeEmoji(p.type)||'🌿';
+      html+='<div class="top-plant-row"><div class="tp-emoji">'+em+'</div><div class="tp-info"><div class="tp-name">'+p.name+'</div><div class="tp-bar-bg"><div class="tp-bar" style="width:'+pct+'%"></div></div></div><div class="tp-count">'+tp.count+'x</div></div>';
+    });
+    html+='</div>';
+  }
+  html+='<div style="height:16px"></div>';
   document.getElementById('jStats').innerHTML=html;
 }
 
@@ -1289,6 +1414,36 @@ function doCheck(){
 }
 function resetCheck(){selSyms=[];document.getElementById('checkRes').innerHTML='';document.getElementById('checkBtn').style.display='flex';document.getElementById('checkBtn').disabled=true;document.getElementById('resetBtn').style.display='none';renderSymptoms();}
 
+
+// ── DIAGNOSA ──
+function renderDiagnosa(){
+  var tip=TIPS[tipIdx%TIPS.length];
+  var tb=document.getElementById('weeklyTipBody');
+  if(tb)tb.textContent=tip.b;
+  var psl=document.getElementById('plantStatusList');
+  if(!psl)return;
+  if(!plants.length){psl.innerHTML='<div class="empty"><div class="empty-ico">🌱</div><div class="empty-title">Belum Ada Tanaman</div><div class="empty-sub">Tambah tanaman untuk melihat status diagnosa</div></div>';return;}
+  var SYMPTOM_CAUSES={bad:['Tanah terlalu kering','Akar butuh ruang','Kurangi siram'],warn:['Ujung daun mengering','Kelembaban rendah'],good:['Daun hijau segar','Kelembaban optimal']};
+  psl.innerHTML=plants.map(function(p){
+    var st=healthStatus(p);var stTxt=st==='good'?'Sehat':st==='warn'?'Perhatian':'Kritis';
+    var wdays=daysUntil(dueDate(p.lastWater,p.water));
+    var lastChk=p.lastWater?fmtDateShort(p.lastWater):'Belum diperiksa';
+    var timeTxt=st==='good'?'Terakhir diperiksa hari ini':'Diperiksa '+Math.abs(wdays)+' hari lalu';
+    var causes=SYMPTOM_CAUSES[st]||[];
+    var em=p.emoji||typeEmoji(p.type)||'🌿';
+    var rows=causes.map(function(c,i){
+      var dotCls=st==='good'?'good':i===0?'warn':'good';
+      var causeTxt=st==='good'?(i===0?'Normal ✓':'Normal ✓'):(i===0?'Perlu perhatian':'Normal ✓');
+      var causeCls=st==='good'?'good':i===0?'warn':'good';
+      return '<div class="symptom-row"><div style="display:flex;align-items:center;flex:1;gap:7px"><div class="symptom-dot '+dotCls+'" style="background:var(--'+(dotCls==='good'?'green':'amber')+')"></div><div class="symptom-txt">'+c+'</div></div><div class="symptom-cause '+causeCls+'">'+causeTxt+'</div></div>';
+    }).join('');
+    return '<div class="pstatus-card">'
+      +'<div class="pstatus-hd"><div class="pstatus-hd-left"><div class="pstatus-emoji">'+em+'</div><div><div class="pstatus-name">'+p.name+'</div><div class="pstatus-time">'+timeTxt+'</div></div></div>'
+      +'<div class="pstatus-badge '+st+'">'+stTxt+'</div></div>'
+      +rows+'</div>';
+  }).join('');
+}
+
 // ── MANAGE TYPES ──
 var DEF_TYPE_IDS=DEF_TYPES.map(function(t){return t.id;});
 function openMgtSheet(){renderMgtList();document.getElementById('mgtSheet').classList.add('open');}
@@ -1299,7 +1454,7 @@ function renderMgtList(){
   types.forEach(function(t){
     var usedCount=plants.filter(function(p){return p.type===t.id;}).length;var canDelete=usedCount===0;
     html+='<div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border2)">'
-      +'<div style="width:34px;height:34px;border-radius:9px;background:var(--gp);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0">'+(t.emoji||'🌿')+'</div>'
+      +'<div style="width:34px;height:34px;border-radius:9px;background:var(--gp);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0">'+'<span style="font-size:10px;font-weight:700;color:var(--green)">'+t.label.substring(0,3)+'</span></div>'
       +'<div style="flex:1"><div style="font-size:13px;font-weight:600;color:var(--text)">'+t.label+'</div><div style="font-size:10px;color:var(--muted);margin-top:1px">'+usedCount+' tanaman</div></div>'
       +'<div style="display:flex;gap:5px">'
       +'<button onclick="openEditType(\''+t.id+'\')" style="width:30px;height:30px;border-radius:8px;border:1px solid var(--border);background:var(--card2);font-size:13px;cursor:pointer">✏️</button>'
