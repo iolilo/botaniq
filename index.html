@@ -479,7 +479,7 @@ button,input,select,textarea{font-family:'Nunito',sans-serif}
 
 <!-- LOGIN -->
 <div id="loginScr">
-  <div class="l-ico"></div>
+  <div class="l-ico">🌿</div>
   <div class="l-logo">Tanduran</div>
   <div class="l-sub">Plant care, digitalized.</div>
   <div class="l-box">
@@ -494,7 +494,7 @@ button,input,select,textarea{font-family:'Nunito',sans-serif}
 
 <!-- HEADER -->
 <div id="hd">
-  <div class="logo">Tanduran</div>
+  <div class="logo">🌿 Tanduran</div>
   <div class="hdr">
     <button class="hbtn" id="themeBtn" onclick="toggleTheme()" title="Ganti tema">🌙</button>
     <div class="uchip" id="uchip" onclick="showAccMenu()">👤 <span id="uLabel">—</span></div>
@@ -1368,10 +1368,10 @@ function deleteJnl(id){
   document.getElementById('_jdN').onclick=function(){m.remove();};m.onclick=function(e){if(e.target===m)m.remove();};
 }
 async function saveJnl(){
-  var eid=document.getElementById('jfId').value;var pid2=parseInt(document.getElementById('jfPlant').value);var note=document.getElementById('jfNote').value.trim();var dt=document.getElementById('jfDate').value||today();
+  var eid=document.getElementById('jfId').value;var pid2=document.getElementById('jfPlant').value;var note=document.getElementById('jfNote').value.trim();var dt=document.getElementById('jfDate').value||today();
   if(!note){toast('Isi catatan dulu!','w');return;}
-  if(eid){var idx=jnls.findIndex(function(x){return x.id===parseInt(eid);});if(idx>-1){jnls[idx].note=note;jnls[idx].date=dt;jnls[idx].plantId=pid2;saveL();sbQ('bq_journals','PATCH',{note:note,date:dt,plant_id:pid2},'id=eq.'+eid+'&user_id=eq.'+encodeURIComponent(CUID));}toast('Catatan berhasil diupdate ✅','ok');}
-  else{var j={id:jid++,plantId:pid2,type:'note',note:note,date:dt};jnls.push(j);saveL();sbQ('bq_journals','POST',{user_id:CUID,plant_id:pid2,type:'note',note:note,date:dt});toast('Catatan tersimpan 📝','ok');}
+  if(eid){var idx=jnls.findIndex(function(x){return String(x.id)===String(eid);});if(idx>-1){jnls[idx].note=note;jnls[idx].date=dt;jnls[idx].plantId=pid2;saveL();sbQ('bq_journals','PATCH',{note:note,date:dt,plant_id:pid2},'id=eq.'+eid+'&user_id=eq.'+encodeURIComponent(CUID));}toast('Catatan berhasil diupdate ✅','ok');}
+  else{var j={id:'jl_'+Date.now(),plantId:pid2,type:'note',note:note,date:dt};jnls.push(j);saveL();sbQ('bq_journals','POST',{user_id:CUID,plant_id:pid2,type:'note',note:note,date:dt});toast('Catatan tersimpan 📝','ok');}
   closeJSheet();renderJnl();renderHome();
 }
 
@@ -1603,17 +1603,22 @@ if('serviceWorker' in navigator){
     var hr=new Date().getHours();var gr=hr<12?'Selamat pagi':hr<17?'Selamat siang':'Selamat malam';
     var nd=document.getElementById('homeDate');if(nd){nd.textContent=gr+', '+CU;}
     document.getElementById('loginScr').classList.add('off');
-    // Verifikasi UID ke server di background — perbaiki kalau berbeda
-    loadData();
-    setTimeout(function(){
-      sbQ('bq_users','GET',null,'username=eq.'+encodeURIComponent(CU)+'&select=id,username').then(function(res){
-        if(res&&res.length&&res[0].id&&res[0].id!==CUID){
+    // Verifikasi CUID dari server DULU sebelum fetch data — ini kunci sync antar device
+    // Kalau CUID di localStorage device lain salah, data tidak akan muncul
+    sbQ('bq_users','GET',null,'username=eq.'+encodeURIComponent(CU)+'&select=id,username').then(function(res){
+      if(res&&res.length&&res[0].id){
+        if(res[0].id!==CUID){
           CUID=res[0].id;
           lsRS('bq_uid',CUID);
-          loadData();
         }
-      }).catch(function(){});
-    },2000);
+      }
+      // Setelah CUID dipastikan benar, baru load data dari server
+      loadData();
+    }).catch(function(){
+      // Kalau server tidak bisa diakses, pakai data lokal sebagai fallback
+      plants=ls('bq_p_'+CU,[]);jnls=ls('bq_j_'+CU,[]);fpCache=ls('bq_fp_'+CU,{});
+      renderAll();
+    });
   }else{setTimeout(function(){document.getElementById('liInp').focus();},300);}
   setInterval(function(){tipIdx++;var t=TIPS[tipIdx%TIPS.length];document.getElementById('tipIco').textContent=t.i;document.getElementById('tipT').textContent=t.t;document.getElementById('tipB').textContent=t.b;},12000);
 })();
