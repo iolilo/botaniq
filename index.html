@@ -483,7 +483,7 @@ button,input,select,textarea{font-family:'Nunito',sans-serif}
 
 <!-- LOGIN -->
 <div id="loginScr">
-  <div class="l-ico">🌿</div>
+  <div class="l-ico"></div>
   <div class="l-logo">Tanduran</div>
   <div class="l-sub">Plant care, digitalized.</div>
   <div class="l-box">
@@ -498,7 +498,7 @@ button,input,select,textarea{font-family:'Nunito',sans-serif}
 
 <!-- HEADER -->
 <div id="hd">
-  <div class="logo">🌿 Tanduran</div>
+  <div class="logo">Tanduran</div>
   <div class="hdr">
     <button class="hbtn" id="themeBtn" onclick="toggleTheme()" title="Ganti tema">🌙</button>
     <div class="uchip" id="uchip" onclick="showAccMenu()">👤 <span id="uLabel">—</span></div>
@@ -520,8 +520,8 @@ button,input,select,textarea{font-family:'Nunito',sans-serif}
   <div id="homeAlertWrap"></div>
   <!-- tip -->
   <div class="tip-card">
-    <div class="tip-ico" id="tipIco">🌿</div>
-    <div><div class="tip-title" id="tipT">Tips Hari Ini</div><div class="tip-body" id="tipB">Memuat...</div></div>
+    <div class="tip-ico" id="tipIco"></div>
+    <div><div class="tip-title" id="tipT">Tips Hari Ini</div><div class="tip-body" id="tipB">Memuat</div></div>
   </div>
   <!-- pengingat -->
   <div class="home-sec" id="homeTindakan" style="display:none">
@@ -913,7 +913,7 @@ async function doLogin(){
   var uname=raw.toLowerCase().replace(/\s+/g,'_').replace(/[^a-z0-9_]/g,'').substring(0,20);
   if(!uname||uname.length<2){toast('Username terlalu pendek!','w');return;}
   var btn=document.getElementById('liBtnLogin');
-  if(btn){btn.textContent='⏳ Memuat...';btn.style.opacity='0.6';btn.disabled=true;}
+  if(btn){btn.textContent='Memuat';btn.style.opacity='0.6';btn.disabled=true;}
   try{
     // 1. Cek apakah username sudah ada di server
     var existing=await sbQ('bq_users','GET',null,'username=eq.'+encodeURIComponent(uname)+'&select=id,username');
