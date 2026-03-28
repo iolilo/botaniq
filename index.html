@@ -47,7 +47,7 @@ body{font-family:'Nunito',sans-serif;color:var(--text);font-size:14px;-webkit-fo
 button,input,select,textarea{font-family:'Nunito',sans-serif}
 
 /* ══ APP ══ */
-#app{max-width:430px;margin:0 auto;height:100dvh;display:flex;flex-direction:column;background:var(--bg);position:relative;overflow:hidden}
+#app{max-width:430px;margin:0 auto;height:100%;min-height:100dvh;max-height:100dvh;display:flex;flex-direction:column;background:var(--bg);position:relative;overflow:hidden}
 
 /* ══ LOGIN ══ */
 #loginScr{position:absolute;inset:0;z-index:999;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem 1.5rem;overflow-y:auto;transition:opacity .3s,transform .3s}
@@ -77,21 +77,21 @@ button,input,select,textarea{font-family:'Nunito',sans-serif}
 .scr.on{display:flex}
 
 /* ══ BERANDA ══ */
-/* kebun card — screenshot image 1 top */
-.kebun-card{margin:8px 16px;background:var(--gp);border-radius:16px;padding:12px 14px;border:1px solid var(--gpb);position:relative;overflow:hidden;min-height:auto}
+/* kebun card */
+.kebun-card{margin:8px 16px;background:var(--gp);border-radius:16px;padding:11px 14px;border:1px solid var(--gpb);position:relative;overflow:hidden;flex-shrink:0}
 .kebun-card::after{content:'';position:absolute;right:-12px;top:-12px;width:64px;height:64px;border-radius:50%;background:var(--gpb)}
 .kebun-title{font-size:12px;font-weight:700;color:var(--green);margin-bottom:1px}
-.kebun-sub{font-size:10px;color:var(--green);opacity:.7;margin-bottom:8px}
+.kebun-sub{font-size:10px;color:var(--green);opacity:.7;margin-bottom:7px}
 .kebun-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}
-.kstat{background:rgba(255,255,255,.6);border-radius:10px;padding:8px 4px;text-align:center}
+.kstat{background:rgba(255,255,255,.6);border-radius:9px;padding:6px 4px;text-align:center}
 [data-theme="dark"] .kstat{background:rgba(255,255,255,.08)}
-.kstat-n{font-size:17px;font-weight:800;color:var(--green);line-height:1}
+.kstat-n{font-size:16px;font-weight:800;color:var(--green);line-height:1}
 .kstat-n.warn{color:var(--amber)}.kstat-n.bad{color:var(--red)}
 .kstat-l{font-size:8px;font-weight:600;color:var(--green);margin-top:2px;opacity:.75}
 .kstat-l.warn{color:var(--amber)}.kstat-l.bad{color:var(--red)}
 
 /* section */
-.home-sec{margin:0 16px 4px}
+.home-sec{margin:0 16px 4px;flex-shrink:0}
 .sec-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;margin-top:14px}
 .sec-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
 .see-all{font-size:11px;color:var(--green);font-weight:700;cursor:pointer;background:none;border:none}
@@ -110,15 +110,13 @@ button,input,select,textarea{font-family:'Nunito',sans-serif}
 
 /* tanaman terakhir — grid 2 kolom */
 .recent-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:0 16px 4px}
-.recent-card{background:var(--card);border-radius:14px;padding:0;border:1px solid var(--border);text-align:center;cursor:pointer;box-shadow:var(--sh);overflow:hidden}
+.recent-card{background:var(--card);border-radius:14px;padding:0;border:1px solid var(--border);text-align:left;cursor:pointer;box-shadow:var(--sh);overflow:hidden}
 .recent-card:active{opacity:.8}
-.recent-img-wrap{width:100%;height:86px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--bg2)}
+.recent-img-wrap{width:100%;height:90px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--bg2)}
 .recent-img-wrap img{width:100%;height:100%;object-fit:cover}
 .recent-img-wrap span{font-size:40px;line-height:1}
-.recent-info{padding:7px 8px 9px}
-.recent-name{font-size:11px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;width:100%}
-.recent-status{font-size:9px;margin-top:2px;font-weight:600}
-.recent-status.good{color:var(--green)}.recent-status.warn{color:var(--amber)}.recent-status.bad{color:var(--red)}
+.recent-info{padding:7px 10px 9px}
+.recent-name{font-size:11.5px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;width:100%}
 
 /* tip card */
 .tip-card{margin:0 16px 4px;background:var(--card);border-radius:13px;padding:9px 12px;display:flex;align-items:flex-start;gap:9px;border:1px solid var(--border);flex-shrink:0;box-shadow:var(--sh)}
@@ -127,7 +125,7 @@ button,input,select,textarea{font-family:'Nunito',sans-serif}
 .tip-body{color:var(--muted);font-size:10.5px;line-height:1.55}
 
 /* alert strip */
-.alert-strip{margin:0 16px 10px;border-radius:11px;padding:10px 12px;display:flex;align-items:center;gap:8px;cursor:pointer;border:1px solid}
+.alert-strip{margin:0 16px 8px;border-radius:11px;padding:10px 12px;display:flex;align-items:center;gap:8px;cursor:pointer;border:1px solid;flex-shrink:0}
 .alert-strip.bad{background:var(--red-bg);border-color:var(--red-ln)}
 .alert-strip.warn{background:var(--amber-bg);border-color:var(--amber-ln)}
 .alert-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
@@ -1112,8 +1110,6 @@ function renderHome(){
     else{
       var sorted=[].concat(plants).sort(function(a,b){return new Date(b.added||0)-new Date(a.added||0);});
       rs.innerHTML=sorted.slice(0,6).map(function(p,i){
-        var st=healthStatus(p);
-        var stTxt=st==='good'?'Sehat':st==='warn'?'Perhatian':'Kritis';
         var em=p.emoji||typeEmoji(p.type)||'🌿';
         var imgH=p.image
           ?'<img src="'+p.image+'" alt="'+p.name+'">'
@@ -1122,7 +1118,6 @@ function renderHome(){
           +'<div class="recent-img-wrap">'+imgH+'</div>'
           +'<div class="recent-info">'
           +'<div class="recent-name">'+p.name+'</div>'
-          +'<div class="recent-status '+st+'">'+stTxt+'</div>'
           +'</div></div>';
       }).join('');
     }
@@ -1576,9 +1571,8 @@ function renderMgtList(){
   var html='';
   types.forEach(function(t){
     var usedCount=plants.filter(function(p){return p.type===t.id;}).length;var canDelete=usedCount===0;
-    html+='<div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border2)">'
-      +'<div style="width:34px;height:34px;border-radius:9px;background:var(--gp);display:flex;align-items:center;justify-content:center;flex-shrink:0">'+'<span style="font-size:10px;font-weight:700;color:var(--green)">'+t.label.substring(0,3)+'</span></div>'
-      +'<div style="flex:1"><div style="font-size:13px;font-weight:600;color:var(--text)">'+t.label+'</div><div style="font-size:10px;color:var(--muted);margin-top:1px">'+usedCount+' tanaman</div></div>'
+    html+='<div style="display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--border2)">'
+      +'<div style="flex:1"><div style="font-size:13px;font-weight:700;color:var(--text)">'+t.label+'</div><div style="font-size:10px;color:var(--muted);margin-top:2px">'+usedCount+' tanaman</div></div>'
       +'<div style="display:flex;gap:5px">'
       +'<button onclick="openEditType(\''+t.id+'\')" style="width:30px;height:30px;border-radius:8px;border:1px solid var(--border);background:var(--card2);font-size:13px;cursor:pointer">✏️</button>'
       +(canDelete?'<button onclick="deleteType(\''+t.id+'\')" style="width:30px;height:30px;border-radius:8px;border:1px solid var(--red-ln);background:var(--red-bg);font-size:13px;cursor:pointer">🗑️</button>':'<button disabled style="width:30px;height:30px;border-radius:8px;border:1px solid var(--border);background:var(--card2);font-size:13px;opacity:.3;cursor:not-allowed">🗑️</button>')
