@@ -78,14 +78,14 @@ button,input,select,textarea{font-family:'Nunito',sans-serif}
 
 /* ══ BERANDA ══ */
 /* kebun card — screenshot image 1 top */
-.kebun-card{margin:12px 16px;background:var(--gp);border-radius:18px;padding:16px 18px;border:1px solid var(--gpb);position:relative;overflow:hidden}
-.kebun-card::after{content:'';position:absolute;right:-16px;top:-16px;width:80px;height:80px;border-radius:50%;background:var(--gpb)}
-.kebun-title{font-size:13px;font-weight:700;color:var(--green);margin-bottom:2px}
-.kebun-sub{font-size:10px;color:var(--green);opacity:.7;margin-bottom:12px}
-.kebun-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.kstat{background:rgba(255,255,255,.6);border-radius:11px;padding:8px 6px;text-align:center}
+.kebun-card{margin:8px 16px;background:var(--gp);border-radius:16px;padding:12px 14px;border:1px solid var(--gpb);position:relative;overflow:hidden}
+.kebun-card::after{content:'';position:absolute;right:-12px;top:-12px;width:64px;height:64px;border-radius:50%;background:var(--gpb)}
+.kebun-title{font-size:12px;font-weight:700;color:var(--green);margin-bottom:1px}
+.kebun-sub{font-size:10px;color:var(--green);opacity:.7;margin-bottom:8px}
+.kebun-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}
+.kstat{background:rgba(255,255,255,.6);border-radius:10px;padding:6px 4px;text-align:center}
 [data-theme="dark"] .kstat{background:rgba(255,255,255,.08)}
-.kstat-n{font-size:20px;font-weight:800;color:var(--green);line-height:1}
+.kstat-n{font-size:17px;font-weight:800;color:var(--green);line-height:1}
 .kstat-n.warn{color:var(--amber)}.kstat-n.bad{color:var(--red)}
 .kstat-l{font-size:8px;font-weight:600;color:var(--green);margin-top:2px;opacity:.75}
 .kstat-l.warn{color:var(--amber)}.kstat-l.bad{color:var(--red)}
@@ -110,15 +110,19 @@ button,input,select,textarea{font-family:'Nunito',sans-serif}
 
 /* tanaman terakhir dilihat — horizontal scroll cards */
 .recent-scroll{display:flex;gap:10px;padding:0 16px 4px;overflow-x:auto}
-.recent-card{background:var(--card);border-radius:16px;padding:12px 10px;border:1px solid var(--border);min-width:110px;text-align:center;cursor:pointer;flex-shrink:0;box-shadow:var(--sh)}
+.recent-card{background:var(--card);border-radius:14px;padding:0;border:1px solid var(--border);width:120px;min-width:120px;text-align:center;cursor:pointer;flex-shrink:0;box-shadow:var(--sh);overflow:hidden}
 .recent-card:active{opacity:.8}
+.recent-img-wrap{width:100%;height:86px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--bg2)}
+.recent-img-wrap img{width:100%;height:100%;object-fit:cover}
+.recent-img-wrap span{font-size:40px;line-height:1}
+.recent-info{padding:7px 8px 9px}
 .recent-emoji{font-size:40px;margin-bottom:7px;display:flex;align-items:center;justify-content:center;height:52px}
-.recent-name{font-size:11px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:96px}
-.recent-status{font-size:9.5px;margin-top:3px;font-weight:600}
+.recent-name{font-size:11px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;width:100%}
+.recent-status{font-size:9px;margin-top:2px;font-weight:600}
 .recent-status.good{color:var(--green)}.recent-status.warn{color:var(--amber)}.recent-status.bad{color:var(--red)}
 
 /* tip card */
-.tip-card{margin:0 16px 4px;background:var(--card);border-radius:13px;padding:11px 13px;display:flex;align-items:flex-start;gap:10px;border:1px solid var(--border);flex-shrink:0;box-shadow:var(--sh)}
+.tip-card{margin:0 16px 4px;background:var(--card);border-radius:13px;padding:9px 12px;display:flex;align-items:flex-start;gap:9px;border:1px solid var(--border);flex-shrink:0;box-shadow:var(--sh)}
 .tip-ico{width:32px;height:32px;border-radius:9px;background:var(--gp);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;border:1px solid var(--gpb)}
 .tip-title{font-weight:700;font-size:11px;color:var(--green);margin-bottom:2px}
 .tip-body{color:var(--muted);font-size:10.5px;line-height:1.55}
@@ -496,7 +500,6 @@ button,input,select,textarea{font-family:'Nunito',sans-serif}
 <div id="hd">
   <div class="logo">🌿 Tanduran</div>
   <div class="hdr">
-    <button class="hbtn" id="refreshBtn" onclick="doRefresh()" title="Sinkron data">🔄</button>
     <button class="hbtn" id="themeBtn" onclick="toggleTheme()" title="Ganti tema">🌙</button>
     <div class="uchip" id="uchip" onclick="showAccMenu()">👤 <span id="uLabel">—</span></div>
   </div>
@@ -869,20 +872,16 @@ function compressImg(file,maxDim,q){
 async function sbQ(table,method,body,params){
   var url=APIURL+'/api/db/'+table+(params?'?'+params:'');
   try{
-    var ctrl=new AbortController();
-    var timer=setTimeout(function(){ctrl.abort();},12000);
-    var opts={method:method,headers:{'Content-Type':'application/json'},signal:ctrl.signal};
+    var opts={method:method,headers:{'Content-Type':'application/json'}};
     if(method==='POST')opts.headers['Prefer']='return=representation';
     if(body)opts.body=JSON.stringify(body);
-    var r=await fetch(url,opts);
-    clearTimeout(timer);
-    if(!r.ok){console.warn('[sbQ] HTTP '+r.status+' on '+table);return null;}
+    var fetchP=fetch(url,opts);
+    var timeoutP=new Promise(function(_,rej){setTimeout(function(){rej(new Error('timeout'));},12000);});
+    var r=await Promise.race([fetchP,timeoutP]);
+    if(!r.ok)return null;
     var txt=await r.text();
     return txt?JSON.parse(txt):null;
-  }catch(e){
-    console.warn('[sbQ] error on '+table+':',e&&e.message||e);
-    return null;
-  }
+  }catch(e){return null;}
 }
 
 // ── THEME ──
@@ -969,31 +968,32 @@ function showAccMenu(){
 // ── LOAD DATA ──
 async function loadData(){
   showSyncToast();
-  var uid=encodeURIComponent(CUID);
-  var sbP=null;
-  // Retry sekali kalau gagal pertama (server cold start)
-  for(var attempt=0;attempt<2;attempt++){
-    sbP=await sbQ('bq_plants','GET',null,'user_id=eq.'+uid+'&order=created_at.asc');
-    if(sbP!==null)break;
-    if(attempt===0)await new Promise(function(r){setTimeout(r,2000);});
-  }
-  if(sbP===null){
-    // Benar-benar tidak bisa reach server
+  // Step 1: Verifikasi CUID dari server (kunci sync antar device)
+  var userRes=await sbQ('bq_users','GET',null,'username=eq.'+encodeURIComponent(CU)+'&select=id,username');
+  if(userRes&&userRes.length&&userRes[0].id){
+    if(userRes[0].id!==CUID){CUID=userRes[0].id;lsRS('bq_uid',CUID);}
+  } else {
+    // Server tidak bisa diakses — pakai data lokal, tidak tampilkan error
     hideSyncToast();
     plants=ls('bq_p_'+CU,[]);jnls=ls('bq_j_'+CU,[]);fpCache=ls('bq_fp_'+CU,{});
     renderAll();
-    toast('Tidak dapat terhubung ke server','w',4000);
+    return;
+  }
+  // Step 2: Fetch semua data dengan CUID yang sudah dipastikan benar
+  var uid=encodeURIComponent(CUID);
+  var sbP=await sbQ('bq_plants','GET',null,'user_id=eq.'+uid+'&order=created_at.asc');
+  if(sbP===null){
+    hideSyncToast();
+    plants=ls('bq_p_'+CU,[]);jnls=ls('bq_j_'+CU,[]);fpCache=ls('bq_fp_'+CU,{});
+    renderAll();
     return;
   }
   var sbJ=await sbQ('bq_journals','GET',null,'user_id=eq.'+uid+'&order=date.desc')||[];
   var sbPh=await sbQ('bq_photos','GET',null,'user_id=eq.'+uid+'&order=date.desc')||[];
   plants=sbP.map(function(r){
-    return{
-      id:r.id,name:r.name,type:r.type,emoji:r.emoji,image:r.image,
-      water:r.water_days,fert:r.fert_days,
-      lastWater:r.last_water,lastFert:r.last_fert,
-      health:r.health,notes:r.notes,added:r.added_at
-    };
+    return{id:r.id,name:r.name,type:r.type,emoji:r.emoji,image:r.image,
+      water:r.water_days,fert:r.fert_days,lastWater:r.last_water,lastFert:r.last_fert,
+      health:r.health,notes:r.notes,added:r.added_at};
   });
   jnls=sbJ.map(function(r){
     return{id:r.id,plantId:r.plant_id,type:r.type,note:r.note,date:r.date};
@@ -1003,16 +1003,11 @@ async function loadData(){
     if(!fpCache[p.plant_id])fpCache[p.plant_id]=[];
     fpCache[p.plant_id].push({id:p.id,img:p.image,date:p.date});
   });
-  saveL();
-  hideSyncToast();
-  renderAll();
-  // Sync custom types dari server
+  saveL();hideSyncToast();renderAll();
+  // Sync custom types
   sbQ('bq_usermeta','GET',null,'user_id=eq.'+uid+'&meta_key=eq.plant_types').then(function(res){
     if(res&&res.length&&res[0].meta_value){
-      try{
-        var serverTypes=JSON.parse(res[0].meta_value);
-        if(serverTypes&&serverTypes.length){lsS('bq_types_'+CU,serverTypes);renderPlants();renderHome();}
-      }catch(e){}
+      try{var t=JSON.parse(res[0].meta_value);if(t&&t.length){lsS('bq_types_'+CU,t);renderPlants();renderHome();}}catch(e){}
     }
   });
 }
@@ -1025,12 +1020,13 @@ function showSyncToast(){
   document.getElementById('app').appendChild(el);
 }
 function hideSyncToast(){var el=document.getElementById('_syncBar');if(el)el.remove();}
-async function doRefresh(){
-  var btn=document.getElementById('refreshBtn');
-  if(btn){btn.style.opacity='0.4';btn.style.pointerEvents='none';}
-  await loadData();
-  if(btn){btn.style.opacity='';btn.style.pointerEvents='';}
-}
+// Auto-refresh saat tab/window kembali difokus (user berpindah tab lalu balik)
+var _lastFocus=0;
+window.addEventListener('focus',function(){
+  var now=Date.now();
+  if(CU&&CUID&&now-_lastFocus>60000){_lastFocus=now;loadData();}
+});
+window.addEventListener('pageshow',function(){_lastFocus=Date.now();});
 
 // ── NAV ──
 function showScr(n){
@@ -1101,12 +1097,10 @@ function renderHome(){
         var st=healthStatus(p);
         var stTxt=st==='good'?'Sehat':st==='warn'?'Perhatian':'Kritis';
         var em=p.emoji||typeEmoji(p.type)||'🌿';
-        var imgH=p.image?'<img src="'+p.image+'" style="width:52px;height:52px;border-radius:11px;object-fit:contain;background:var(--bg2)" alt="">':'<span style="font-size:40px;line-height:1">'+em+'</span>';
-        return '<div class="recent-card" onclick="openDetail(\''+p.id+'\')">'
-          +'<span class="recent-emoji">'+imgH+'</span>'
-          +'<div class="recent-name">'+p.name+'</div>'
-          +'<div class="recent-status '+st+'">'+stTxt+'</div>'
-          +'</div>';
+        var imgH=p.image
+          ?'<img src="'+p.image+'" alt="'+p.name+'">'
+          :'<span>'+em+'</span>';
+        return '<div class="recent-card" onclick="openDetail(\''+p.id+'\')">'          +'<div class="recent-img-wrap">'+imgH+'</div>'          +'<div class="recent-info">'          +'<div class="recent-name">'+p.name+'</div>'          +'<div class="recent-status '+st+'">'+stTxt+'</div>'          +'</div>'          +'</div>';
       }).join('');
     }
   }
@@ -1607,7 +1601,6 @@ if('serviceWorker' in navigator){
 // ── INIT ──
 (function init(){
   initTheme();
-  fetch(APIURL+'/api/db/bq_users?select=id&username=eq.__warmup__').catch(function(){});
   var savedUser=lsR('bq_user');var savedUID=lsR('bq_uid');
   if(savedUser&&savedUser.length>=2&&savedUID){
     CU=savedUser;CUID=savedUID;
@@ -1615,22 +1608,8 @@ if('serviceWorker' in navigator){
     var hr=new Date().getHours();var gr=hr<12?'Selamat pagi':hr<17?'Selamat siang':'Selamat malam';
     var nd=document.getElementById('homeDate');if(nd){nd.textContent=gr+', '+CU;}
     document.getElementById('loginScr').classList.add('off');
-    // Verifikasi CUID dari server DULU sebelum fetch data — ini kunci sync antar device
-    // Kalau CUID di localStorage device lain salah, data tidak akan muncul
-    sbQ('bq_users','GET',null,'username=eq.'+encodeURIComponent(CU)+'&select=id,username').then(function(res){
-      if(res&&res.length&&res[0].id){
-        if(res[0].id!==CUID){
-          CUID=res[0].id;
-          lsRS('bq_uid',CUID);
-        }
-      }
-      // Setelah CUID dipastikan benar, baru load data dari server
-      loadData();
-    }).catch(function(){
-      // Kalau server tidak bisa diakses, pakai data lokal sebagai fallback
-      plants=ls('bq_p_'+CU,[]);jnls=ls('bq_j_'+CU,[]);fpCache=ls('bq_fp_'+CU,{});
-      renderAll();
-    });
+    // Langsung loadData — di dalamnya sudah ada verifikasi CUID
+    loadData();
   }else{setTimeout(function(){document.getElementById('liInp').focus();},300);}
   setInterval(function(){tipIdx++;var t=TIPS[tipIdx%TIPS.length];document.getElementById('tipIco').textContent=t.i;document.getElementById('tipT').textContent=t.t;document.getElementById('tipB').textContent=t.b;},12000);
 })();
