@@ -431,8 +431,8 @@ button,input,select,textarea{font-family:'Nunito',sans-serif}
 
 /* ══ OVERLAYS ══ */
 .ov{position:absolute;inset:0;z-index:90;background:rgba(0,0,0,.4);backdrop-filter:blur(5px);display:none;align-items:flex-end;justify-content:center;pointer-events:none}
-/* tlSheet needs to be above detail panel (z-index 60) */
-#tlSheet{z-index:95}
+/* sheets di atas detail panel (z-index 60) */
+#tlSheet,#pSheet{z-index:95}
 .ov.open{display:flex;pointer-events:all}
 .sheet{background:var(--card);border-radius:20px 20px 0 0;width:100%;max-width:430px;max-height:90vh;overflow-y:auto;padding:0 16px 40px;border-top:1px solid var(--border);animation:shUp .24s cubic-bezier(.4,0,.2,1)}
 @keyframes shUp{from{transform:translateY(50%)}to{transform:translateY(0)}}
@@ -710,7 +710,7 @@ button,input,select,textarea{font-family:'Nunito',sans-serif}
 <div class="ov" id="tlSheet" onclick="if(event.target===this)closeTLSheet()">
   <div class="sheet" onclick="event.stopPropagation()">
     <div class="sh-handle"></div>
-    <div class="sh-hd"><button class="sh-back" onclick="closeTLSheet()">←</button><div class="sh-title">📸 Tambah Foto</div></div>
+    <div class="sh-hd"><button class="sh-back" onclick="closeTLSheet()">←</button><div class="sh-title">📸 Tambah Foto Progres</div></div>
     <input type="hidden" id="tlPid">
     <div class="fg"><label class="fl">Tanggal</label><input class="fi" type="date" id="tlDate"></div>
     <div class="fg">
@@ -722,6 +722,7 @@ button,input,select,textarea{font-family:'Nunito',sans-serif}
         <div id="tlTxt" class="iutxt">Pilih foto progress</div>
       </div>
     </div>
+    <div class="fg"><label class="fl">Catatan (opsional)</label><textarea class="fta" id="tlNote" placeholder="Kondisi tanaman, pengamatan..." style="min-height:60px"></textarea></div>
     <button class="submt" onclick="saveTL()">💾 Simpan Foto</button>
   </div>
 </div>
@@ -996,13 +997,9 @@ function showAccMenu(){
 
 // ── LOAD DATA ──
 async function loadData(){
-  // Tampilkan data lokal DULU supaya UI langsung kelihatan
-  plants=ls('bq_p_'+CU,[]);jnls=ls('bq_j_'+CU,[]);fpCache=ls('bq_fp_'+CU,{});
-  renderAll();
   showSyncToast();
   try{
     var uid=encodeURIComponent(CUID);
-    // Semua request paralel sekaligus — user verify + semua data
     var results=await Promise.all([
       sbQ('bq_users','GET',null,'username=eq.'+encodeURIComponent(CU)+'&select=id,username'),
       sbQ('bq_plants','GET',null,'user_id=eq.'+uid+'&order=created_at.asc'),
@@ -1011,11 +1008,15 @@ async function loadData(){
       sbQ('bq_usermeta','GET',null,'user_id=eq.'+uid+'&meta_key=eq.plant_types')
     ]);
     var userRes=results[0],sbP=results[1],sbJ=results[2]||[],sbPh=results[3]||[],sbMeta=results[4];
-    // Update CUID jika berubah di server
     if(userRes&&userRes.length&&userRes[0].id&&userRes[0].id!==CUID){
       CUID=userRes[0].id;lsRS('bq_uid',CUID);
     }
-    if(!sbP){hideSyncToast();return;}
+    if(!sbP){
+      // Server tidak bisa dijangkau — tampil data lokal sebagai fallback sementara
+      plants=ls('bq_p_'+CU,[]);jnls=ls('bq_j_'+CU,[]);fpCache=ls('bq_fp_'+CU,{});
+      toast('Tidak ada koneksi — menampilkan data terakhir','w',4000);
+      hideSyncToast();renderAll();return;
+    }
     plants=sbP.map(function(r){
       return{id:r.id,name:r.name,type:r.type,emoji:r.emoji,image:r.image,
         water:r.water_days,fert:r.fert_days,lastWater:r.last_water,lastFert:r.last_fert,
@@ -1027,19 +1028,31 @@ async function loadData(){
     fpCache={};
     sbPh.forEach(function(p){
       if(!fpCache[p.plant_id])fpCache[p.plant_id]=[];
-      fpCache[p.plant_id].push({id:p.id,img:p.image,date:p.date});
+      fpCache[p.plant_id].push({id:p.id,img:p.image,date:p.date,note:p.note||''});
     });
     if(sbMeta&&sbMeta.length&&sbMeta[0].meta_value){
       try{var t=JSON.parse(sbMeta[0].meta_value);if(t&&t.length)lsS('bq_types_'+CU,t);}catch(e){}
     }
-    saveL();hideSyncToast();renderAll();
-  }catch(e){hideSyncToast();}
+    // Simpan ke lokal hanya sebagai cache setelah dapat data server
+    saveL();
+    hideSyncToast();renderAll();
+  }catch(e){
+    plants=ls('bq_p_'+CU,[]);jnls=ls('bq_j_'+CU,[]);fpCache=ls('bq_fp_'+CU,{});
+    toast('Tidak ada koneksi — menampilkan data terakhir','w',4000);
+    hideSyncToast();renderAll();
+  }
 }
 function showSyncToast(){
-  // Gunakan indikator minimal di uchip saja, tidak ada loading bar
-  var uc=document.getElementById('uchip');if(uc)uc.style.opacity='0.6';
+  var uc=document.getElementById('uchip');if(uc)uc.style.opacity='0.5';
+  if(!document.getElementById('_syncDot')){
+    var dot=document.createElement('div');dot.id='_syncDot';
+    dot.style.cssText='width:6px;height:6px;border-radius:50%;background:var(--green);animation:syncPulse 1s ease-in-out infinite;position:absolute;top:18px;left:90px';
+    if(!document.getElementById('_syncPulseStyle')){var s=document.createElement('style');s.id='_syncPulseStyle';s.textContent='@keyframes syncPulse{0%,100%{opacity:.25}50%{opacity:1}}';document.head.appendChild(s);}
+    document.getElementById('hd').appendChild(dot);
+  }
 }
 function hideSyncToast(){
+  var dot=document.getElementById('_syncDot');if(dot)dot.remove();
   var el=document.getElementById('_syncBar');if(el)el.remove();
   var uc=document.getElementById('uchip');if(uc)uc.style.opacity='1';
 }
@@ -1320,14 +1333,24 @@ function closeDetail(){document.getElementById('detail').classList.remove('open'
 // ── LOG CARE ──
 async function logCare(id,type){
   var p=plants.find(function(x){return x.id==id;});if(!p)return;id=p.id;
-  var t=today();if(type==='water')p.lastWater=t;if(type==='fert')p.lastFert=t;
+  var t=today();
   var noteMap={water:'Disiram',fert:'Dipupuk',prune:'Dipangkas',repot:'Ganti pot',disease:'Dicek penyakit',note:'Catatan'};
   var toastMsg={water:'💧 Siram tercatat!',fert:'🌱 Pupuk tercatat!',prune:'✂️ Pangkas tercatat!',repot:'🪴 Repot tercatat!',disease:'🩺 Penyakit tercatat!'};
   var noteText=noteMap[type]||JLBL[type]||type;
-  var j={id:jid++,plantId:id,type:type,note:noteText,date:t};
+  // Kirim ke server dulu — tunggu response
+  var results=await Promise.all([
+    sbQ('bq_journals','POST',{user_id:CUID,plant_id:id,type:type,note:noteText,date:t}),
+    type==='water'||type==='fert'
+      ? sbQ('bq_plants','PATCH',{last_water:type==='water'?t:p.lastWater,last_fert:type==='fert'?t:p.lastFert},'id=eq.'+id+'&user_id=eq.'+encodeURIComponent(CUID))
+      : Promise.resolve(true)
+  ]);
+  var jRes=results[0];
+  if(!jRes||!jRes[0]){toast('Gagal mencatat — cek koneksi','e',3000);return;}
+  // Berhasil di server — update state lokal dengan ID dari server
+  if(type==='water')p.lastWater=t;
+  if(type==='fert')p.lastFert=t;
+  var j={id:jRes[0].id,plantId:id,type:type,note:noteText,date:t};
   jnls.push(j);saveL();
-  sbQ('bq_plants','PATCH',{last_water:p.lastWater,last_fert:p.lastFert},'id=eq.'+id+'&user_id=eq.'+encodeURIComponent(CUID));
-  sbQ('bq_journals','POST',{user_id:CUID,plant_id:id,type:type,note:noteText,date:t});
   toast(toastMsg[type]||'📝 Tercatat!','ok');
   renderJnl();renderHome();renderPlants();
   if(detId==id){
@@ -1367,7 +1390,7 @@ function editPlant(id){
   document.getElementById('pfType').value=p.type;document.getElementById('newTypeWrap').style.display='none';
   if(p.image){document.getElementById('pfPrev').src=p.image;document.getElementById('pfPrev').style.display='block';document.getElementById('pfIco').style.display='none';document.getElementById('pfTxt').style.display='none';}
   else{document.getElementById('pfPrev').style.display='none';document.getElementById('pfIco').style.display='block';document.getElementById('pfTxt').style.display='block';}
-  closeDetail();setTimeout(function(){document.getElementById('pSheet').classList.add('open');},290);
+  document.getElementById('pSheet').classList.add('open'); // buka di atas detail, tidak close detail
 }
 function closePSheet(){document.getElementById('pSheet').classList.remove('open');document.getElementById('pfId').value='';addImg=null;}
 function popTypeSelect(){
@@ -1387,27 +1410,31 @@ async function savePlant(){
   if(tv==='__new__'){var nn=document.getElementById('pfTypeNew').value.trim();if(!nn){toast('Isi nama jenis baru!','w');return;}type=nn.toLowerCase().replace(/\s+/g,'_').replace(/[^a-z0-9_]/g,'');emoji='🌿';var types=getTypes();if(!types.find(function(t){return t.id===type;})){types.splice(types.length-1,0,{id:type,label:nn,emoji:emoji});saveTypes(types);}}
   else{type=tv;emoji=typeEmoji(type);}
   var dateVal=document.getElementById('pfDate').value;var addedAt=dateVal?new Date(dateVal).toISOString():today();
-  var data={name:name,type:type,emoji:emoji,water:parseInt(document.getElementById('pfWater').value),fert:90,notes:document.getElementById('pfNotes').value.trim(),image:addImg,added:addedAt};
+  var data={name:name,type:type,emoji:emoji,water:parseInt(document.getElementById('pfWater').value),fert:90,notes:document.getElementById('pfNotes').value.trim(),added:addedAt};
+  var btn=document.querySelector('#pSheet .submt');if(btn){btn.disabled=true;btn.textContent='Menyimpan...';}
   if(eid){
     var idx=plants.findIndex(function(p){return p.id==eid;});
     if(idx>-1){
       var existingImg=plants[idx].image||null;
-      data.image=addImg!==null?addImg:existingImg; // pakai foto baru kalau ada, kalau tidak pakai yang lama
-      plants[idx]=Object.assign({},plants[idx],data);
-      saveL();
+      data.image=addImg!==null?addImg:existingImg;
+      // Server dulu — tidak simpan lokal kalau server gagal
       var patchRes=await sbQ('bq_plants','PATCH',{name:data.name,type:data.type,emoji:data.emoji,image:data.image,water_days:data.water,notes:data.notes,updated_at:new Date().toISOString()},'id=eq.'+eid+'&user_id=eq.'+encodeURIComponent(CUID));
-      if(patchRes===null){toast('Update tersimpan lokal, cek koneksi','w');}else{toast('Tanaman berhasil diupdate ✅','ok');}
+      if(patchRes===null){toast('Gagal update — cek koneksi','e',3000);if(btn){btn.disabled=false;btn.textContent='💾 Simpan Tanaman';}return;}
+      plants[idx]=Object.assign({},plants[idx],data);
+      saveL();toast('Tanaman berhasil diupdate ✅','ok');
     }
-  }
-  else{
+  }else{
     var t=today();
-    var np=Object.assign({id:'tmp_'+Date.now(),health:'good',lastWater:t,lastFert:t,added:addedAt},data);
-    var res=await sbQ('bq_plants','POST',{user_id:CUID,name:np.name,type:np.type,emoji:np.emoji,image:np.image,water_days:np.water,fert_days:90,last_water:t,last_fert:t,health:'good',notes:np.notes,added_at:addedAt});
-    if(res&&res[0]&&res[0].id){np.id=res[0].id;toast('Tanaman berhasil ditambahkan 🌱','ok');}
-    else{toast('Tersimpan lokal — cek koneksi internet','w',3500);}
-    plants.push(np);tipIdx++;
+    data.image=addImg||null;
+    // Server dulu — pakai ID dari server
+    var res=await sbQ('bq_plants','POST',{user_id:CUID,name:data.name,type:data.type,emoji:data.emoji,image:data.image,water_days:data.water,fert_days:90,last_water:t,last_fert:t,health:'good',notes:data.notes,added_at:addedAt});
+    if(!res||!res[0]||!res[0].id){toast('Gagal simpan — cek koneksi','e',3000);if(btn){btn.disabled=false;btn.textContent='💾 Simpan Tanaman';}return;}
+    var np=Object.assign({id:res[0].id,health:'good',lastWater:t,lastFert:t},data);
+    plants.push(np);saveL();tipIdx++;toast('Tanaman berhasil ditambahkan 🌱','ok');
   }
-  saveL();closePSheet();renderHome();renderPlants();
+  if(btn){btn.disabled=false;btn.textContent='💾 Simpan Tanaman';}
+  closePSheet();renderHome();renderPlants();
+  if(eid&&detId==eid){renderDBody(eid);}
 }
 function confirmDel(id){
   var p=plants.find(function(x){return x.id==id;});if(!p)return;id=p.id;
@@ -1423,12 +1450,39 @@ function renderTLGrid(id){
   var el=document.getElementById('tlG_'+id);if(!el)return;
   var photos=fpCache[id]||[];
   var addBtn='<div class="tl-add-inline" onclick="openTLSheet('+id+')"><div style="font-size:20px">📷</div><div style="font-size:9px;font-weight:700;color:var(--green);margin-top:3px">Tambah</div></div>';
-  el.innerHTML=addBtn+photos.map(function(ph){return '<div class="tl-item" onclick="openLB(\''+ph.img+'\',\''+ph.date+'\')"><img src="'+ph.img+'" loading="lazy" alt=""><div class="tl-dt">'+fmtShort(ph.date)+'</div><button class="tl-del" onclick="event.stopPropagation();deleteTL('+id+',\''+ph.id+'\')">✕</button></div>';}).join('');
+  el.innerHTML=addBtn+photos.map(function(ph){
+    var noteHtml=ph.note?'<div style="font-size:9px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:76px">'+ph.note+'</div>':'';
+    return '<div class="tl-item" onclick="openLB(\''+ph.img+'\',\''+ph.date+'\')"><img src="'+ph.img+'" loading="lazy" alt=""><div class="tl-dt">'+fmtShort(ph.date)+noteHtml+'</div><button class="tl-del" onclick="event.stopPropagation();deleteTL('+id+',\''+ph.id+'\')">✕</button></div>';
+  }).join('');
 }
-function openTLSheet(pid2){document.getElementById('tlPid').value=pid2;document.getElementById('tlDate').value=today();document.getElementById('tlPrev').style.display='none';document.getElementById('tlIco').style.display='block';document.getElementById('tlTxt').style.display='block';tlImg=null;document.getElementById('tlSheet').classList.add('open');}
+function openTLSheet(pid2){document.getElementById('tlPid').value=pid2;document.getElementById('tlDate').value=today();document.getElementById('tlPrev').style.display='none';document.getElementById('tlIco').style.display='block';document.getElementById('tlTxt').style.display='block';document.getElementById('tlNote').value='';tlImg=null;document.getElementById('tlSheet').classList.add('open');}
 function closeTLSheet(){document.getElementById('tlSheet').classList.remove('open');tlImg=null;}
-function onTLImg(ev){var f=ev.target.files[0];if(!f)return;compressImg(f,800,.75).then(function(data){if(!data){toast('Gagal memproses foto','e');return;}tlImg=data;document.getElementById('tlPrev').src=data;document.getElementById('tlPrev').style.display='block';document.getElementById('tlIco').style.display='none';document.getElementById('tlTxt').style.display='none';});}
-async function saveTL(){if(!tlImg){toast('Pilih foto dulu!','w');return;}var pid2=document.getElementById('tlPid').value;var dt=document.getElementById('tlDate').value||today();if(!fpCache[pid2])fpCache[pid2]=[];var newPh={id:'local_'+Date.now(),img:tlImg,date:dt};fpCache[pid2].unshift(newPh);saveL();closeTLSheet();renderDBody(pid2);toast('Foto tersimpan 📸','ok');var res=await sbQ('bq_photos','POST',{user_id:CUID,plant_id:pid2,image:tlImg,date:dt});if(res&&res[0]){newPh.id=res[0].id;saveL();}}
+function onTLImg(ev){var f=ev.target.files[0];if(!f)return;compressImg(f,600,.65).then(function(data){if(!data){toast('Gagal memproses foto','e');return;}tlImg=data;document.getElementById('tlPrev').src=data;document.getElementById('tlPrev').style.display='block';document.getElementById('tlIco').style.display='none';document.getElementById('tlTxt').style.display='none';});}
+async function saveTL(){
+  if(!tlImg){toast('Pilih foto dulu!','w');return;}
+  var pid2=document.getElementById('tlPid').value;
+  var dt=document.getElementById('tlDate').value||today();
+  var note=document.getElementById('tlNote').value.trim();
+  if(!fpCache[pid2])fpCache[pid2]=[];
+  var newPh={id:'local_'+Date.now(),img:tlImg,date:dt,note:note};
+  fpCache[pid2].unshift(newPh);
+  saveL();
+  closeTLSheet();
+  renderDBody(pid2);
+  toast('Menyimpan foto...','i',2000);
+  var res=await sbQ('bq_photos','POST',{user_id:CUID,plant_id:pid2,image:tlImg,date:dt,note:note});
+  if(res&&res[0]&&res[0].id){
+    newPh.id=res[0].id;
+    saveL();
+    toast('Foto tersimpan 📸','ok');
+  }else{
+    // Gagal ke server — hapus dari cache lokal supaya tidak muncul data palsu
+    fpCache[pid2]=fpCache[pid2].filter(function(p){return p.id!==newPh.id;});
+    saveL();
+    renderDBody(pid2);
+    toast('Gagal simpan foto — cek koneksi & coba lagi','e',4000);
+  }
+}
 function deleteTL(pid2,phId){if(!fpCache[pid2])return;fpCache[pid2]=fpCache[pid2].filter(function(p){return p.id!=phId;});saveL();renderTLGrid(pid2);sbQ('bq_photos','DELETE',null,'id=eq.'+phId+'&user_id=eq.'+encodeURIComponent(CUID));toast('Foto dihapus 🗑️','ok');}
 
 // ── LIGHTBOX ──
@@ -1466,10 +1520,25 @@ function deleteJnl(id){
   document.getElementById('_jdN').onclick=function(){m.remove();};m.onclick=function(e){if(e.target===m)m.remove();};
 }
 async function saveJnl(){
-  var eid=document.getElementById('jfId').value;var pid2=document.getElementById('jfPlant').value;var note=document.getElementById('jfNote').value.trim();var dt=document.getElementById('jfDate').value||today();
+  var eid=document.getElementById('jfId').value;
+  var pid2=document.getElementById('jfPlant').value;
+  var note=document.getElementById('jfNote').value.trim();
+  var dt=document.getElementById('jfDate').value||today();
   if(!note){toast('Isi catatan dulu!','w');return;}
-  if(eid){var idx=jnls.findIndex(function(x){return String(x.id)===String(eid);});if(idx>-1){jnls[idx].note=note;jnls[idx].date=dt;jnls[idx].plantId=pid2;saveL();sbQ('bq_journals','PATCH',{note:note,date:dt,plant_id:pid2},'id=eq.'+eid+'&user_id=eq.'+encodeURIComponent(CUID));}toast('Catatan berhasil diupdate ✅','ok');}
-  else{var j={id:'jl_'+Date.now(),plantId:pid2,type:'note',note:note,date:dt};jnls.push(j);saveL();sbQ('bq_journals','POST',{user_id:CUID,plant_id:pid2,type:'note',note:note,date:dt});toast('Catatan tersimpan 📝','ok');}
+  if(eid){
+    // Edit — PATCH ke server dulu
+    var pr=await sbQ('bq_journals','PATCH',{note:note,date:dt,plant_id:pid2},'id=eq.'+eid+'&user_id=eq.'+encodeURIComponent(CUID));
+    if(pr===null){toast('Gagal update — cek koneksi','e',3000);return;}
+    var idx=jnls.findIndex(function(x){return String(x.id)===String(eid);});
+    if(idx>-1){jnls[idx].note=note;jnls[idx].date=dt;jnls[idx].plantId=pid2;}
+    saveL();toast('Catatan berhasil diupdate ✅','ok');
+  }else{
+    // Tambah baru — POST ke server dulu, pakai ID dari server
+    var res=await sbQ('bq_journals','POST',{user_id:CUID,plant_id:pid2,type:'note',note:note,date:dt});
+    if(!res||!res[0]){toast('Gagal simpan — cek koneksi','e',3000);return;}
+    var j={id:res[0].id,plantId:pid2,type:'note',note:note,date:dt};
+    jnls.push(j);saveL();toast('Catatan tersimpan 📝','ok');
+  }
   closeJSheet();renderJnl();renderHome();
 }
 
