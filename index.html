@@ -431,6 +431,8 @@ button,input,select,textarea{font-family:'Nunito',sans-serif}
 
 /* ══ OVERLAYS ══ */
 .ov{position:absolute;inset:0;z-index:90;background:rgba(0,0,0,.4);backdrop-filter:blur(5px);display:none;align-items:flex-end;justify-content:center;pointer-events:none}
+/* tlSheet needs to be above detail panel (z-index 60) */
+#tlSheet{z-index:95}
 .ov.open{display:flex;pointer-events:all}
 .sheet{background:var(--card);border-radius:20px 20px 0 0;width:100%;max-width:430px;max-height:90vh;overflow-y:auto;padding:0 16px 40px;border-top:1px solid var(--border);animation:shUp .24s cubic-bezier(.4,0,.2,1)}
 @keyframes shUp{from{transform:translateY(50%)}to{transform:translateY(0)}}
@@ -873,7 +875,7 @@ async function sbQ(table,method,body,params){
     if(method==='POST')opts.headers['Prefer']='return=representation';
     if(body)opts.body=JSON.stringify(body);
     var fetchP=fetch(url,opts);
-    var timeoutP=new Promise(function(_,rej){setTimeout(function(){rej(new Error('timeout'));},12000);});
+    var timeoutP=new Promise(function(_,rej){setTimeout(function(){rej(new Error('timeout'));},6000)});
     var r=await Promise.race([fetchP,timeoutP]);
     if(!r.ok)return null;
     var txt=await r.text();
@@ -994,49 +996,44 @@ function showAccMenu(){
 
 // ── LOAD DATA ──
 async function loadData(){
+  // Tampilkan data lokal DULU supaya UI langsung kelihatan
+  plants=ls('bq_p_'+CU,[]);jnls=ls('bq_j_'+CU,[]);fpCache=ls('bq_fp_'+CU,{});
+  renderAll();
   showSyncToast();
-  // Step 1: Verifikasi CUID dari server (kunci sync antar device)
-  var userRes=await sbQ('bq_users','GET',null,'username=eq.'+encodeURIComponent(CU)+'&select=id,username');
-  if(userRes&&userRes.length&&userRes[0].id){
-    if(userRes[0].id!==CUID){CUID=userRes[0].id;lsRS('bq_uid',CUID);}
-  } else {
-    // Server tidak bisa diakses — pakai data lokal, tidak tampilkan error
-    hideSyncToast();
-    plants=ls('bq_p_'+CU,[]);jnls=ls('bq_j_'+CU,[]);fpCache=ls('bq_fp_'+CU,{});
-    renderAll();
-    return;
-  }
-  // Step 2: Fetch semua data dengan CUID yang sudah dipastikan benar
-  var uid=encodeURIComponent(CUID);
-  var sbP=await sbQ('bq_plants','GET',null,'user_id=eq.'+uid+'&order=created_at.asc');
-  if(sbP===null){
-    hideSyncToast();
-    plants=ls('bq_p_'+CU,[]);jnls=ls('bq_j_'+CU,[]);fpCache=ls('bq_fp_'+CU,{});
-    renderAll();
-    return;
-  }
-  var sbJ=await sbQ('bq_journals','GET',null,'user_id=eq.'+uid+'&order=date.desc')||[];
-  var sbPh=await sbQ('bq_photos','GET',null,'user_id=eq.'+uid+'&order=date.desc')||[];
-  plants=sbP.map(function(r){
-    return{id:r.id,name:r.name,type:r.type,emoji:r.emoji,image:r.image,
-      water:r.water_days,fert:r.fert_days,lastWater:r.last_water,lastFert:r.last_fert,
-      health:r.health,notes:r.notes,added:r.added_at};
-  });
-  jnls=sbJ.map(function(r){
-    return{id:r.id,plantId:r.plant_id,type:r.type,note:r.note,date:r.date};
-  });
-  fpCache={};
-  sbPh.forEach(function(p){
-    if(!fpCache[p.plant_id])fpCache[p.plant_id]=[];
-    fpCache[p.plant_id].push({id:p.id,img:p.image,date:p.date});
-  });
-  saveL();hideSyncToast();renderAll();
-  // Sync custom types
-  sbQ('bq_usermeta','GET',null,'user_id=eq.'+uid+'&meta_key=eq.plant_types').then(function(res){
-    if(res&&res.length&&res[0].meta_value){
-      try{var t=JSON.parse(res[0].meta_value);if(t&&t.length){lsS('bq_types_'+CU,t);renderPlants();renderHome();}}catch(e){}
+  try{
+    var uid=encodeURIComponent(CUID);
+    // Semua request paralel sekaligus — user verify + semua data
+    var results=await Promise.all([
+      sbQ('bq_users','GET',null,'username=eq.'+encodeURIComponent(CU)+'&select=id,username'),
+      sbQ('bq_plants','GET',null,'user_id=eq.'+uid+'&order=created_at.asc'),
+      sbQ('bq_journals','GET',null,'user_id=eq.'+uid+'&order=date.desc'),
+      sbQ('bq_photos','GET',null,'user_id=eq.'+uid+'&order=date.desc'),
+      sbQ('bq_usermeta','GET',null,'user_id=eq.'+uid+'&meta_key=eq.plant_types')
+    ]);
+    var userRes=results[0],sbP=results[1],sbJ=results[2]||[],sbPh=results[3]||[],sbMeta=results[4];
+    // Update CUID jika berubah di server
+    if(userRes&&userRes.length&&userRes[0].id&&userRes[0].id!==CUID){
+      CUID=userRes[0].id;lsRS('bq_uid',CUID);
     }
-  });
+    if(!sbP){hideSyncToast();return;}
+    plants=sbP.map(function(r){
+      return{id:r.id,name:r.name,type:r.type,emoji:r.emoji,image:r.image,
+        water:r.water_days,fert:r.fert_days,lastWater:r.last_water,lastFert:r.last_fert,
+        health:r.health,notes:r.notes,added:r.added_at};
+    });
+    jnls=sbJ.map(function(r){
+      return{id:r.id,plantId:r.plant_id,type:r.type,note:r.note,date:r.date};
+    });
+    fpCache={};
+    sbPh.forEach(function(p){
+      if(!fpCache[p.plant_id])fpCache[p.plant_id]=[];
+      fpCache[p.plant_id].push({id:p.id,img:p.image,date:p.date});
+    });
+    if(sbMeta&&sbMeta.length&&sbMeta[0].meta_value){
+      try{var t=JSON.parse(sbMeta[0].meta_value);if(t&&t.length)lsS('bq_types_'+CU,t);}catch(e){}
+    }
+    saveL();hideSyncToast();renderAll();
+  }catch(e){hideSyncToast();}
 }
 function showSyncToast(){
   // Gunakan indikator minimal di uchip saja, tidak ada loading bar
@@ -1391,8 +1388,25 @@ async function savePlant(){
   else{type=tv;emoji=typeEmoji(type);}
   var dateVal=document.getElementById('pfDate').value;var addedAt=dateVal?new Date(dateVal).toISOString():today();
   var data={name:name,type:type,emoji:emoji,water:parseInt(document.getElementById('pfWater').value),fert:90,notes:document.getElementById('pfNotes').value.trim(),image:addImg,added:addedAt};
-  if(eid){var idx=plants.findIndex(function(p){return p.id==eid;});if(idx>-1){if(!addImg)data.image=plants[idx].image;plants[idx]=Object.assign({},plants[idx],data);sbQ('bq_plants','PATCH',{name:data.name,type:data.type,emoji:data.emoji,image:data.image,water_days:data.water,notes:data.notes,updated_at:new Date().toISOString()},'id=eq.'+eid+'&user_id=eq.'+encodeURIComponent(CUID));}toast('Tanaman berhasil diupdate ✅','ok');}
-  else{var t=today();var np=Object.assign({id:'tmp_'+Date.now(),health:'good',lastWater:t,lastFert:t,added:addedAt},data);var res=await sbQ('bq_plants','POST',{user_id:CUID,name:np.name,type:np.type,emoji:np.emoji,image:np.image,water_days:np.water,fert_days:90,last_water:t,last_fert:t,health:'good',notes:np.notes,added_at:addedAt});if(res&&res[0]&&res[0].id){np.id=res[0].id;}plants.push(np);tipIdx++;toast('Tanaman berhasil ditambahkan 🌱','ok');}
+  if(eid){
+    var idx=plants.findIndex(function(p){return p.id==eid;});
+    if(idx>-1){
+      var existingImg=plants[idx].image||null;
+      data.image=addImg!==null?addImg:existingImg; // pakai foto baru kalau ada, kalau tidak pakai yang lama
+      plants[idx]=Object.assign({},plants[idx],data);
+      saveL();
+      var patchRes=await sbQ('bq_plants','PATCH',{name:data.name,type:data.type,emoji:data.emoji,image:data.image,water_days:data.water,notes:data.notes,updated_at:new Date().toISOString()},'id=eq.'+eid+'&user_id=eq.'+encodeURIComponent(CUID));
+      if(patchRes===null){toast('Update tersimpan lokal, cek koneksi','w');}else{toast('Tanaman berhasil diupdate ✅','ok');}
+    }
+  }
+  else{
+    var t=today();
+    var np=Object.assign({id:'tmp_'+Date.now(),health:'good',lastWater:t,lastFert:t,added:addedAt},data);
+    var res=await sbQ('bq_plants','POST',{user_id:CUID,name:np.name,type:np.type,emoji:np.emoji,image:np.image,water_days:np.water,fert_days:90,last_water:t,last_fert:t,health:'good',notes:np.notes,added_at:addedAt});
+    if(res&&res[0]&&res[0].id){np.id=res[0].id;toast('Tanaman berhasil ditambahkan 🌱','ok');}
+    else{toast('Tersimpan lokal — cek koneksi internet','w',3500);}
+    plants.push(np);tipIdx++;
+  }
   saveL();closePSheet();renderHome();renderPlants();
 }
 function confirmDel(id){
@@ -1411,10 +1425,10 @@ function renderTLGrid(id){
   var addBtn='<div class="tl-add-inline" onclick="openTLSheet('+id+')"><div style="font-size:20px">📷</div><div style="font-size:9px;font-weight:700;color:var(--green);margin-top:3px">Tambah</div></div>';
   el.innerHTML=addBtn+photos.map(function(ph){return '<div class="tl-item" onclick="openLB(\''+ph.img+'\',\''+ph.date+'\')"><img src="'+ph.img+'" loading="lazy" alt=""><div class="tl-dt">'+fmtShort(ph.date)+'</div><button class="tl-del" onclick="event.stopPropagation();deleteTL('+id+',\''+ph.id+'\')">✕</button></div>';}).join('');
 }
-function openTLSheet(pid2){document.getElementById('tlPid').value=pid2;document.getElementById('tlDate').value=today();document.getElementById('tlPrev').style.display='none';document.getElementById('tlIco').style.display='block';document.getElementById('tlTxt').style.display='block';tlImg=null;closeDetail();setTimeout(function(){document.getElementById('tlSheet').classList.add('open');},290);}
+function openTLSheet(pid2){document.getElementById('tlPid').value=pid2;document.getElementById('tlDate').value=today();document.getElementById('tlPrev').style.display='none';document.getElementById('tlIco').style.display='block';document.getElementById('tlTxt').style.display='block';tlImg=null;document.getElementById('tlSheet').classList.add('open');}
 function closeTLSheet(){document.getElementById('tlSheet').classList.remove('open');tlImg=null;}
 function onTLImg(ev){var f=ev.target.files[0];if(!f)return;compressImg(f,800,.75).then(function(data){if(!data){toast('Gagal memproses foto','e');return;}tlImg=data;document.getElementById('tlPrev').src=data;document.getElementById('tlPrev').style.display='block';document.getElementById('tlIco').style.display='none';document.getElementById('tlTxt').style.display='none';});}
-async function saveTL(){if(!tlImg){toast('Pilih foto dulu!','w');return;}var pid2=document.getElementById('tlPid').value;var dt=document.getElementById('tlDate').value||today();if(!fpCache[pid2])fpCache[pid2]=[];var newPh={id:'local_'+Date.now(),img:tlImg,date:dt};fpCache[pid2].unshift(newPh);saveL();closeTLSheet();setTimeout(function(){openDetail(pid2);toast('Foto tersimpan 📸','ok');},290);var res=await sbQ('bq_photos','POST',{user_id:CUID,plant_id:pid2,image:tlImg,date:dt});if(res&&res[0]){newPh.id=res[0].id;saveL();}}
+async function saveTL(){if(!tlImg){toast('Pilih foto dulu!','w');return;}var pid2=document.getElementById('tlPid').value;var dt=document.getElementById('tlDate').value||today();if(!fpCache[pid2])fpCache[pid2]=[];var newPh={id:'local_'+Date.now(),img:tlImg,date:dt};fpCache[pid2].unshift(newPh);saveL();closeTLSheet();renderDBody(pid2);toast('Foto tersimpan 📸','ok');var res=await sbQ('bq_photos','POST',{user_id:CUID,plant_id:pid2,image:tlImg,date:dt});if(res&&res[0]){newPh.id=res[0].id;saveL();}}
 function deleteTL(pid2,phId){if(!fpCache[pid2])return;fpCache[pid2]=fpCache[pid2].filter(function(p){return p.id!=phId;});saveL();renderTLGrid(pid2);sbQ('bq_photos','DELETE',null,'id=eq.'+phId+'&user_id=eq.'+encodeURIComponent(CUID));toast('Foto dihapus 🗑️','ok');}
 
 // ── LIGHTBOX ──
